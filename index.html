@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+
+.printable {
+  display: block;
+  border:1px dashed black;
+}
+
+@media print {
+  .non-printable {
+    display: none;
+  }
+
+  .printable {
+    display: block;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: 768px) {
+
+  /* For mobile phones: */
+  [class*="col-"] {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+
+  /* For tablets: */
+  .col-s-1 {
+    width: 8.33%;
+  }
+
+  .col-s-2 {
+    width: 16.66%;
+  }
+
+  .col-s-3 {
+    width: 25%;
+  }
+
+  .col-s-4 {
+    width: 33.33%;
+  }
+
+  .col-s-5 {
+    width: 41.66%;
+  }
+
+  .col-s-6 {
+    width: 50%;
+  }
+
+  .col-s-7 {
+    width: 58.33%;
+  }
+
+  .col-s-8 {
+    width: 66.66%;
+  }
+
+  .col-s-9 {
+    width: 75%;
+  }
+
+  .col-s-10 {
+    width: 83.33%;
+  }
+
+  .col-s-11 {
+    width: 91.66%;
+  }
+
+  .col-s-12 {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .col-1 {
+    width: 8.33%;
+  }
+
+  .col-12 {
+    width: 16.66%;
+  }
+
+  .col-3 {
+    width: 25%;
+  }
+
+  .col-4 {
+    width: 33.33%;
+  }
+
+  .col-5 {
+    width: 41.66%;
+  }
+
+  .col-6 {
+    width: 50%;
+  }
+
+  .col-7 {
+    width: 58.33%;
+  }
+
+  .col-8 {
+    width: 66.66%;
+  }
+
+  .col-9 {
+    width: 75%;
+  }
+
+  .col-12 {
+    width: 83.33%;
+  }
+
+  .col-11 {
+    width: 91.66%;
+  }
+
+  .col-12 {
+    width: 100%;
+  }
+}
+
+[class*="col-"] {
+  float: left;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.printButton {
+  background: #64b448;
+  color: #fff;
+  font-size: 16px;
+  padding: 3px 6px;
+  border-radius: 3px;
+  margin-right: 5px;
+  font-weight: 500;
+}
+
+.p-label {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+label {
+  background: #64b448;
+  color: #fff;
+  font-size: 16px;
+  padding: 3px 6px;
+  border-radius: 3px;
+  margin-right: 5px;
+  font-weight: 500;
+}
+
+.rowwy {
+  background: #ccbbbb;
+}
+
+    </style>
+</head>
+<body onload="addListeners()">
+
+    <div class="col-12">
+		<div class="col-4 non-printable" style="margin-left: 50px;">
+      <div class="col-12" >
+        <button class="printButton" onclick="window.print();">print</button></div>
+      <div class="col-12" >
+        <div class="col-12 p-label"><label>Rate:</label></div>
+        <div class="col-12"><input class="calculatable" id="rate" type="number" />
+        <select>
+        <option value="gram">gram</option>
+		<option value="tola" selected="selected">tola</option>
+        <option value="milligram">
+milligram</option>
+        <option value="kilogram">kilo</option>
+        </select>
+        </div>
+
+        <div class="col-12 p-label"><label>Weight:</label></div>
+        <div class="col-12"><input class="calculatable" id="weight" type="number" />
+        <select>
+        <option value="gram" selected="selected">gram</option>
+        <option value="milligram">
+milligram</option>
+        <option value="kilogram">kilo</option>
+        </select>
+        </div>
+
+        <div class="col-12 p-label"><label>purity:</label></div>
+        <div class="col-12"><input class="calculatable" id="purity" type="number" value="100" /><label>%</label></div>
+<div class="col-12 p-label"><label>Quantity:</label></div>
+        <div class="col-12"><input class="calculatable" id="quanityNo" type="number" value="0" /></div>
+        <div class="col-12 p-label"><label>Wastage:</label></div>
+        <div class="col-12"><input class="calculatable" id="surcharge" type="number" value="0" /><select>
+        <option value="gram">gram</option>
+        <option value="milligram" selected="selected">
+milligram</option>
+        </select></div>
+
+      </div>
+    </div>
+	<div class="printable col-4" id="printable" style="margin-right: 50px;">
+      Printer version
+    </div>
+	</div>
+<script>
+var printObj = {
+	rate: 0,
+	rateUnit:"gram",
+	weight: 0,
+	weightUnit:"gram",
+	purity:0,
+	quatity:0,
+	wastage:0,
+	wastageUnit:"milligram"
+}
+const unitMultiplier = {
+	gram:1,
+	tola:10,
+	milligram:0.001,
+	kilo:1000
+}
+const updatePrintObj  = function(){
+	console.log("" + this.value);
+}	
+function addListeners(){
+var calculatables = document.getElementsByClassName("calculatable");
+Array.from(calculatables).forEach( calculatable => 
+    calculatable.addEventListener('oninput', updatePrintObj, false)
+);
+console.log(calculatables);
+}
+</script>
+    
+  </body>
+
+</html>
