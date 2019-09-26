@@ -5,7 +5,7 @@
 		<script src="index.js"></script>
 		</head>
 
-		<body onload="addListeners()">
+		<body onload="loader()">
 
 			<div class="col-12">
 				<div class="col-4 non-printable" style="margin-left: 50px;">
@@ -39,14 +39,14 @@
 						</div>
 
 						<div class="col-12 p-label">
-							<label>purity:</label>
+							<label>Purity:</label>
 						</div>
 						<div class="col-12">
 							<input class="calculatable" id="purity" type="number" value="100" />
 							<label>%</label>
 						</div>
 						<div class="col-12 p-label">
-							<label>Quantity:</label>
+							<label>Number of items:</label>
 						</div>
 						<div class="col-12">
 							<input class="calculatable" id="quanityNo" type="number" value="0" />
@@ -65,7 +65,6 @@
 					</div>
 				</div>
 				<div class="printable col-4" id="printable" style="margin-right: 50px;">
-					<ol id='printItems'></ol>
 				</div>
 			</div>
 
