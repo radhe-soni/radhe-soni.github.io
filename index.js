@@ -24,8 +24,6 @@ const unitMultiplier = {
 function updatePrintObj() {
 	const calculatable = this;
 	
-	
-	
 	if (!this['printItemId']) {
 		printItemObj[calculatable.id] = calculatable.value;
 		console.log(printItemObj);
