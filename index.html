@@ -1,78 +1,114 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-		<link rel="stylesheet" href="index.css">
-		<script src="index.js"></script>
-		</head>
 
-		<body onload="loader()">
+<head>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="index.css" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="index.js"></script>
+</head>
 
-			<div class="col-12">
-				<div class="col-4 non-printable" style="margin-left: 50px;">
-					<div class="col-12" >
-						<button class="printButton" onclick="window.print();">print</button>
-					</div>
-					<div class="col-12" >
-						<div class="col-12 p-label">
-							<label>Rate:</label>
+<body onload="loader()">
+	<div class="container">
+		<div class="row" style="margin-top: 15%; background-color:azure">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Item Name</label>
+					<div class="row">
+						<div class="col-md-6">
+							<input class="calculatable form-control" id="itemName" type="text" value="Gold Fine" />
 						</div>
-						<div class="col-12">
-							<input class="calculatable" id="rate" type="number" />
-							<select>
-								<option value="gram">gram</option>
+					</div>
+				</div>
+				<label for="rate">Rate</label>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<input class="calculatable form-control" id="rate" type="number" />
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<select class="form-control">
 								<option value="tola" selected="selected">tola</option>
+								<option value="gram">gram</option>
 								<option value="milligram">milligram</option>
 								<option value="kilogram">kilo</option>
 							</select>
 						</div>
-
-						<div class="col-12 p-label">
-							<label>Weight:</label>
+					</div>
+				</div>
+				<label>Weight</label>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<input class="calculatable form-control" id="weight" type="number" />
 						</div>
-						<div class="col-12">
-							<input class="calculatable" id="weight" type="number" />
-							<select>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<select class="form-control">
 								<option value="gram" selected="selected">gram</option>
 								<option value="milligram">milligram</option>
 								<option value="kilogram">kilo</option>
 							</select>
 						</div>
-
-						<div class="col-12 p-label">
-							<label>Purity:</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>Purity</label>
+					<div class="row">
+						<div class="col-md-6">
+							<input class="calculatable form-control" id="purity" type="number" value="100" />
 						</div>
-						<div class="col-12">
-							<input class="calculatable" id="purity" type="number" value="100" />
+						<div class="col-md-1">
 							<label>%</label>
 						</div>
-						<div class="col-12 p-label">
-							<label>Number of items:</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>Number of items</label>
+					<div class="row">
+						<div class="col-md-6">
+							<input class="calculatable form-control" id="quantityNo" type="number" />
 						</div>
-						<div class="col-12">
-							<input class="calculatable" id="quanityNo" type="number" value="0" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label>Wastage</label>
+					<div class="row">
+						<div class="col-md-6">
+							<input class="calculatable form-control" id="surcharge" type="number" />
 						</div>
-						<div class="col-12 p-label">
-							<label>Wastage:</label>
-						</div>
-						<div class="col-12">
-							<input class="calculatable" id="surcharge" type="number" value="0" />
-							<select>
+						<div class="col-md-3">
+							<select class="form-control">
 								<option value="gram">gram</option>
 								<option value="milligram" selected="selected">milligram</option>
 							</select>
 						</div>
-
 					</div>
 				</div>
-				<div class="printable col-4" id="printable" style="margin-right: 50px;">
-		</div>
 			</div>
+			<div class="col-md-6" id="printable">
+			</div>
+		</div>
+		<div class="row">
+			<div class="offset-md-10">
+				<button class="btn btn-primary" onclick="window.print();">print</button>
+			</div>
+		</div>
+	</div>
 
 
-		</body>
+</body>
 
-	</html>
-	
+</html>
