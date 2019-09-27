@@ -1,6 +1,5 @@
 "use strict";
 const printItemObj = {
-	printItemId:'',
 	rate: 0,
 	rateUnit: "gram",
 	weight: 0,
@@ -9,14 +8,10 @@ const printItemObj = {
 	quantity: 0,
 	wastage: 0,
 	wastageUnit: "milligram",
-	setRate : (value, printItemId) => {
-		this.rate = value;
-		
-	}
 }
-
+const printItemObjs = [];
 const getprintItemObjSequence = () => {
-	let i = 1;
+	let i = 0;
 	return {
 		rate:i++,
 		weight:i++,
@@ -26,7 +21,18 @@ const getprintItemObjSequence = () => {
 	}
 }
 const printItemObjSequence = getprintItemObjSequence();
-const printObjs = {}
+const cells = {}
+const printColumns ={
+		sno:'',
+		name:'',
+		rate:'',
+		weight:'',
+		purity:'',
+		quatity:'',
+		wastage:'',
+		total:''
+		
+}
 const unitMultiplier = {
 	gram: 1,
 	tola: 10,
@@ -36,58 +42,54 @@ const unitMultiplier = {
 function updatePrintObj() {
 	const calculatable = this;
 	const itemId = calculatable.id;
-	printItemObj[itemId] = calculatable.value;
-	if (!printItemObj.printItemId) {
-		const printItemId = createNewPrintItem(itemId);
-		printItemObj.printItemId = printItemId;
-	} else {
-		const printItemId = printItemObj.printItemId;
-		let printItemEle = document.getElementById(itemId+printItemId);
-		if(printItemEle){
-			printItemEle.innerHTML = calculatable.value;
-		}
-		else{
-			const printItem = printObjs[printItemId];
-			const printItemEle = createNewPrintItemEle(itemId, printItemId);
-			printItem.appendChild(printItemEle);
-			let index = Array.from(printItem.children).indexOf(printItemEle);
-			if(printItemObjSequence[itemId] > index){
-				while(index && printItemObjSequence[itemId] != index){
-					index = moveUp(printItemEle);
-				}
-			}
-			else if(printItemObjSequence[itemId] < index){
-				while(index && printItemObjSequence[itemId] != index){
-					index=moveDown(printItemEle);
-				}
-			}
-		}
+	if(printItemObj[itemId]==0){
+		printItemObj[itemId] = calculatable.value;
+		const index = createNewPrintItem(itemId);
+		printItemObj.index = index;
+	}
+	else{
+		const cellId = itemId + 'cell' + printItemObj.index;
+		updatePrintItem(itemId, cellId);
 	}
 }
 function createNewPrintItem(itemId) {
-	const printItems = document.getElementById('printItems');
-	const printItemsSize = printItems.getElementsByTagName('li').length;
-	const printItemId = 'printItem' + printItemsSize;
-	const printItem = document.createElement('li');
-	printItem.setAttribute('id', printItemId);
-	printObjs[printItemId] = printItem;
-	printItems.appendChild(printItem);
-	const printItemEle = createNewPrintItemEle(itemId, printItemId);
-	printItem.appendChild(printItemEle);
-	return printItemId;
+	const columnValues = printColumns[itemId];
+	const index = columnValues.getElementsByTagName('li').length;
+	const cellId = itemId + 'cell' + index;
+	const cell = document.createElement('li');
+	cell.setAttribute('id', cellId);
+	cells[cellId] = cell;
+	cell.innerHTML = printItemObj[itemId];
+	columnValues.appendChild(cell);
+	return index;
 }
-function createNewPrintItemEle(itemId, printItemId){
+function createNewPrintItemEle(itemId, cellId){
 	const printItemEle = document.createElement('div');
-	printItemEle.setAttribute('id', itemId+printItemId);
+	printItemEle.setAttribute('id', itemId+cellId);
 	printItemEle.setAttribute('style', 'width:16.66%;float:left');
 	printItemEle.innerHTML = printItemObj[itemId];
 	return printItemEle;
 }
+
+function updatePrintItem(itemId, cellId){
+	const cell = cells[cellId];
+	cell.innerHTML = printItemObj[itemId];
+}
+
 function loader(){
 	const printable = document.getElementById('printable');
-	const printItems = document.createElement('ol');
-	printItems.setAttribute('id', 'printItems');
-	printable.appendChild(printItems);
+	Object.entries(printColumns).forEach(name => {
+		const column =  document.createElement('div');
+		column.setAttribute('style', 'width:12.5%;float:left');
+		printable.appendChild(column);
+		const columnValues = document.createElement('ul');
+		printColumns[name[0]] = columnValues;
+		column.appendChild(columnValues);
+		columnValues.style = 'list-style-type: none;';
+		const columnName = document.createElement('li');
+		columnName.innerHTML = name[0];
+		columnValues.appendChild(columnName);
+	});
 	addListeners();
 }
 function addListeners() {
@@ -108,3 +110,4 @@ function moveDown(element) {
     element.parentNode.insertBefore(element.nextElementSibling, element);
   return Array.from(element.parentNode.children).indexOf(element);
 }
+
