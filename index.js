@@ -1,26 +1,9 @@
 "use strict";
 function loader() {
 	const printable = document.getElementById('printable');
-	Object.entries(printColumns).forEach(entry => {
-		const item = entry[0];
-		const column = document.createElement('ul');
-		printColumns[item].column = column;
-		printable.appendChild(column);
-		column.classList.add('list-group');
-		column.classList.add('list-group-custom');
-		const columnNameCell = document.createElement('li');
-		columnNameCell.innerHTML = printColumns[item].name;
-		columnNameCell.classList.add('list-group-item');
-		columnNameCell.classList.add('list-group-item-custom');
-		column.appendChild(columnNameCell);
-		const cell = document.createElement('li');
-		cell.innerHTML = printItemObj[item];
-		cell.classList.add('list-group-item');
-		cell.classList.add('list-group-item-custom');
-		column.appendChild(cell);
-		const cellId = item + 'cell' + 1;
-		cells[cellId] = cell;
-	});
+	Object.entries(printColumns).map(entry => entry[0])
+	.map(getNewColumn)
+	.forEach(column => printable.appendChild(column));
 	addListeners();
 }
 function addListeners() {
@@ -29,24 +12,52 @@ function addListeners() {
 		calculatables[i].addEventListener('input', updatePrintObj);
 	}
 }
+function getNewColumn(item) {
+	const column = document.createElement('ul');
+	printColumns[item].column = column;
+	column.classList.add('list-group');
+	column.classList.add('list-group-custom');
+	column.appendChild(getHeaderCell(item));
+	column.appendChild(getNewCell(item));
+	return column;
+}
+function getHeaderCell(item) {
+	const columnNameCell = document.createElement('li');
+	columnNameCell.innerHTML = printColumns[item].name;
+	columnNameCell.classList.add('list-group-item');
+	columnNameCell.classList.add('list-group-item-custom');
+	return columnNameCell;
+}
+function getNewCell(item) {
+	const cell = document.createElement('li');
+	cell.innerHTML = printItemObj[item];
+	cell.classList.add('list-group-item');
+	cell.classList.add('list-group-item-custom');
+	const cellId = item + 'cell' + 1;
+	cells[cellId] = cell;
+	return cell;
+}
 const printItemObj = {
 	itemName: 'Gold Fine',
 	rate: 0,
 	rateUnit: "gram",
 	weight: 0,
 	weightUnit: "gram",
-	purity: 0,
+	purity: 100,
 	quantityNo: 0,
 	wastage: 0,
 	wastageUnit: "milligram",
-	get total(){
-		return this.rate * this.weight;
+	sumTotal: 0,
+	get total() {
+		this.sumTotal = this.rate * ((this.weight * this.purity / 100) + (this.quantityNo * this.wastage ));
+		console.log(this.sumTotal);
+		return this.sumTotal;
 	},
-	get sno(){
+	get sno() {
 		return printColumns.sno.column.children.length;
 	},
-	get index(){
-		return this.sno-1;
+	get index() {
+		return this.sno - 1;
 	}
 }
 const printItemObjs = [];
@@ -63,7 +74,7 @@ const getprintItemObjSequence = () => {
 const printItemObjSequence = getprintItemObjSequence();
 const cells = {}
 const printColumns = getPrintColumns();
-function getPrintColumns(){
+function getPrintColumns() {
 	return {
 		sno: {
 			name: 'S.No.',
@@ -109,8 +120,7 @@ function updatePrintObj() {
 	const calculatable = this;
 	const itemId = calculatable.id;
 	printItemObj[itemId] = calculatable.value;
-	const cellId = itemId + 'cell' + printItemObj.index;
-	updatePrintItem(itemId, cellId);
+	updatePrintItem(itemId);
 }
 function createNewPrintItem(itemId) {
 	const column = printColumns[itemId].column;
@@ -123,12 +133,17 @@ function createNewPrintItem(itemId) {
 	cells[cellId] = cell;
 	cell.innerHTML = printItemObj[itemId];
 	column.appendChild(cell);
+
 	return index;
 }
 
-function updatePrintItem(itemId, cellId) {
-	const cell = cells[cellId];
+function updatePrintItem(itemId) {
+	let cellId = itemId + 'cell' + printItemObj.index;
+	let cell = cells[cellId];
 	cell.innerHTML = printItemObj[itemId];
+	cellId = 'totalcell' + printItemObj.index;
+	cell = cells[cellId];
+	cell.innerHTML = printItemObj.total;
 }
 
 
@@ -143,4 +158,10 @@ function moveDown(element) {
 	if (element.nextElementSibling)
 		element.parentNode.insertBefore(element.nextElementSibling, element);
 	return Array.from(element.parentNode.children).indexOf(element);
+}
+function printTheTable() {
+	window.print();
+}
+function addNewItem() {
+
 }
