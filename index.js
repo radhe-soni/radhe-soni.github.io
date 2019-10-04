@@ -2,14 +2,18 @@
 function loader() {
 	const printable = document.getElementById('printable');
 	Object.entries(printColumns).map(entry => entry[0])
-	.map(getNewColumn)
-	.forEach(column => printable.appendChild(column));
+		.map(getNewColumn)
+		.forEach(column => printable.appendChild(column));
 	addListeners();
 }
 function addListeners() {
 	var calculatables = document.getElementsByClassName('calculatable');
 	for (var i = 0; i < calculatables.length; i++) {
 		calculatables[i].addEventListener('input', updatePrintObj);
+	}
+	var weightUnits = document.getElementsByClassName('weight-unit');
+	for (var i = 0; i < weightUnits.length; i++) {
+		weightUnits[i].addEventListener('change', updateWeightUnits);
 	}
 }
 function getNewColumn(item) {
@@ -37,20 +41,29 @@ function getNewCell(item) {
 	cells[cellId] = cell;
 	return cell;
 }
+const unitMultiplier = {
+	gram: 0.001,
+	tola: 0.01,
+	milligram: 0.000001,
+	kilo: 1
+}
 const printItemObj = {
 	itemName: 'Gold Fine',
 	rate: 0,
-	rateUnit: "gram",
+	rateUnit: "tola",
 	weight: 0,
 	weightUnit: "gram",
 	purity: 100,
-	quantityNo: 0,
+	pieces: 0,
 	wastage: 0,
 	wastageUnit: "milligram",
+	labour: 0,
 	sumTotal: 0,
+	labourUnit: "kilo",
 	get total() {
-		this.sumTotal = this.rate * ((this.weight * this.purity / 100) + (this.quantityNo * this.wastage ));
-		console.log(this.sumTotal);
+		this.sumTotal = (this.rate / unitMultiplier[this.rateUnit]) *
+			((unitMultiplier[this.weightUnit] * this.weight * this.purity / 100)
+				+ (this.pieces * this.wastage * unitMultiplier[this.wastageUnit])) + (this.labour / unitMultiplier[this.labourUnit]);
 		return this.sumTotal;
 	},
 	get sno() {
@@ -64,11 +77,13 @@ const printItemObjs = [];
 const getprintItemObjSequence = () => {
 	let i = 0;
 	return {
+		quantity: i++,
 		rate: i++,
 		weight: i++,
 		purity: i++,
-		quantity: i++,
-		wastage: i++
+		wastage: i++,
+		labour:i++,
+		sumTotal:i++
 	}
 }
 const printItemObjSequence = getprintItemObjSequence();
@@ -84,6 +99,10 @@ function getPrintColumns() {
 			name: 'Item Name',
 			class: 'col-md-2'
 		},
+		pieces: {
+			name: 'Pieces',
+			class: 'col-md-2'
+		},
 		rate: {
 			name: 'Rate',
 			class: 'col-md-2'
@@ -96,12 +115,13 @@ function getPrintColumns() {
 			name: 'Purity',
 			class: 'col-md-1'
 		},
-		quantityNo: {
-			name: 'Quantity',
-			class: 'col-md-2'
-		},
+		
 		wastage: {
 			name: 'Wastage',
+			class: 'col-md-2'
+		},
+		labour: {
+			name: 'Labour',
 			class: 'col-md-2'
 		},
 		total: {
@@ -110,16 +130,16 @@ function getPrintColumns() {
 		}
 	}
 }
-const unitMultiplier = {
-	gram: 1,
-	tola: 10,
-	milligram: 0.001,
-	kilo: 1000
+function updateWeightUnits() {
+	const unitSelection = this;
+	const itemId = unitSelection.id;
+	printItemObj[itemId] = unitSelection.value;
+	updateSubTotal();
 }
 function updatePrintObj() {
 	const calculatable = this;
 	const itemId = calculatable.id;
-	printItemObj[itemId] = calculatable.value;
+	printItemObj[itemId] = typeof calculatable.value === "string" ?  parseInt(calculatable.value) : calculatable.value;
 	updatePrintItem(itemId);
 }
 function createNewPrintItem(itemId) {
@@ -141,11 +161,13 @@ function updatePrintItem(itemId) {
 	let cellId = itemId + 'cell' + printItemObj.index;
 	let cell = cells[cellId];
 	cell.innerHTML = printItemObj[itemId];
-	cellId = 'totalcell' + printItemObj.index;
-	cell = cells[cellId];
+	updateSubTotal();
+}
+function updateSubTotal() {
+	let cellId = 'totalcell' + printItemObj.index;
+	let cell = cells[cellId];
 	cell.innerHTML = printItemObj.total;
 }
-
 
 function moveUp(element) {
 	console.log("moving element up");

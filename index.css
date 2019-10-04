@@ -21,6 +21,7 @@ label {
   border-radius: 3px;
   font-weight: 500;
   display:grid !important;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 .list-group-custom{
   display:inline-block !important;
