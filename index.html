@@ -2,28 +2,52 @@
 <html>
 
 <head>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="index.css" />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<script src="index.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	 crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	 crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" href="style/index.css" />
 </head>
 
 <body onload="loader()">
 	<div class="container">
-		<div class="row non-printable" style="margin-top: 15%; background-color:azure">
-			<div class="offset-md-11">
+		<div class="row non-printable" style="margin-top: 2%; background-color:azure">
+			<div class="form-group offset-sm-11">
 				<button class="btn btn-primary" onclick="printTheTable();">print</button>
 			</div>
 			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-3">
+						<label>Customer /Shop Name</label>
+					</div>
+					<div class="col-sm-4">
+						<input class="form-control" id="customerName" type="text" />
+					</div>
+					<div class="col-sm-2">
+						<label>Voucher No.</label>
+					</div>
+					<div class="col-sm-3">
+						<input class="form-control" id="voucherNo" type="text" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<label>Cust /Shop Contact</label>
+					</div>
+					<div class="col-sm-4">
+						<input class="form-control" id="customerContact" type="text" />
+					</div>
+					<div class="col-sm-2">
+						<label>Date</label>
+					</div>
+					<div class="col-sm-3">
+						<input class="form-control" id="billDate" type="date" />
+					</div>
+				</div>
 				<div class="form-group">
 					<label>Item Name</label>
 					<div class="row">
@@ -32,15 +56,13 @@
 						</div>
 					</div>
 				</div>
-				<label for="rate">Rate</label>
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="form-group">
+				<div class="form-group">
+					<label for="rate">Rate</label>
+					<div class="row">
+						<div class="col-sm-6">
 							<input class="calculatable form-control" id="rate" type="number" />
 						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
+						<div class="col-sm-2">
 							<select class="form-control weight-unit" id="rateUnit">
 								<option value="tola" selected="selected">tola</option>
 								<option value="gram">gram</option>
@@ -50,15 +72,13 @@
 						</div>
 					</div>
 				</div>
-				<label>Weight</label>
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="form-group">
+				<div class="form-group">
+					<label>Weight</label>
+					<div class="row">
+						<div class="col-sm-6">
 							<input class="calculatable form-control" id="weight" type="number" />
 						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
+						<div class="col-sm-2">
 							<select class="form-control weight-unit" id="weightUnit">
 								<option value="gram" selected="selected">gram</option>
 								<option value="milligram">milligram</option>
@@ -67,52 +87,52 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-sm-6">
-						<label>Purity(%)</label>
-						<div class="form-group">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Purity(%)</label>
 							<input class="calculatable form-control" id="purity" type="number" value="100" />
 						</div>
-					</div>
-					<div class="col-sm-6">
-						<label>Pieces</label>
-						<div class="form-group">
+						<div class="col-sm-6">
+							<label>Pieces</label>
 							<input class="calculatable form-control" id="pieces" type="number" />
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-sm-6">
-						<label>Wastage</label>
-					</div>
-					<div class="col-sm-6">
-						<label>Labour</label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="form-group col-sm-6">
-						<div class="row">
-							<div class="col-sm-8">
-								<input class="calculatable form-control" id="wastage" type="number" />
-							</div>
-							<div class="col-sm-4">
-								<select class="form-control weight-unit" id="wastageUnit">
-									<option value="gram">gram</option>
-									<option value="milligram" selected="selected">milligram</option>
-								</select>
-							</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Wastage</label>
+						</div>
+						<div class="col-sm-6">
+							<label>Labour</label>
 						</div>
 					</div>
-					<div class="form-group col-sm-6">
-						<div class="row">
-							<div class="col-sm-8">
-								<input class="calculatable form-control" id="labour" type="number" />
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="row">
+								<div class="col-sm-8">
+									<input class="calculatable form-control" id="wastage" type="number" />
+								</div>
+								<div class="col-sm-4">
+									<select class="form-control weight-unit" id="wastageUnit">
+										<option value="gram">gram</option>
+										<option value="milligram" selected="selected">milligram</option>
+									</select>
+								</div>
 							</div>
-							<div class="col-sm-4">
+						</div>
+						<div class="col-sm-6">
+							<div class="row">
+								<div class="col-sm-8">
+									<input class="calculatable form-control" id="labour" type="number" />
+								</div>
+								<div class="col-sm-4">
 									<select class="form-control weight-unit" id="labourUnit">
 										<option value="gram">gram</option>
 										<option value="kilo" selected="selected">kilo</option>
 									</select>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -123,8 +143,30 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" style="background-color:azure">
-			<div class="col-sm-12 justify-content-md-center printable" id="printable">
+		<div class="row" style="background-color:rgb(238, 248, 245);margin-bottom: 50px;">
+			<div class="col-sm-12 printable bill-info">
+				<div class='table'>
+					<div class="resp-table-header">
+						<div class="table-header-cell">Radhe Kishan Jwellers</div>
+					</div>
+					<div class="resp-table-row">
+						<div class="table-body-cell">
+							<div class="row">
+								<div class='col-sm-3' style="min-width:80px">Customer /Shop Name:-</div>
+								<div class='col-sm-3'>R K Jwellers</div>
+								<div class='offset-sm-2'>Voucher No:-</div>
+								<div class='col-sm-2'>239832</div>
+							</div>
+							<div class="row">
+								<div class='col-sm-3' style="min-width:80px">Customer /Shop Contact:-</div>
+								<div class='col-sm-3'>8982573533</div>
+								<div class='offset-sm-2'>Date:-</div>
+								<div class='col-sm-3'>23-Oct-2019</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="table" id="printable"></div>
 			</div>
 		</div>
 	</div>
@@ -133,7 +175,10 @@
 	</div>
 	</div>
 
-
+	<script src="./modules/printColumn.js"></script>
+	<script src="./modules/printUtility.js"></script>
+	<script src="./scripts/index.js"></script>
+	<script>$("#billDate").val(getFormattedDate(new Date()));</script>
 </body>
 
 </html>

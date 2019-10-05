@@ -12,24 +12,61 @@
   margin-bottom: 5px;
   margin-top: 5px;
 }
-
-label {
-  background: #64b448;
-  color: #fff;
+input{
+  background: #CCFFFF !important;
+}
+label{
+  background: #FFDF00;
+  color: #000;
   font-size: 20px;
   padding: 3px 6px;
   border-radius: 3px;
   font-weight: 500;
   display:grid !important;
   font-family: Verdana, Arial, Helvetica, sans-serif;
+  min-width: 80px;
+  word-wrap: break-word;
 }
 .list-group-custom{
   display:inline-block !important;
 }
 .list-group-item-custom{
   padding: 0.25rem 0.25rem !important;
+  border-radius: 0 !important;
+  border: 1px solid black !important;
 }
-
+div.bill-info{
+border:1px solid black;
+}
+.table{
+  width: 100%;
+  display: table;  
+}
+.resp-table-header{
+  display: table-header-group;
+  font-weight: bold;
+  font-size: 20px;
+}
+.table-header-cell{
+  display: table-cell;
+  padding: 0.2rem; 
+  text-align: center;
+  border: 0.5px solid black;
+}
+.resp-table-row{
+  display: table-row;
+}
+.table-body-cell{
+  display: table-cell;
+  padding: 0.2rem; 
+  text-align: center;
+  border: 0.5px solid black;
+}
+@media (prefers-color-scheme: dark) {
+  label{
+    color: #FFF;
+  }
+}
 @media print {
   .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
     float: left;
@@ -228,5 +265,8 @@ label {
 
   .printable {
     text-align: center;
+  }
+  input{
+    border:none;
   }
 }
