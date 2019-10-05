@@ -9,7 +9,7 @@ function loader() {
 	printable.appendChild(headerRow);
 	printColumns.columns.map(columnInfo => getHeaderCell(columnInfo))
 		.forEach(cell => headerRow.appendChild(cell));
-	const firstRow = getTableRow();
+	const firstRow = createTableRow();
 	printable.appendChild(firstRow);
 	printColumns.columns.map(columnInfo => getNewCell(columnInfo))
 		.forEach(cell => firstRow.appendChild(cell));
@@ -44,7 +44,15 @@ function printTheTable() {
 	window.print();
 }
 function addNewItem() {
-
+	const printable = document.getElementById('printable');
+	const newRow = createTableRow();
+	printable.appendChild(newRow);
+	const newPrintRow = new PrintRow(printRows.rows.length + 1);
+	printRows.rows.push(newPrintRow);
+	printRows.currentRow = newPrintRow.index;
+	newPrintRow.resetFeilds(inputMap);
+	printColumns.columns.map(columnInfo => getNewCell(columnInfo))
+		.forEach(cell => newRow.appendChild(cell));
 }
 function getFormattedDate(date) {
 	return date.getFullYear()
@@ -58,13 +66,14 @@ var inputMap = getInputMap();
 function getInputMap() {
 	let inputMap = {};
 	for (var i = 0; i < calculatables.length; i++) {
-		inputMap[calculatables[i].id] = calculatables[i + 1 < calculatables.length ? i + 1 : 0];
+		inputMap[calculatables[i].id] = calculatables[i];
+		inputMap[calculatables[i].id+'_next'] = calculatables[i + 1 < calculatables.length ? i + 1 : 0];
 	}
 	return inputMap;
 }
 $('.calculatable').keypress(function (e) {
 	if (e.which == 13) {
 		$(this).blur();
-		inputMap[this.id].focus();
+		inputMap[this.id+'_next'].focus();
 	}
 });

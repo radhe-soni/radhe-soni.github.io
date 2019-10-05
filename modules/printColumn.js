@@ -55,18 +55,18 @@ class PrintRows {
 class PrintRow {
     constructor(index) {
         this.itemName = 'Gold Fine',
-        this.rate = 0,
-        this.rateUnit = "tola",
-        this.weight = 0,
-        this.weightUnit = "gram",
-        this.purity = 100,
-        this.pieces = 0,
-        this.wastage = 0,
-        this.wastageUnit = "milligram",
-        this.labour = 0,
-        this.sumTotal = 0,
-        this.labourUnit = "kilo",
-        this.sno = index
+            this.rate = 0,
+            this.rateUnit = "tola",
+            this.weight = 0,
+            this.weightUnit = "gram",
+            this.purity = 100,
+            this.pieces = 0,
+            this.wastage = 0,
+            this.wastageUnit = "milligram",
+            this.labour = 0,
+            this.sumTotal = 0,
+            this.labourUnit = "kilo",
+            this.sno = index
     }
     get total() {
         this.sumTotal = (this.rate / unitMultiplier[this.rateUnit]) *
@@ -77,6 +77,17 @@ class PrintRow {
     }
     get index() {
         return this.sno - 1;
+    }
+    resetFeilds(inputMap) {
+        Object.entries(this).forEach(entry => {
+            const itemId = entry[0];
+            const itemValue = entry[1];
+            const itemField = inputMap[itemId];
+            if (itemField) {
+                itemField.value = itemValue;
+            }
+        });
+
     }
 }
 const unitMultiplier = {

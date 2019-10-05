@@ -3,7 +3,7 @@ function getHeaderRow() {
 	row.classList.add('resp-table-header');
 	return row;
 }
-function getTableRow() {
+function createTableRow() {
 	const row = document.createElement('div');
 	row.classList.add('resp-table-row');
 	return row;
