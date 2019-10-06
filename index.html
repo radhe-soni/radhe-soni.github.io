@@ -2,17 +2,14 @@
 <html>
 
 <head>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	 crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	 crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	 crossorigin="anonymous">
 	<link rel="stylesheet" href="style/index.css" />
 </head>
 
@@ -29,13 +26,13 @@
 							<span class="badge badge-primary"><label>Customer /Shop Name</label></span>
 						</div>
 						<div class="col-sm-4">
-							<input class="form-control" id="customerName" type="text" />
+							<input class="form-control print-header-input" id="customerName" type="text" oninput="populatePrintHeader(this);"/>
 						</div>
 						<div class="col-sm-2">
 							<span class="badge badge-primary"><label>Voucher No.</label></span>
 						</div>
 						<div class="col-sm-3">
-							<input class="form-control" id="voucherNo" type="text" />
+							<input class="form-control print-header-input" id="voucherNo" type="text" oninput="populatePrintHeader(this);"/>
 						</div>
 					</div>
 				</div>
@@ -45,13 +42,13 @@
 							<span class="badge badge-primary"><label>Cust /Shop Contact</label></span>
 						</div>
 						<div class="col-sm-4">
-							<input class="form-control" id="customerContact" type="text" />
+							<input class="form-control print-header-input" id="customerContact" type="text" oninput="populatePrintHeader(this);"/>
 						</div>
 						<div class="col-sm-2">
 							<span class="badge badge-primary"><label>Date</label></span>
 						</div>
 						<div class="col-sm-3">
-							<input class="form-control" id="billDate" type="date" />
+							<input class="form-control print-header-input" id="billDate" type="date" oninput="populatePrintHeader(this);"/>
 						</div>
 					</div>
 				</div>
@@ -153,7 +150,7 @@
 		</div>
 		<div class="row" style="background-color:rgb(238, 248, 245);margin-bottom: 50px;">
 			<div class="col-sm-12 printable bill-info" id="billInfo">
-				<div class='table'>
+				<div class='table' id="billInfoTable">
 					<div class="resp-table-header">
 						<div class="table-header-cell">Radhe Kishan Jwellers</div>
 					</div>
@@ -161,15 +158,15 @@
 						<div class="table-body-cell">
 							<div class="row">
 								<div class='col-sm-3' style="min-width:80px">Customer /Shop Name:-</div>
-								<div class='col-sm-3'>R K Jwellers</div>
-								<div class='offset-sm-2'>Voucher No:-</div>
-								<div class='col-sm-2'>239832</div>
+								<div class='col-sm-3' id="customerNamePrint"></div>
+								<div class='offset-sm-2' >Voucher No:-</div>
+								<div class='col-sm-2' id="voucherNoPrint"></div>
 							</div>
 							<div class="row">
 								<div class='col-sm-3' style="min-width:80px">Customer /Shop Contact:-</div>
-								<div class='col-sm-3'>8982573533</div>
+								<div class='col-sm-3' id="customerContactPrint"></div>
 								<div class='offset-sm-2'>Date:-</div>
-								<div class='col-sm-3'>23-Oct-2019</div>
+								<div class='col-sm-3' id="billDatePrint"></div>
 							</div>
 						</div>
 					</div>
@@ -180,20 +177,30 @@
 					</div>
 					<div class="resp-table-footer">
 						<div class="table-footer-cell">
-							<div class='col-sm-10'>
-								Proprieter:- Gokul Prasad Soni
+							<div class="col-12" style="border-bottom:1px solid black;font-weight: 800;font-size:1.25em;text-align: left;">
+								Grand Total<span class='offset-sm-10' id="grandTotal">0.00</span>
 							</div>
-							<div class='col-sm-10'>
-								Contact:- 9425841282
+							<div class="row">
+								<div class='col-sm-9'>
+									Proprieter:- Gokul Prasad Soni
+								</div>
+								<div class='col-sm-9'>
+									Contact:- 9425841282
+								</div>
+								<div class='col-sm-9'>
+									<div>Address:- c/o Radhe Kishan Jwellers, Sarafa Bazaar</div>
+									<div> Kotwali Road Sidhi (M.P.)</div>
+								</div>
+								<div class='col-sm-3'  style="text-align: center">
+										------------------
+									</div>
+								<div class='col-sm-9'>
+									Pincode:- 486661
+								</div>
+								<div class='col-sm-3' style="text-align: center">
+									Signature
+								</div>
 							</div>
-							<div class='col-sm-10'>
-								<div>Address:- c/o Radhe Kishan Jwellers, Sarafa Bazaar</div>
-								<div> Kotwali Road Sidhi (M.P.)</div>
-							</div>
-							<div class='col-sm-10'>
-								Pincode:- 486661
-							</div>
-
 						</div>
 					</div>
 				</div>

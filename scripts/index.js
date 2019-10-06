@@ -3,22 +3,28 @@ const printRows = new PrintRows();
 const printColumns = new PrintColumns();
 function loader() {
 	const printable = document.getElementById('printable');
-	printRows.rows.push(new PrintRow(printRows.rows.length + 1));
+	printRows.rows.push(new PrintRow(printRows.rows.length));
 	
 	const headerRow = getHeaderRow();
 	printable.appendChild(headerRow);
 	printColumns.columns.map(columnInfo => getHeaderCell(columnInfo))
 		.forEach(cell => headerRow.appendChild(cell));
 	
-		const firstRow = createTableRow();
+	const firstRow = createTableRow();
+	firstRow.addEventListener('click', () => setFieldsWithSelectedRow(0));
 	printColumns.columns.map(columnInfo => getNewCell(columnInfo))
 		.forEach(cell => firstRow.appendChild(cell));
 	const dataGroupRow = getDataGroup('printable');
 	printable.appendChild(dataGroupRow);
 	dataGroupRow.appendChild(firstRow);
-	const footerRow = getFooterRow();
-	printable.appendChild(footerRow);
 	addListeners();
+}
+function setFieldsWithSelectedRow(rowIndex){
+	const selectedRow = printRows.rows[rowIndex];
+	selectedRow.resetFeilds(inputMap);
+	printRows.currentRow = selectedRow.sno;
+	console.log(rowIndex);
+	console.log(rowIndex + selectedRow);
 }
 function addListeners() {
 	var calculatables = document.getElementsByClassName('calculatable');
@@ -39,18 +45,24 @@ function updateWeightUnits() {
 	const header = document.getElementById(printRows.generateHeaderCellId(itemId.replace('Unit', '')));
 	printRows.getCurrentRow()[itemId] = unitSelection.value;
 	header.innerHTML = getColumnName(itemId, printColumnMap[itemId.replace('Unit', '')].name);
-	
-	
 	updateSubTotal();
 }
 function updatePrintObj() {
 	const calculatable = this;
 	const itemId = calculatable.id;
-	const itemValue = typeof calculatable.value === "string" ? calculatable.value : parseInt(calculatable.value);
+	const itemValue = typeof calculatable.value === "string" ? calculatable.value : parseFloat(calculatable.value);
 	printRows.getCurrentRow()[itemId] = itemValue;
 	updatePrintItem(itemId);
 }
+function populatePrintHeader(element) {
+	const printHeaderId = element.id+'Print';
+	document.getElementById(printHeaderId).innerText=element.value;
+}
 function printTheTable() {
+	const printHeaderInputs = document.getElementsByClassName('print-header-input');
+	for (var i = 0; i < printHeaderInputs.length; i++) {
+		populatePrintHeader(printHeaderInputs[i]);
+	}
 	const billInfo = document.getElementById('billInfo');
 	const customerCopy = billInfo.cloneNode(true);
 	const billInfoParent = billInfo.parentElement;
@@ -73,11 +85,12 @@ function printTheTable() {
 function addNewItem() {
 	const printable = document.getElementById('printableDataGroup');
 	const newRow = createTableRow();
-	printable.insertBefore(newRow, printable.lastChild);
-	const newPrintRow = new PrintRow(printRows.rows.length + 1);
+	printable.appendChild(newRow);
+	const newPrintRow = new PrintRow(printRows.rows.length);
 	printRows.rows.push(newPrintRow);
-	printRows.currentRow = newPrintRow.index;
+	printRows.currentRow = newPrintRow.sno;
 	newPrintRow.resetFeilds(inputMap);
+	newRow.addEventListener('click', () => setFieldsWithSelectedRow(newPrintRow.index));
 	printColumns.columns.map(columnInfo => getNewCell(columnInfo))
 		.forEach(cell => newRow.appendChild(cell));
 	

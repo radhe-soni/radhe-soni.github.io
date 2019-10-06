@@ -56,32 +56,35 @@ class PrintRows {
     generateHeaderCellId(itemId) {
         return itemId + '_cell_' + 0;
     }
+    grandTotal(){
+        return this.rows.map(row => parseFloat(row.total)).reduce((x, y) => x + y).toFixed(2);
+    }
 }
 class PrintRow {
     constructor(index) {
         this.itemName = 'Gold Fine',
-            this.rate = 0,
+            this.rate = '',
             this.rateUnit = "tola",
-            this.weight = 0,
+            this.weight = '',
             this.weightUnit = "gram",
             this.purity = 100,
-            this.pieces = 0,
-            this.wastage = 0,
+            this.pieces = '',
+            this.wastage = '',
             this.wastageUnit = "milligram",
-            this.labour = 0,
-            this.sumTotal = 0,
+            this.labour = '',
+            this.sumTotal = '',
             this.labourUnit = "kilo",
-            this.sno = index
+            this.sno = index+1
     }
     get total() {
         this.sumTotal = (this.rate / unitMultiplier[this.rateUnit]) *
             ((unitMultiplier[this.weightUnit] * this.weight * this.purity / 100)
                 + (this.pieces * this.wastage * unitMultiplier[this.wastageUnit]))
             + (this.labour / unitMultiplier[this.labourUnit]);
-        return this.sumTotal;
+        return this.sumTotal.toFixed(2);
     }
     get index() {
-        return this.sno - 1;
+        return this.sno-1;
     }
     resetFeilds(inputMap) {
         Object.entries(this).forEach(entry => {

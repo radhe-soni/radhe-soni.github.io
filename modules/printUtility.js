@@ -9,9 +9,9 @@ function getHeaderRow() {
 	row.classList.add('resp-table-header');
 	return row;
 }
-function getFooterRow() {
+function getGrandTotalRow() {
 	const group = document.createElement('div');
-	group.classList.add('table-row-group');
+	group.classList.add('table');
 	let row = document.createElement('div');
 	row.classList.add('resp-table-row');
 	group.appendChild(row);
@@ -29,6 +29,7 @@ function getFooterRow() {
 function createTableRow() {
 	const row = document.createElement('div');
 	row.classList.add('resp-table-row');
+	
 	return row;
 }
 function getHeaderCell(columnInfo) {
@@ -67,7 +68,8 @@ function updateSubTotal() {
 	cell.innerHTML = printRows.getCurrentRow().total;
 }
 function updateGrandTotal(){
-
+	const grandTotal = document.getElementById('grandTotal');
+	grandTotal.innerText = printRows.grandTotal();
 }
 function createNewPrintItem(itemId) {
 	const column = printColumns[itemId].column;
