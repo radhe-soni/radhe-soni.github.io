@@ -13,12 +13,14 @@ const getprintItemColumnSequence = () => {
     }
 }
 const printItemColumnSequence = getprintItemColumnSequence();
+const printColumnMap = {};
 class PrintColumn {
     constructor(name, className, itemId) {
         this.name = name,
             this.className = className,
             this.itemId = itemId,
-            this.sequence = printItemColumnSequence[itemId]
+            this.sequence = printItemColumnSequence[itemId];
+        printColumnMap[itemId] = this;
     }
 }
 
@@ -43,13 +45,16 @@ class PrintRows {
         this.currentRow = 1;
     }
     generateCellId(itemId) {
-        return itemId + 'cell' + this.rows.length;
+        return itemId + '_cell_' + this.rows.length;
     }
     getCurrentRow() {
         return this.rows[this.currentRow - 1];
     }
     getCurrentCellId(itemId) {
-        return itemId + 'cell' + this.currentRow;
+        return itemId + '_cell_' + this.currentRow;
+    }
+    generateHeaderCellId(itemId) {
+        return itemId + '_cell_' + 0;
     }
 }
 class PrintRow {
@@ -89,11 +94,22 @@ class PrintRow {
         });
 
     }
+    getUnitSymbol(itemId) {
+        return unitSymbol[this[itemId]];
+    }
+    
 }
 const unitMultiplier = {
     gram: 0.001,
     tola: 0.01,
     milligram: 0.000001,
     kilo: 1
+}
+
+const unitSymbol = {
+    gram: 'g',
+    tola: '10g',
+    milligram: 'mg',
+    kilo: 'kg'
 }
 

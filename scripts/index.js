@@ -3,16 +3,21 @@ const printRows = new PrintRows();
 const printColumns = new PrintColumns();
 function loader() {
 	const printable = document.getElementById('printable');
-	// new PrintRow(printRows.rows.length + 1)
 	printRows.rows.push(new PrintRow(printRows.rows.length + 1));
+	
 	const headerRow = getHeaderRow();
 	printable.appendChild(headerRow);
 	printColumns.columns.map(columnInfo => getHeaderCell(columnInfo))
 		.forEach(cell => headerRow.appendChild(cell));
-	const firstRow = createTableRow();
-	printable.appendChild(firstRow);
+	
+		const firstRow = createTableRow();
 	printColumns.columns.map(columnInfo => getNewCell(columnInfo))
 		.forEach(cell => firstRow.appendChild(cell));
+	const dataGroupRow = getDataGroup('printable');
+	printable.appendChild(dataGroupRow);
+	dataGroupRow.appendChild(firstRow);
+	const footerRow = getFooterRow();
+	printable.appendChild(footerRow);
 	addListeners();
 }
 function addListeners() {
@@ -28,9 +33,14 @@ function addListeners() {
 const cells = {}
 
 function updateWeightUnits() {
+	
 	const unitSelection = this;
 	const itemId = unitSelection.id;
+	const header = document.getElementById(printRows.generateHeaderCellId(itemId.replace('Unit', '')));
 	printRows.getCurrentRow()[itemId] = unitSelection.value;
+	header.innerHTML = getColumnName(itemId, printColumnMap[itemId.replace('Unit', '')].name);
+	
+	
 	updateSubTotal();
 }
 function updatePrintObj() {
@@ -41,18 +51,36 @@ function updatePrintObj() {
 	updatePrintItem(itemId);
 }
 function printTheTable() {
+	const billInfo = document.getElementById('billInfo');
+	const customerCopy = billInfo.cloneNode(true);
+	const billInfoParent = billInfo.parentElement;
+	const original = billInfoParent.innerHTML;
+	
+	const sellerDiv = document.createElement('div');
+	sellerDiv.classList.add('row');
+	sellerDiv.innerText='Seller Copy';
+	billInfo.insertBefore(sellerDiv, billInfo.firstChild);
+
+	const customerDiv = document.createElement('div');
+	customerDiv.classList.add('row');
+	customerDiv.innerText='Customer Copy';
+	customerCopy.insertBefore(customerDiv, customerCopy.firstChild);
+	billInfoParent.appendChild(customerCopy);
 	window.print();
+	setTimeout(function(){ billInfoParent.innerHTML = original; }, 1500);
+	
 }
 function addNewItem() {
-	const printable = document.getElementById('printable');
+	const printable = document.getElementById('printableDataGroup');
 	const newRow = createTableRow();
-	printable.appendChild(newRow);
+	printable.insertBefore(newRow, printable.lastChild);
 	const newPrintRow = new PrintRow(printRows.rows.length + 1);
 	printRows.rows.push(newPrintRow);
 	printRows.currentRow = newPrintRow.index;
 	newPrintRow.resetFeilds(inputMap);
 	printColumns.columns.map(columnInfo => getNewCell(columnInfo))
 		.forEach(cell => newRow.appendChild(cell));
+	
 }
 function getFormattedDate(date) {
 	return date.getFullYear()
@@ -61,19 +89,23 @@ function getFormattedDate(date) {
 		+ "-"
 		+ ("0" + date.getDate()).slice(-2);
 }
-var calculatables = document.getElementsByClassName('calculatable');
+var calculatables = document.getElementsByTagName('input');
 var inputMap = getInputMap();
 function getInputMap() {
 	let inputMap = {};
 	for (var i = 0; i < calculatables.length; i++) {
 		inputMap[calculatables[i].id] = calculatables[i];
-		inputMap[calculatables[i].id+'_next'] = calculatables[i + 1 < calculatables.length ? i + 1 : 0];
+		inputMap[calculatables[i].id + '_next'] = calculatables[i + 1 < calculatables.length ? i + 1 : 0];
 	}
 	return inputMap;
 }
-$('.calculatable').keypress(function (e) {
+$('input').keypress(e => gotoNextField(e));
+function gotoNextField(e){
 	if (e.which == 13) {
-		$(this).blur();
-		inputMap[this.id+'_next'].focus();
+		$(e.target).blur();
+		let nextElement = inputMap[e.target.id + '_next'];
+		if(nextElement){
+			nextElement.focus();
+		}
 	}
-});
+}

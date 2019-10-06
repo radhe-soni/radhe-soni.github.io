@@ -1,6 +1,29 @@
+function getDataGroup(parentId) {
+	const row = document.createElement('div');
+	row.classList.add('table-row-group');
+	row.id = parentId+'DataGroup';
+	return row;
+}
 function getHeaderRow() {
 	const row = document.createElement('div');
 	row.classList.add('resp-table-header');
+	return row;
+}
+function getFooterRow() {
+	const group = document.createElement('div');
+	group.classList.add('table-row-group');
+	let row = document.createElement('div');
+	row.classList.add('resp-table-row');
+	group.appendChild(row);
+	let cell = document.createElement('div');
+	cell.classList.add('table-body-cell');
+	cell.innerText = "Grand Total";
+	row.appendChild(cell);
+	cell = document.createElement('div');
+	cell.classList.add('table-body-cell');
+	cell.id='grandTotal';
+	cell.innerText=0;
+	row.appendChild(cell);
 	return row;
 }
 function createTableRow() {
@@ -10,9 +33,18 @@ function createTableRow() {
 }
 function getHeaderCell(columnInfo) {
 	const headerCell = document.createElement('div');
-	headerCell.innerHTML = columnInfo.name;
+	const columnName = getColumnName(columnInfo.itemId+'Unit', columnInfo.name);
+	headerCell.innerHTML = columnName;
+	headerCell.id = printRows.generateHeaderCellId(columnInfo.itemId);
 	headerCell.classList.add('table-header-cell');
 	return headerCell;
+}
+function getColumnName(itemId, name){
+	let unitSymbol = `(${printRows.rows[0].getUnitSymbol([itemId])})`;
+	if(unitSymbol == '(undefined)'){
+		unitSymbol='';
+	}
+	return `${name} ${unitSymbol}`;
 }
 function getNewCell(columnInfo) {
 	const cell = document.createElement('div');
@@ -27,11 +59,15 @@ function updatePrintItem(itemId) {
 	let cell = cells[cellId];
 	cell.innerHTML = printRows.getCurrentRow()[itemId];
 	updateSubTotal();
+	updateGrandTotal();
 }
 function updateSubTotal() {
-	let cellId = 'totalcell' + printRows.currentRow;
+	let cellId = printRows.getCurrentCellId('total');
 	let cell = cells[cellId];
 	cell.innerHTML = printRows.getCurrentRow().total;
+}
+function updateGrandTotal(){
+
 }
 function createNewPrintItem(itemId) {
 	const column = printColumns[itemId].column;

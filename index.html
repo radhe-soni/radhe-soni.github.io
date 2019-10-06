@@ -2,54 +2,61 @@
 <html>
 
 <head>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	 crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-	 crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	 crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	 crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="style/index.css" />
 </head>
 
 <body onload="loader()">
 	<div class="container">
-		<div class="row non-printable" style="margin-top: 2%; background-color:azure">
-			<div class="form-group offset-sm-11">
-				<button class="btn btn-primary" onclick="printTheTable();">print</button>
+		<div class="row non-printable" style="margin-top: 5%;">
+			<div class="form-group offset-sm-9">
+				<button class="printButton btn btn-primary" onclick="printTheTable();">Print</button>
 			</div>
 			<div class="col-sm-12">
-				<div class="row">
-					<div class="col-sm-3">
-						<label>Customer /Shop Name</label>
-					</div>
-					<div class="col-sm-4">
-						<input class="form-control" id="customerName" type="text" />
-					</div>
-					<div class="col-sm-2">
-						<label>Voucher No.</label>
-					</div>
-					<div class="col-sm-3">
-						<input class="form-control" id="voucherNo" type="text" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-3">
-						<label>Cust /Shop Contact</label>
-					</div>
-					<div class="col-sm-4">
-						<input class="form-control" id="customerContact" type="text" />
-					</div>
-					<div class="col-sm-2">
-						<label>Date</label>
-					</div>
-					<div class="col-sm-3">
-						<input class="form-control" id="billDate" type="date" />
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-3">
+							<span class="badge badge-primary"><label>Customer /Shop Name</label></span>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control" id="customerName" type="text" />
+						</div>
+						<div class="col-sm-2">
+							<span class="badge badge-primary"><label>Voucher No.</label></span>
+						</div>
+						<div class="col-sm-3">
+							<input class="form-control" id="voucherNo" type="text" />
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<label>Item Name</label>
+					<div class="row">
+						<div class="col-sm-3">
+							<span class="badge badge-primary"><label>Cust /Shop Contact</label></span>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control" id="customerContact" type="text" />
+						</div>
+						<div class="col-sm-2">
+							<span class="badge badge-primary"><label>Date</label></span>
+						</div>
+						<div class="col-sm-3">
+							<input class="form-control" id="billDate" type="date" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="badge badge-primary"><label>Item Name</label></span>
 					<div class="row">
 						<div class="col-sm-6">
 							<input class="calculatable form-control" id="itemName" type="text" value="Gold Fine" />
@@ -57,7 +64,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="rate">Rate</label>
+					<span class="badge badge-primary" for="rate"><label>Rate</label></span>
 					<div class="row">
 						<div class="col-sm-6">
 							<input class="calculatable form-control" id="rate" type="number" />
@@ -73,7 +80,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label>Weight</label>
+					<span class="badge badge-primary"><label>Weight</label></span>
 					<div class="row">
 						<div class="col-sm-6">
 							<input class="calculatable form-control" id="weight" type="number" />
@@ -90,11 +97,11 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-sm-6">
-							<label>Purity(%)</label>
+							<span class="badge badge-primary"><label>Purity(%)</label></span>
 							<input class="calculatable form-control" id="purity" type="number" value="100" />
 						</div>
 						<div class="col-sm-6">
-							<label>Pieces</label>
+							<span class="badge badge-primary"><label>Pieces</label></span>
 							<input class="calculatable form-control" id="pieces" type="number" />
 						</div>
 					</div>
@@ -102,10 +109,10 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-sm-6">
-							<label>Wastage</label>
+							<span class="badge badge-primary"><label>Wastage</label></span>
 						</div>
 						<div class="col-sm-6">
-							<label>Labour</label>
+							<span class="badge badge-primary"><label>Labour</label></span>
 						</div>
 					</div>
 					<div class="row">
@@ -139,12 +146,13 @@
 				</div>
 
 				<div class="offset-md-10">
-					<button class="btn btn-primary" onclick="addNewItem();">Add New Item</button>
+					<button class="btn btn-primary" style="margin-bottom:0.5em" onclick="addNewItem();">Add New
+						Item</button>
 				</div>
 			</div>
 		</div>
 		<div class="row" style="background-color:rgb(238, 248, 245);margin-bottom: 50px;">
-			<div class="col-sm-12 printable bill-info">
+			<div class="col-sm-12 printable bill-info" id="billInfo">
 				<div class='table'>
 					<div class="resp-table-header">
 						<div class="table-header-cell">Radhe Kishan Jwellers</div>
@@ -165,16 +173,35 @@
 							</div>
 						</div>
 					</div>
+					<div class="resp-table-row">
+						<div class="table-body-cell">
+							<div class="table" id="printable"></div>
+						</div>
+					</div>
+					<div class="resp-table-footer">
+						<div class="table-footer-cell">
+							<div class='col-sm-10'>
+								Proprieter:- Gokul Prasad Soni
+							</div>
+							<div class='col-sm-10'>
+								Contact:- 9425841282
+							</div>
+							<div class='col-sm-10'>
+								<div>Address:- c/o Radhe Kishan Jwellers, Sarafa Bazaar</div>
+								<div> Kotwali Road Sidhi (M.P.)</div>
+							</div>
+							<div class='col-sm-10'>
+								Pincode:- 486661
+							</div>
+
+						</div>
+					</div>
 				</div>
-				<div class="table" id="printable"></div>
+
+				<!-- <div class="table" id="footer"></div> -->
 			</div>
 		</div>
 	</div>
-	<div class="row non-printable">
-
-	</div>
-	</div>
-
 	<script src="./modules/printColumn.js"></script>
 	<script src="./modules/printUtility.js"></script>
 	<script src="./scripts/index.js"></script>
