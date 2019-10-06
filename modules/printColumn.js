@@ -13,12 +13,14 @@ const getprintItemColumnSequence = () => {
     }
 }
 const printItemColumnSequence = getprintItemColumnSequence();
+const printColumnMap = {};
 class PrintColumn {
     constructor(name, className, itemId) {
         this.name = name,
             this.className = className,
             this.itemId = itemId,
-            this.sequence = printItemColumnSequence[itemId]
+            this.sequence = printItemColumnSequence[itemId];
+        printColumnMap[itemId] = this;
     }
 }
 
@@ -43,46 +45,74 @@ class PrintRows {
         this.currentRow = 1;
     }
     generateCellId(itemId) {
-        return itemId + 'cell' + this.rows.length;
+        return itemId + '_cell_' + this.rows.length;
     }
     getCurrentRow() {
         return this.rows[this.currentRow - 1];
     }
     getCurrentCellId(itemId) {
-        return itemId + 'cell' + this.currentRow;
+        return itemId + '_cell_' + this.currentRow;
+    }
+    generateHeaderCellId(itemId) {
+        return itemId + '_cell_' + 0;
+    }
+    grandTotal(){
+        return this.rows.map(row => parseFloat(row.total)).reduce((x, y) => x + y).toFixed(2);
     }
 }
 class PrintRow {
     constructor(index) {
         this.itemName = 'Gold Fine',
-        this.rate = 0,
-        this.rateUnit = "tola",
-        this.weight = 0,
-        this.weightUnit = "gram",
-        this.purity = 100,
-        this.pieces = 0,
-        this.wastage = 0,
-        this.wastageUnit = "milligram",
-        this.labour = 0,
-        this.sumTotal = 0,
-        this.labourUnit = "kilo",
-        this.sno = index
+            this.rate = '',
+            this.rateUnit = "tola",
+            this.weight = '',
+            this.weightUnit = "gram",
+            this.purity = 100,
+            this.pieces = '',
+            this.wastage = '',
+            this.wastageUnit = "milligram",
+            this.labour = '',
+            this.sumTotal = '',
+            this.labourUnit = "kilo",
+            this.sno = index+1
     }
     get total() {
         this.sumTotal = (this.rate / unitMultiplier[this.rateUnit]) *
             ((unitMultiplier[this.weightUnit] * this.weight * this.purity / 100)
                 + (this.pieces * this.wastage * unitMultiplier[this.wastageUnit]))
             + (this.labour / unitMultiplier[this.labourUnit]);
-        return this.sumTotal;
+        return this.sumTotal.toFixed(2);
     }
     get index() {
-        return this.sno - 1;
+        return this.sno-1;
     }
+    resetFeilds(inputMap) {
+        Object.entries(this).forEach(entry => {
+            const itemId = entry[0];
+            const itemValue = entry[1];
+            const itemField = inputMap[itemId];
+            if (itemField) {
+                itemField.value = itemValue;
+            }
+        });
+
+    }
+    getUnitSymbol(itemId) {
+        return unitSymbol[this[itemId]];
+    }
+    
 }
 const unitMultiplier = {
     gram: 0.001,
     tola: 0.01,
     milligram: 0.000001,
     kilo: 1
+}
+
+const unitSymbol = {
+    gram: 'g',
+    tola: '10g',
+    milligram: 'mg',
+    kilo: 'kg'
 }
 

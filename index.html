@@ -15,41 +15,45 @@
 
 <body onload="loader()">
 	<div class="container">
-		<div class="row non-printable" style="margin-top: 2%; background-color:azure">
-			<div class="form-group offset-sm-11">
-				<button class="btn btn-primary" onclick="printTheTable();">print</button>
+		<div class="row non-printable" style="margin-top: 5%;">
+			<div class="form-group offset-sm-9">
+				<button class="printButton btn btn-primary" onclick="printTheTable();">Print</button>
 			</div>
 			<div class="col-sm-12">
-				<div class="row">
-					<div class="col-sm-3">
-						<label>Customer /Shop Name</label>
-					</div>
-					<div class="col-sm-4">
-						<input class="form-control" id="customerName" type="text" />
-					</div>
-					<div class="col-sm-2">
-						<label>Voucher No.</label>
-					</div>
-					<div class="col-sm-3">
-						<input class="form-control" id="voucherNo" type="text" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-3">
-						<label>Cust /Shop Contact</label>
-					</div>
-					<div class="col-sm-4">
-						<input class="form-control" id="customerContact" type="text" />
-					</div>
-					<div class="col-sm-2">
-						<label>Date</label>
-					</div>
-					<div class="col-sm-3">
-						<input class="form-control" id="billDate" type="date" />
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-3">
+							<span class="badge badge-primary"><label>Customer /Shop Name</label></span>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control print-header-input" id="customerName" type="text" oninput="populatePrintHeader(this);"/>
+						</div>
+						<div class="col-sm-2">
+							<span class="badge badge-primary"><label>Voucher No.</label></span>
+						</div>
+						<div class="col-sm-3">
+							<input class="form-control print-header-input" id="voucherNo" type="text" oninput="populatePrintHeader(this);"/>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<label>Item Name</label>
+					<div class="row">
+						<div class="col-sm-3">
+							<span class="badge badge-primary"><label>Cust /Shop Contact</label></span>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control print-header-input" id="customerContact" type="text" oninput="populatePrintHeader(this);"/>
+						</div>
+						<div class="col-sm-2">
+							<span class="badge badge-primary"><label>Date</label></span>
+						</div>
+						<div class="col-sm-3">
+							<input class="form-control print-header-input" id="billDate" type="date" oninput="populatePrintHeader(this);"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="badge badge-primary"><label>Item Name</label></span>
 					<div class="row">
 						<div class="col-sm-6">
 							<input class="calculatable form-control" id="itemName" type="text" value="Gold Fine" />
@@ -57,7 +61,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="rate">Rate</label>
+					<span class="badge badge-primary" for="rate"><label>Rate</label></span>
 					<div class="row">
 						<div class="col-sm-6">
 							<input class="calculatable form-control" id="rate" type="number" />
@@ -73,7 +77,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label>Weight</label>
+					<span class="badge badge-primary"><label>Weight</label></span>
 					<div class="row">
 						<div class="col-sm-6">
 							<input class="calculatable form-control" id="weight" type="number" />
@@ -90,11 +94,11 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-sm-6">
-							<label>Purity(%)</label>
+							<span class="badge badge-primary"><label>Purity(%)</label></span>
 							<input class="calculatable form-control" id="purity" type="number" value="100" />
 						</div>
 						<div class="col-sm-6">
-							<label>Pieces</label>
+							<span class="badge badge-primary"><label>Pieces</label></span>
 							<input class="calculatable form-control" id="pieces" type="number" />
 						</div>
 					</div>
@@ -102,10 +106,10 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-sm-6">
-							<label>Wastage</label>
+							<span class="badge badge-primary"><label>Wastage</label></span>
 						</div>
 						<div class="col-sm-6">
-							<label>Labour</label>
+							<span class="badge badge-primary"><label>Labour</label></span>
 						</div>
 					</div>
 					<div class="row">
@@ -139,13 +143,14 @@
 				</div>
 
 				<div class="offset-md-10">
-					<button class="btn btn-primary" onclick="addNewItem();">Add New Item</button>
+					<button class="btn btn-primary" style="margin-bottom:0.5em" onclick="addNewItem();">Add New
+						Item</button>
 				</div>
 			</div>
 		</div>
 		<div class="row" style="background-color:rgb(238, 248, 245);margin-bottom: 50px;">
-			<div class="col-sm-12 printable bill-info">
-				<div class='table'>
+			<div class="col-sm-12 printable bill-info" id="billInfo">
+				<div class='table' id="billInfoTable">
 					<div class="resp-table-header">
 						<div class="table-header-cell">Radhe Kishan Jwellers</div>
 					</div>
@@ -153,28 +158,57 @@
 						<div class="table-body-cell">
 							<div class="row">
 								<div class='col-sm-3' style="min-width:80px">Customer /Shop Name:-</div>
-								<div class='col-sm-3'>R K Jwellers</div>
-								<div class='offset-sm-2'>Voucher No:-</div>
-								<div class='col-sm-2'>239832</div>
+								<div class='col-sm-3' id="customerNamePrint"></div>
+								<div class='offset-sm-2' >Voucher No:-</div>
+								<div class='col-sm-2' id="voucherNoPrint"></div>
 							</div>
 							<div class="row">
 								<div class='col-sm-3' style="min-width:80px">Customer /Shop Contact:-</div>
-								<div class='col-sm-3'>8982573533</div>
+								<div class='col-sm-3' id="customerContactPrint"></div>
 								<div class='offset-sm-2'>Date:-</div>
-								<div class='col-sm-3'>23-Oct-2019</div>
+								<div class='col-sm-3' id="billDatePrint"></div>
+							</div>
+						</div>
+					</div>
+					<div class="resp-table-row">
+						<div class="table-body-cell">
+							<div class="table" id="printable"></div>
+						</div>
+					</div>
+					<div class="resp-table-footer">
+						<div class="table-footer-cell">
+							<div class="col-12" style="border-bottom:1px solid black;font-weight: 800;font-size:1.25em;text-align: left;">
+								Grand Total<span class='offset-sm-10' id="grandTotal">0.00</span>
+							</div>
+							<div class="row">
+								<div class='col-sm-9'>
+									Proprieter:- Gokul Prasad Soni
+								</div>
+								<div class='col-sm-9'>
+									Contact:- 9425841282
+								</div>
+								<div class='col-sm-9'>
+									<div>Address:- c/o Radhe Kishan Jwellers, Sarafa Bazaar</div>
+									<div> Kotwali Road Sidhi (M.P.)</div>
+								</div>
+								<div class='col-sm-3'  style="text-align: center">
+										------------------
+									</div>
+								<div class='col-sm-9'>
+									Pincode:- 486661
+								</div>
+								<div class='col-sm-3' style="text-align: center">
+									Signature
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="table" id="printable"></div>
+
+				<!-- <div class="table" id="footer"></div> -->
 			</div>
 		</div>
 	</div>
-	<div class="row non-printable">
-
-	</div>
-	</div>
-
 	<script src="./modules/printColumn.js"></script>
 	<script src="./modules/printUtility.js"></script>
 	<script src="./scripts/index.js"></script>
