@@ -9,6 +9,11 @@ function getHeaderRow() {
 	row.classList.add('resp-table-header');
 	return row;
 }
+function getFooterRow() {
+	const row = document.createElement('div');
+	row.classList.add('resp-table-footer');
+	return row;
+}
 function getGrandTotalRow() {
 	const group = document.createElement('div');
 	group.classList.add('table');
@@ -38,7 +43,7 @@ function createTableRow(index) {
 }
 function getHeaderCell(columnInfo) {
 	const headerCell = document.createElement('div');
-	const columnName = getColumnName(columnInfo.itemId+'Unit', columnInfo.name);
+	const columnName = columnInfo.name;
 	headerCell.innerHTML = columnName;
 	headerCell.id = printRows.generateHeaderCellId(columnInfo.itemId);
 	headerCell.classList.add('table-header-cell');
@@ -62,21 +67,44 @@ function getNewCell(columnInfo) {
 function updatePrintItem(itemId) {
 	let cellId = printRows.getCurrentCellId(itemId);
 	let cell = cells[cellId];
-	cell.innerHTML = printRows.getCurrentRow()[itemId];
+	cell.innerHTML = printRows.getCurrentRow()[itemId] + getUnitSymbol(itemId);
 	updateSubTotal();
 	updateGrandTotal();
+}
+function getUnitSymbol(itemId){
+	let unitSymbolString = '';
+	const unitSymbol = printRows.getCurrentRow().getUnitSymbol(itemId);
+	if(unitSymbol){
+		const unitSymbolSpan = document.createElement('span');
+		unitSymbolSpan.classList.add('unit-symbol');
+		unitSymbolSpan.innerText = `(${unitSymbol})`;
+		unitSymbolString = unitSymbolSpan.outerHTML;
+	}
+	return unitSymbolString;
+}
+function updateLabourCharge() {
+	let cellId = printRows.getCurrentCellId('labourCharge');
+	let cell = cells[cellId];
+	cell.innerHTML = printRows.getCurrentRow().labourCharge;
 }
 function updateSubTotal() {
 	let cellId = printRows.getCurrentCellId('total');
 	let cell = cells[cellId];
 	cell.innerHTML = printRows.getCurrentRow().total;
+	updateLabourCharge();
 }
 function updateGrandTotal(){
-	const grandTotalValue = printRows.grandTotal();
+	const grandTotalValue = printRows.grandTotal;
 	const grandTotal = document.getElementById('grandTotal');
 	grandTotal.innerText = grandTotalValue;
 	const grandTotalFloating = document.getElementById('grandTotalFloating');
 	grandTotalFloating.innerText = grandTotalValue;
+	const weightTotal = document.getElementById('weightTotal');
+	weightTotal.innerText = printRows.weightTotal + '(kg)';
+	const fineWeightTotal = document.getElementById('fineWeightTotal');
+	fineWeightTotal.innerText = printRows.fineWeightTotal + '(kg)';
+	const labourChargeTotal = document.getElementById('labourChargeTotal');
+	labourChargeTotal.innerText = printRows.labourChargeTotal;
 }
 function createNewPrintItem(itemId) {
 	const column = printColumns[itemId].column;

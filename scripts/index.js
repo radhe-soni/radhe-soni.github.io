@@ -9,12 +9,15 @@ function loader() {
 	printable.appendChild(headerRow);
 	printColumns.columns.map(columnInfo => getHeaderCell(columnInfo))
 		.forEach(cell => headerRow.appendChild(cell));
+	
 	const firstRow = createTableRow(0);
 	printColumns.columns.map(columnInfo => getNewCell(columnInfo))
 		.forEach(cell => firstRow.appendChild(cell));
+	
 	const dataGroupRow = getDataGroup('printable');
 	printable.appendChild(dataGroupRow);
 	dataGroupRow.appendChild(firstRow);
+	
 	addListeners();
 }
 function setFieldsWithSelectedRow(rowIndex){
@@ -44,6 +47,7 @@ function updateWeightUnits() {
 	printRows.getCurrentRow()[itemId] = unitSelection.value;
 	header.innerHTML = getColumnName(itemId, printColumnMap[itemId.replace('Unit', '')].name);
 	updateSubTotal();
+	updateGrandTotal()
 }
 function updatePrintObj() {
 	const calculatable = this;

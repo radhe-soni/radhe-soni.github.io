@@ -144,12 +144,13 @@
 						<div class="col-sm-6">
 							<div class="row">
 								<div class="col-sm-5">
-									<input class="calculatable form-control" id="labour" type="number" />
+									<input class="calculatable form-control" id="labourRate" type="number" />
 								</div>
 								<div class="col-sm-7">
-									<select class="form-control weight-unit" id="labourUnit">
+									<select class="form-control weight-unit" id="labourRateUnit">
 										<option value="gram">gram</option>
 										<option value="kilo" selected="selected">kilo</option>
+										<option value="pieces">pieces</option>
 									</select>
 								</div>
 							</div>
@@ -188,14 +189,26 @@
 					</div>
 					<div class="resp-table-row">
 						<div class="table-body-cell">
-							<div class="table" id="printable"></div>
+							<div class="table" id="printable">
+								<div class="resp-table-footer">
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell">Grand Total</div>
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell" id="weightTotal">0</div>
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell" id="fineWeightTotal">0</div>
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell" id="labourChargeTotal">0</div>
+									<div class="table-body-cell" id="grandTotal">0.00</div>
+								</div>
+							</div>
 						</div>
 					</div>
+
 					<div class="resp-table-footer">
 						<div class="table-footer-cell">
-							<div class="col-12" style="border-bottom:1px solid black;font-weight: 800;font-size:1.25em;text-align: left;">
-								Grand Total<span class='offset-sm-10' id="grandTotal">0.00</span>
-							</div>
 							<div class="row">
 								<div class='col-sm-9'>
 									Proprieter:- Gokul Prasad Soni
