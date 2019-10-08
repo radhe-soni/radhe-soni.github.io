@@ -9,9 +9,7 @@ function loader() {
 	printable.appendChild(headerRow);
 	printColumns.columns.map(columnInfo => getHeaderCell(columnInfo))
 		.forEach(cell => headerRow.appendChild(cell));
-	
-	const firstRow = createTableRow();
-	firstRow.addEventListener('click', () => setFieldsWithSelectedRow(0));
+	const firstRow = createTableRow(0);
 	printColumns.columns.map(columnInfo => getNewCell(columnInfo))
 		.forEach(cell => firstRow.appendChild(cell));
 	const dataGroupRow = getDataGroup('printable');
@@ -83,14 +81,13 @@ function printTheTable() {
 	
 }
 function addNewItem() {
-	const printable = document.getElementById('printableDataGroup');
-	const newRow = createTableRow();
-	printable.appendChild(newRow);
 	const newPrintRow = new PrintRow(printRows.rows.length);
 	printRows.rows.push(newPrintRow);
 	printRows.currentRow = newPrintRow.sno;
 	newPrintRow.resetFeilds(inputMap);
-	newRow.addEventListener('click', () => setFieldsWithSelectedRow(newPrintRow.index));
+	const printable = document.getElementById('printableDataGroup');
+	const newRow = createTableRow(newPrintRow.index);
+	printable.appendChild(newRow);
 	printColumns.columns.map(columnInfo => getNewCell(columnInfo))
 		.forEach(cell => newRow.appendChild(cell));
 	
