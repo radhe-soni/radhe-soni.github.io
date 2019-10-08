@@ -52,8 +52,11 @@ margin-top:5px;
 .resp-table-row{
   display: table-row;
 }
+.data-table-row:hover{
+  background-color: #CCC;
+}
 .table-row-group {
-  display: table-row-group; 
+  display: table-row-group;
 }
 .table-body-cell{
   display: table-cell;
@@ -76,6 +79,23 @@ margin-top:5px;
   caption-side: left; 
   display: table-caption; 
   border: 1px solid black;
+}
+.stiky-note{
+    z-index: 1;
+    position: fixed;
+    opacity: 0.6;
+    float:right;
+    display:block;
+    min-width: 6rem;
+    min-height:4rem;
+    text-align: center;
+}
+.bill-container {
+  z-index: 10;
+  background-color:#CCDDEE;
+  margin-bottom: 50px;
+  margin-top:2em;
+  display:block;
 }
 @media (prefers-color-scheme: dark) {
   label{

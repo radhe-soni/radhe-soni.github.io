@@ -11,70 +11,77 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	 crossorigin="anonymous">
 	<link rel="stylesheet" href="style/index.css" />
+	<meta name="viewport" content="minimum-scale=0.35, user-scalable=no">
 </head>
 
 <body onload="loader()">
 	<div class="container">
-		<div class="row non-printable" style="margin-top: 5%;">
-			<div class="form-group offset-sm-9">
+
+		<div class="row card non-printable" style="margin-top: 5%;">
+			<div class="form-group col-sm-6">
 				<button class="printButton btn btn-primary" onclick="printTheTable();">Print</button>
 			</div>
-			<div class="col-sm-12">
-				<div class="form-group">
+
+			<div class="col-sm-12 card-body rounded">
+				<div class="offset-sm-7 bg-success stiky-note">
+					<div class='col-sm-12'>GRAND TOTAL</div>
+					<div class='badge badge-dark' id="grandTotalFloating">0</div>
+				</div>
+				<div class="form-group col-sm-8">
 					<div class="row">
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<span class="badge badge-dark"><label>Customer /Shop Name</label></span>
 						</div>
-						<div class="col-sm-5">
-							<input class="form-control print-header-input" id="customerName" type="text" oninput="populatePrintHeader(this);"/>
+						<div class="col-sm-6">
+							<input class="form-control print-header-input" id="customerName" type="text" oninput="populatePrintHeader(this);" />
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group col-sm-8">
 					<div class="row">
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<span class="badge badge-dark"><label>Cust /Shop Contact</label></span>
 						</div>
-						<div class="col-sm-5">
-							<input class="form-control print-header-input" id="customerContact" type="text" oninput="populatePrintHeader(this);"/>
+						<div class="col-sm-6">
+							<input class="form-control print-header-input" id="customerContact" type="text" oninput="populatePrintHeader(this);" />
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group col-sm-8">
 					<div class="row">
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<span class="badge badge-dark"><label>Voucher No.</label></span>
 						</div>
-						<div class="col-sm-4">
-							<input class="form-control print-header-input" id="voucherNo" type="text" oninput="populatePrintHeader(this);"/>
+						<div class="col-sm-6">
+							<input class="form-control print-header-input" id="voucherNo" type="text" oninput="populatePrintHeader(this);" />
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group col-sm-8">
 					<div class="row">
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<span class="badge badge-dark"><label>Date</label></span>
 						</div>
-						<div class="col-sm-5">
-							<input class="form-control print-header-input" id="billDate" type="date" oninput="populatePrintHeader(this);"/>
+						<div class="col-sm-6">
+							<input class="form-control print-header-input" id="billDate" type="date" oninput="populatePrintHeader(this);" />
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group col-sm-8">
 					<span class="badge badge-dark"><label>Item Name</label></span>
 					<div class="row">
-						<div class="col-sm-8">
+						<div class="col-sm-12">
 							<input class="calculatable form-control" id="itemName" type="text" value="Gold Fine" />
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group col-sm-8">
 					<span class="badge badge-dark" for="rate"><label>Rate</label></span>
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<input class="calculatable form-control" id="rate" type="number" />
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<select class="form-control weight-unit" id="rateUnit">
 								<option value="tola" selected="selected">tola</option>
 								<option value="gram">gram</option>
@@ -84,13 +91,13 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group col-sm-8">
 					<span class="badge badge-dark"><label>Weight</label></span>
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<input class="calculatable form-control" id="weight" type="number" />
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<select class="form-control weight-unit" id="weightUnit">
 								<option value="gram" selected="selected">gram</option>
 								<option value="milligram">milligram</option>
@@ -99,29 +106,29 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group col-sm-8">
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<span class="badge badge-dark"><label>Purity(%)</label></span>
 							<input class="calculatable form-control" id="purity" type="number" value="100" />
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<span class="badge badge-dark"><label>Pieces</label></span>
 							<input class="calculatable form-control" id="pieces" type="number" />
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group col-sm-8">
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<span class="badge badge-dark"><label>Wastage</label></span>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<span class="badge badge-dark"><label>Labour</label></span>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<div class="row">
 								<div class="col-sm-5">
 									<input class="calculatable form-control" id="wastage" type="number" />
@@ -134,7 +141,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<div class="row">
 								<div class="col-sm-5">
 									<input class="calculatable form-control" id="labour" type="number" />
@@ -150,13 +157,14 @@
 					</div>
 				</div>
 
-				<div class="offset-md-10">
-					<button class="btn btn-primary" style="margin-bottom:0.5em" onclick="addNewItem();">Add New
-						Item</button>
-				</div>
+			</div>
+			<div class="form-group col-sm-7">
+				<button class="btn btn-primary" onclick="addNewItem();"> + Add New
+					Item</button>
 			</div>
 		</div>
-		<div class="row" style="background-color:rgb(238, 248, 245);margin-bottom: 50px;">
+
+		<div class="row bill-container">
 			<div class="col-sm-12 printable bill-info" id="billInfo">
 				<div class='table' id="billInfoTable">
 					<div class="resp-table-header">
@@ -167,7 +175,7 @@
 							<div class="row">
 								<div class='col-sm-3' style="min-width:80px">Customer /Shop Name:-</div>
 								<div class='col-sm-3' id="customerNamePrint"></div>
-								<div class='offset-sm-2' >Voucher No:-</div>
+								<div class='offset-sm-2'>Voucher No:-</div>
 								<div class='col-sm-2' id="voucherNoPrint"></div>
 							</div>
 							<div class="row">
@@ -199,9 +207,9 @@
 									<div>Address:- c/o Radhe Kishan Jwellers, Sarafa Bazaar</div>
 									<div> Kotwali Road Sidhi (M.P.)</div>
 								</div>
-								<div class='col-sm-3'  style="text-align: center">
-										------------------
-									</div>
+								<div class='col-sm-3' style="text-align: center">
+									------------------
+								</div>
 								<div class='col-sm-9'>
 									Pincode:- 486661
 								</div>
@@ -216,7 +224,11 @@
 				<!-- <div class="table" id="footer"></div> -->
 			</div>
 		</div>
+		<div class="col-sm-6 non-printable">
+			<button class="printButton btn btn-primary" onclick="printTheTable();">Print</button>
+		</div>
 	</div>
+
 	<script src="./modules/printColumn.js"></script>
 	<script src="./modules/printUtility.js"></script>
 	<script src="./scripts/index.js"></script>

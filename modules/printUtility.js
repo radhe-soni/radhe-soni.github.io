@@ -26,10 +26,14 @@ function getGrandTotalRow() {
 	row.appendChild(cell);
 	return row;
 }
-function createTableRow() {
+function createTableRow(index) {
 	const row = document.createElement('div');
 	row.classList.add('resp-table-row');
-	
+	row.classList.add('data-table-row');
+	row.setAttribute("data-toggle", "tooltip");
+	row.setAttribute("data-placement", "top");
+	row.setAttribute("title", "Click on the row to edit !!!");
+	row.addEventListener('click', () => setFieldsWithSelectedRow(index));
 	return row;
 }
 function getHeaderCell(columnInfo) {
@@ -68,8 +72,11 @@ function updateSubTotal() {
 	cell.innerHTML = printRows.getCurrentRow().total;
 }
 function updateGrandTotal(){
+	const grandTotalValue = printRows.grandTotal();
 	const grandTotal = document.getElementById('grandTotal');
-	grandTotal.innerText = printRows.grandTotal();
+	grandTotal.innerText = grandTotalValue;
+	const grandTotalFloating = document.getElementById('grandTotalFloating');
+	grandTotalFloating.innerText = grandTotalValue;
 }
 function createNewPrintItem(itemId) {
 	const column = printColumns[itemId].column;
