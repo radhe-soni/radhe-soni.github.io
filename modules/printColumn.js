@@ -82,7 +82,7 @@ class PrintRow {
         if(this.labourRateUnit == 'pieces'){
             return (this.labourRate * this.pieces);
         }
-        return (this.labourRate / unitMultiplier[this.labourRateUnit]);
+        return (this.labourRate / unitMultiplier[this.labourRateUnit]) * this.getStandardWeight().toFixed(2);
     }
     get total() {
         this.sumTotal = (this.rate / unitMultiplier[this.rateUnit]) *
