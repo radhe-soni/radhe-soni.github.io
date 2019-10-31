@@ -4,23 +4,23 @@ const printColumns = new PrintColumns();
 function loader() {
 	const printable = document.getElementById('printable');
 	printRows.rows.push(new PrintRow(printRows.rows.length));
-	
+
 	const headerRow = getHeaderRow();
 	printable.appendChild(headerRow);
 	printColumns.columns.map(columnInfo => getHeaderCell(columnInfo))
 		.forEach(cell => headerRow.appendChild(cell));
-	
+
 	const firstRow = createTableRow(0);
 	printColumns.columns.map(columnInfo => getNewCell(columnInfo))
 		.forEach(cell => firstRow.appendChild(cell));
-	
+
 	const dataGroupRow = getDataGroup('printable');
 	printable.appendChild(dataGroupRow);
 	dataGroupRow.appendChild(firstRow);
-	
+
 	addListeners();
 }
-function setFieldsWithSelectedRow(rowIndex){
+function setFieldsWithSelectedRow(rowIndex) {
 	const selectedRow = printRows.rows[rowIndex];
 	selectedRow.resetFeilds(inputMap);
 	printRows.currentRow = selectedRow.sno;
@@ -40,7 +40,7 @@ function addListeners() {
 const cells = {}
 
 function updateWeightUnits() {
-	
+
 	const unitSelection = this;
 	const itemId = unitSelection.id;
 	const header = document.getElementById(printRows.generateHeaderCellId(itemId.replace('Unit', '')));
@@ -57,8 +57,8 @@ function updatePrintObj() {
 	updatePrintItem(itemId);
 }
 function populatePrintHeader(element) {
-	const printHeaderId = element.id+'Print';
-	document.getElementById(printHeaderId).innerText=element.value;
+	const printHeaderId = element.id + 'Print';
+	document.getElementById(printHeaderId).innerText = element.value;
 }
 function printTheTable() {
 	const printHeaderInputs = document.getElementsByClassName('print-header-input');
@@ -69,15 +69,15 @@ function printTheTable() {
 	const customerCopy = billInfo.cloneNode(true);
 	const billInfoParent = billInfo.parentElement;
 	const original = billInfoParent.innerHTML;
-	
+
 	const sellerDiv = document.createElement('div');
 	sellerDiv.classList.add('row');
-	sellerDiv.innerText='Seller Copy';
+	sellerDiv.innerText = 'Seller Copy';
 	billInfo.insertBefore(sellerDiv, billInfo.firstChild);
 
 	const customerDiv = document.createElement('div');
 	customerDiv.classList.add('row');
-	customerDiv.innerText='Customer Copy';
+	customerDiv.innerText = 'Customer Copy';
 	customerCopy.insertBefore(customerDiv, customerCopy.firstChild);
 	billInfoParent.appendChild(customerCopy);
 	window.print();
@@ -96,7 +96,7 @@ function addNewItem() {
 	printable.appendChild(newRow);
 	printColumns.columns.map(columnInfo => getNewCell(columnInfo))
 		.forEach(cell => newRow.appendChild(cell));
-	
+
 }
 function getFormattedDate(date) {
 	return date.getFullYear()
@@ -115,42 +115,42 @@ function getInputMap() {
 	}
 	return inputMap;
 }
-$('input').keypress(e => gotoNextField(e));
-function gotoNextField(e){
+[...document.getElementsByTagName('input')].forEach(e => e.addEventListener('keypress', gotoNextField));
+function gotoNextField(e) {
 	if (e.which == 13) {
-		$(e.target).blur();
+		e.target.blur();
 		let nextElement = inputMap[e.target.id + '_next'];
-		if(nextElement){
+		if (nextElement) {
 			nextElement.focus();
 		}
 	}
 }
-(function() {
+(function () {
 
-    var beforePrint = () => {
-       // console.log('Functionality to run before printing.');
-    };
+	var beforePrint = () => {
+		// console.log('Functionality to run before printing.');
+	};
 
-    var afterPrint = fun => {
-		if(typeof fun === "function"){
+	var afterPrint = fun => {
+		if (typeof fun === "function") {
 			fun();
 		}
 	}
-    
 
-    if (window.matchMedia) {
-        var mediaQueryList = window.matchMedia('print');
-        mediaQueryList.addListener( mql =>  {
-            if (mql.matches) {
-                beforePrint();
-            } else {
-                fun => afterPrint(fun);
-            }
-        });
-    }
 
-    window.onbeforeprint = beforePrint;
-    window.onafterprint = afterPrint;
+	if (window.matchMedia) {
+		var mediaQueryList = window.matchMedia('print');
+		mediaQueryList.addListener(mql => {
+			if (mql.matches) {
+				beforePrint();
+			} else {
+				fun => afterPrint(fun);
+			}
+		});
+	}
+
+	window.onbeforeprint = beforePrint;
+	window.onafterprint = afterPrint;
 
 }());
 
