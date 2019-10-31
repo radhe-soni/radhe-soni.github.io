@@ -153,3 +153,9 @@ function gotoNextField(e){
     window.onafterprint = afterPrint;
 
 }());
+
+function deleteCurrentItem(){
+	const currentRowIndex = printRows.getCurrentRow().index;
+	const currentRowElement = document.getElementById('dataRow'+ currentRowIndex);
+	
+}

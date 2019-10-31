@@ -36,6 +36,9 @@ class PrintRows {
     getCurrentRow() {
         return this.rows[this.currentRow - 1];
     }
+    removeCurrentRow() {
+        this.rows[this.currentRow - 1];
+    }
     getCurrentCellId(itemId) {
         return itemId + '_cell_' + this.currentRow;
     }

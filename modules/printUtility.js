@@ -39,6 +39,7 @@ function createTableRow(index) {
 	row.setAttribute("data-placement", "top");
 	row.setAttribute("title", "Click on the row to edit !!!");
 	row.addEventListener('click', () => setFieldsWithSelectedRow(index));
+	row.setAttribute('id', 'dataRow'+ index);
 	return row;
 }
 function getHeaderCell(columnInfo) {

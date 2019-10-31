@@ -100,7 +100,7 @@
 							</div>
 							<div class="col-sm-6">
 								<span class="badge badge-dark"><label>Pieces</label></span>
-								<input class="calculatable form-control" id="pieces" type="number" value="1"/>
+								<input class="calculatable form-control" id="pieces" type="number" value="1" />
 							</div>
 						</div>
 					</div>
@@ -148,15 +148,22 @@
 				<div class="col-sm-3">
 					<div class="sticky-top">
 						<div class="bg-success text-center">
-							<div class='col-sm-12 h4'>GRAND TOTAL<br/><span class='badge badge-dark' id="grandTotalFloating">0</span></div>
-							
+							<div class='col-sm-12 h4'>GRAND TOTAL<br /><span class='badge badge-dark'
+									id="grandTotalFloating">0</span></div>
+
 						</div>
-						<div class="mt-1 text-center">
+						<div class="mt-2 text-center">
 							<button class="btn btn-primary" onclick="printTheTable();">
 								<span class="display-4">Print</span></button>
 						</div>
-						<div class="mt-1 text-center">
-							<button class="btn btn-primary" onclick="addNewItem();"><span class="h4">+ Add New Item</span>
+						<div class="mt-2 text-center">
+							<button class="btn btn-primary" onclick="addNewItem();"><span class="h5">+ Add New
+									Item</span>
+							</button>
+						</div>
+						<div class="mt-2 text-center">
+							<button class="btn btn-primary" onclick="deleteCurrentItem();"><span class="h5">x Remove
+									Selected Item</span>
 							</button>
 						</div>
 					</div>
