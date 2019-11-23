@@ -152,4 +152,14 @@ function gotoNextField(e) {
 	window.onbeforeprint = beforePrint;
 	window.onafterprint = afterPrint;
 
+<<<<<<< HEAD
 }());
+=======
+}());
+
+function deleteCurrentItem(){
+	const currentRowIndex = printRows.getCurrentRow().index;
+	const currentRowElement = document.getElementById('dataRow'+ currentRowIndex);
+	
+}
+>>>>>>> da92f5571f0f9777017676a8a5cf0682976d7b3d
