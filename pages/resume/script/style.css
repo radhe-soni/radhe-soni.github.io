@@ -6,14 +6,7 @@
 	text-align: justify;
 	text-justify: inter-word;
 	font-size: 18px;
-}
-
-.leftContent .description, .midContent {
-	font-family: "Verdana";
-}
-
-.rightContent .description {
-	font-family: "Consolas";
+	font-family: "Times New Roman";
 }
 
 .duration {
@@ -71,3 +64,14 @@
 	background: #ff0020;
 	color: white;
 }
+
+@media print {
+
+	html, body {
+	  height:100%; 
+	  margin: 0 !important; 
+	  padding: 0 !important;
+	  overflow: hidden;
+	}
+  
+  }
