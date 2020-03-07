@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="/style/index.css" />
+	<meta name="viewport" content="minimum-scale=0.2, user-scalable=no">
+</head>
+
+<body onload="loader()">
+	<div class="container">
+
+		<div class="row card non-printable" style="margin-top: 5%;">
+
+			<div class="col-sm-12 row">
+				<div class="col-sm-9 row card-body rounded">
+
+					<div class="form-group col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<span class="badge badge-dark"><label>Customer /Shop Name</label></span>
+								<input class="form-control print-header-input" id="customerName" type="text"
+									oninput="populatePrintHeader(this);" />
+							</div>
+							<div class="col-sm-6">
+								<span class="badge badge-dark"><label>Cust /Shop Contact</label></span>
+								<input class="form-control print-header-input" id="customerContact" type="number"
+									oninput="populatePrintHeader(this);" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<span class="badge badge-dark"><label>Voucher No.</label></span>
+								<input class="form-control print-header-input" id="voucherNo" type="number"
+									oninput="populatePrintHeader(this);" />
+							</div>
+							<div class="col-sm-6">
+								<span class="badge badge-dark"><label>Date</label></span>
+								<input class="form-control print-header-input" id="billDate" type="date"
+									oninput="populatePrintHeader(this);" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-sm-12">
+						<span class="badge badge-dark"><label>Item Name</label></span>
+						<div class="row">
+							<div class="col-sm-12">
+								<input class="calculatable form-control" id="itemName" type="text" value="Gold Fine" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-sm-12">
+						<span class="badge badge-dark" for="rate"><label>Rate</label></span>
+						<div class="row">
+							<div class="col-sm-6">
+								<input class="calculatable form-control" id="rate" type="number" />
+							</div>
+							<div class="col-sm-6">
+								<select class="form-control weight-unit" id="rateUnit">
+									<option value="tola" selected="selected">tola</option>
+									<option value="gram">gram</option>
+									<option value="milligram">milligram</option>
+									<option value="kilogram">kilo</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-sm-12">
+						<span class="badge badge-dark"><label>Weight</label></span>
+						<div class="row">
+							<div class="col-sm-6">
+								<input class="calculatable form-control" id="weight" type="number" />
+							</div>
+							<div class="col-sm-6">
+								<select class="form-control weight-unit" id="weightUnit">
+									<option value="gram" selected="selected">gram</option>
+									<option value="milligram">milligram</option>
+									<option value="kilogram">kilo</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<span class="badge badge-dark"><label>Purity(%)</label></span>
+								<input class="calculatable form-control" id="purity" type="number" value="100" />
+							</div>
+							<div class="col-sm-6">
+								<span class="badge badge-dark"><label>Pieces</label></span>
+								<input class="calculatable form-control" id="pieces" type="number" value="1"/>
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-sm-12">
+						<div class="row">
+							<div class="col-sm-6">
+								<span class="badge badge-dark"><label>Wastage</label></span>
+							</div>
+							<div class="col-sm-6">
+								<span class="badge badge-dark"><label>Labour</label></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-5">
+										<input class="calculatable form-control" id="wastage" type="number" />
+									</div>
+									<div class="col-sm-7">
+										<select class="form-control weight-unit" id="wastageUnit">
+											<option value="gram">gram</option>
+											<option value="milligram" selected="selected">milligram</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-5">
+										<input class="calculatable form-control" id="labourRate" type="number" />
+									</div>
+									<div class="col-sm-7">
+										<select class="form-control weight-unit" id="labourRateUnit">
+											<option value="gram">gram</option>
+											<option value="kilo" selected="selected">kilo</option>
+											<option value="pieces">pieces</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-sm-3">
+					<div class="sticky-top">
+						<div class="bg-success text-center">
+							<div class='col-sm-12 h4'>GRAND TOTAL<br/><span class='badge badge-dark' id="grandTotalFloating">0</span></div>
+							
+						</div>
+						<div class="mt-1 text-center">
+							<button class="btn btn-primary" onclick="printTheTable();">
+								<span class="display-4">Print</span></button>
+						</div>
+						<div class="mt-1 text-center">
+							<button class="btn btn-primary" onclick="addNewItem();"><span class="h4">+ Add New Item</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row bill-container">
+			<div class="col-sm-12 printable bill-info" id="billInfo">
+				<div class='table' id="billInfoTable">
+					<div class="resp-table-header">
+						<div class="table-header-cell">Radhe Kishan Jwellers</div>
+					</div>
+					<div class="resp-table-row">
+						<div class="table-body-cell">
+							<div class="row">
+								<div class='col-sm-3' style="min-width:80px">Customer /Shop Name:-</div>
+								<div class='col-sm-3' id="customerNamePrint"></div>
+								<div class='offset-sm-2'>Voucher No:-</div>
+								<div class='col-sm-2' id="voucherNoPrint"></div>
+							</div>
+							<div class="row">
+								<div class='col-sm-3' style="min-width:80px">Customer /Shop Contact:-</div>
+								<div class='col-sm-3' id="customerContactPrint"></div>
+								<div class='offset-sm-2'>Date:-</div>
+								<div class='col-sm-3' id="billDatePrint"></div>
+							</div>
+						</div>
+					</div>
+					<div class="resp-table-row">
+						<div class="table-body-cell">
+							<div class="table" id="printable">
+								<div class="resp-table-footer">
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell">Grand Total</div>
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell" id="weightTotal">0</div>
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell" id="fineWeightTotal">0</div>
+									<div class="table-body-cell"></div>
+									<div class="table-body-cell" id="labourChargeTotal">0</div>
+									<div class="table-body-cell" id="grandTotal">0.00</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="resp-table-footer">
+						<div class="table-footer-cell">
+							<div class="row">
+								<div class='col-sm-9'>
+									Proprieter:- Gokul Prasad Soni
+								</div>
+								<div class='col-sm-9'>
+									Contact:- 9425841282
+								</div>
+								<div class='col-sm-9'>
+									<div>Address:- c/o Radhe Kishan Jwellers, Sarafa Bazaar</div>
+									<div> Kotwali Road Sidhi (M.P.)</div>
+								</div>
+								<div class='col-sm-3' style="text-align: center">
+									------------------
+								</div>
+								<div class='col-sm-9'>
+									Pincode:- 486661
+								</div>
+								<div class='col-sm-3' style="text-align: center">
+									Signature
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- <div class="table" id="footer"></div> -->
+			</div>
+		</div>
+	</div>
+
+	<script src="./modules/printColumn.js"></script>
+	<script src="./modules/printUtility.js"></script>
+	<script src="./pages/rkj/scripts/index.js"></script>
+	<script>$("#billDate").val(getFormattedDate(new Date()));</script>
+</body>
+
+</html>
