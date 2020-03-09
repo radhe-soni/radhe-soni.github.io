@@ -1,7 +1,39 @@
 "use strict";
 const printRows = new PrintRows();
 const printColumns = new PrintColumns();
+const items = [
+	"Samagra scholarship mapping",
+	"Samagra scholarship profile updation and u dise profile updation",
+	"Mapping list print out",
+	"Feeding list print out",
+	"Proposal print out",
+	"M 1 click successful list print out",
+	"M 1 click unsussessful list print out",
+	"Inspire award registration",
+	"Circular print out",
+	"Typing works and print out",
+	"Unmap student",
+	"TC print out",
+	"Account updation of students",
+	"Class updation 1A of students",
+	"Photocopy",
+	"Other works and print out",
+	"Salary Excelsheet print out",
+	"MER updation and print out",
+	"Uniform excel sheet and print out",
+	"NMMS FORM ONLINE",
+	"NMMS Admit card Print out"
+];
 function loader() {
+    initializeDateField()
+    const itemNames = document.getElementById("itemNames");
+    items.forEach(item => {
+        const option = document.createElement("option");
+        itemNames.appendChild(option);
+        option.setAttribute("value", item);
+        option.innerText=item;
+    });
+
 	const printable = document.getElementById('printable');
 	printRows.rows.push(new PrintRow(printRows.rows.length));
 
@@ -20,6 +52,10 @@ function loader() {
 
 	addListeners();
 }
+const initializeDateField = () => {const dateField = document.getElementById("billDate");
+    dateField.value = getFormattedDate(new Date());
+    populatePrintHeader(dateField);
+}
 function setFieldsWithSelectedRow(rowIndex) {
 	const selectedRow = printRows.rows[rowIndex];
 	selectedRow.resetFeilds(inputMap);
@@ -31,10 +67,6 @@ function addListeners() {
 	var calculatables = document.getElementsByClassName('calculatable');
 	for (var i = 0; i < calculatables.length; i++) {
 		calculatables[i].addEventListener('input', updatePrintObj);
-	}
-	var weightUnits = document.getElementsByClassName('weight-unit');
-	for (var i = 0; i < weightUnits.length; i++) {
-		weightUnits[i].addEventListener('change', updateWeightUnits);
 	}
 }
 const cells = {}
@@ -57,8 +89,13 @@ function updatePrintObj() {
 	updatePrintItem(itemId);
 }
 function populatePrintHeader(element) {
-	const printHeaderId = element.id + 'Print';
-	document.getElementById(printHeaderId).innerText = element.value;
+    const printHeaderId = element.id + 'Print';
+    if(element.type == 'date'){
+        document.getElementById(printHeaderId).innerText = new Date(element.value).toLocaleDateString()
+        return
+    }
+    document.getElementById(printHeaderId).innerText = element.value;
+	
 }
 function printTheTable() {
 	const printHeaderInputs = document.getElementsByClassName('print-header-input');
@@ -152,9 +189,6 @@ function gotoNextField(e) {
 	window.onbeforeprint = beforePrint;
 	window.onafterprint = afterPrint;
 
-<<<<<<< HEAD
-}());
-=======
 }());
 
 function deleteCurrentItem(){
@@ -162,4 +196,3 @@ function deleteCurrentItem(){
 	const currentRowElement = document.getElementById('dataRow'+ currentRowIndex);
 	
 }
->>>>>>> da92f5571f0f9777017676a8a5cf0682976d7b3d
