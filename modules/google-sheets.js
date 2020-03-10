@@ -1,16 +1,7 @@
-function createSheet(title, callback) {
-  // [START sheets_create]
-  gapi.client.sheets.spreadsheets.create({
-    properties: {
-      title: title
-    }
-  }).then((response) => {
-    // [START_EXCLUDE silent]
-    callback(response);
-    console.log('Spreadsheet ID: ' + response.result.spreadsheetId);
-    // [END_EXCLUDE]
-  });
-  // [END sheets_create]
+function createSheet(title, parentFolderName) {
+    findFile(parentFolderName).then(file => {
+        createFile(title, file.id, 'application/vnd.google-apps.spreadsheet');
+    });
 }
 function listMajors() {
     gapi.client.sheets.spreadsheets.values.get({

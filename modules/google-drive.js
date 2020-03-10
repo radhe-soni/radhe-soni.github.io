@@ -6,7 +6,7 @@ const logFiles = files => {
     if (files && files.length > 0) {
         for (var i = 0; i < files.length; i++) {
             var file = files[i];
-            console.log(file.name + ' (' + file.id + ')');
+            console.log(file.name + ' (' + file.id + ')' + file.mimeType);
         }
     } else {
         console.log('No files found.');
@@ -37,13 +37,35 @@ const createFolder = (folderName, parentId) => {
         'body': request
 
     }).then(function (file, err) {
-        console.info("response recieved");
         if (err) {
             alert("App folder could not be created. See console for more logs.")
             console.error(err);
         } else {
-            APP_FOLDER = file;
             console.log('App folder created ', file);
+        }
+    });
+}
+
+const createFile = (fileName, parentId, mimeType) => {
+    if(!mimeType){
+       mimeType = "application/vnd.google-apps.spreadsheet"
+    }
+    var request = {
+        'name': fileName,
+        'mimeType': mimeType,
+        "parents": [parentId]
+    };
+    gapi.client.request({
+        'path': 'https://www.googleapis.com/drive/v3/files/',
+        'method': 'POST',
+        'body': request
+
+    }).then(function (file, err) {
+        if (err) {
+            alert("file could not be created. See console for more logs.")
+            console.error(err);
+        } else {
+            console.log('File created ', file);
         }
     });
 }
