@@ -14,7 +14,7 @@
     <script src="./scripts/printColumn.js"></script>
 	<script src="./scripts/printUtility.js"></script>
 	<script src="./scripts/index.js"></script>
-	
+    <script src="/modules/google-sheets.js"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="/style/index.css" />
@@ -22,8 +22,11 @@
 </head>
 
 <body onload="loader()">
-	<div class="container">
-		<div class="row card non-printable" style="margin-top: 5%;">
+    <div class="col-sm-12 mt-2">
+        <object  class="col-sm-12" height="100" data="/google-api-header.html"></object>
+    </div>
+	<div class="container  mt-2">
+		<div class="row card non-printable" >
 			<div class="col-sm-12 row">
 				<div class="col-sm-9 card-body rounded">
                     <div class="row">
@@ -162,8 +165,6 @@
             </div>
 		</div>
 	</div>
-
-	
 </body>
 
 </html>
