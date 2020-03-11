@@ -17,11 +17,9 @@ class GoogleAuth {
         if (isSignedIn) {
             this.authorizeButton.style.display = 'none';
             this.signoutButton.style.display = 'block';
-            this.createButton.style.display = 'block';
         } else {
             this.authorizeButton.style.display = 'block';
             this.signoutButton.style.display = 'none';
-            this.createButton.style.display = 'none';
         }
     }
 

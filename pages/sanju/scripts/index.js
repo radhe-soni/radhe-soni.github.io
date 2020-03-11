@@ -24,13 +24,8 @@ const items = [
 	"NMMS FORM ONLINE",
 	"NMMS Admit card Print out"
 ];
-const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
-Date.prototype.getMonthName = function(lang) {
-    lang = lang && (lang in Date.locale) ? lang : 'en';
-    return monthNames[this.getMonth()];
-};
+
+
 function loader() {
     intializeGAPIClient([createAppFolder, createMonthFolder]);
     initializeDateField();

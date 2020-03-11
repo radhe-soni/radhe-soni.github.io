@@ -12,13 +12,25 @@ const logFiles = files => {
         console.log('No files found.');
     }
 }
-const fetchFiles = () => {
+const fetchFiles = parentId => {
     return gapi.client.drive.files.list({
         'pageSize': 10,
-        'fields': "nextPageToken, files(id, name, mimeType,parents, createdTime)"
-    }).then(response => response.result.files);
+        'fields': "nextPageToken, files(id, name, mimeType,parents, createdTime)",
+        'parents': [parentId]
+    }).then(response => response.result.files)
+        .catch(response => {
+            alert("fetch files failed.", response.result.error);
+            throw new Error(response.result.error.message);
+        });
 }
 var APP_FOLDER;
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+Date.prototype.getMonthName = function(lang) {
+    lang = lang && (lang in Date.locale) ? lang : 'en';
+    return monthNames[this.getMonth()];
+};
 const findFile = fileName => fetchFiles().then(files => files.find(file => file.name == fileName))
     .then(file => {
         console.log(file);
@@ -29,8 +41,11 @@ const createFolder = (folderName, parentId) => {
     var request = {
         'name': folderName,
         'mimeType': 'application/vnd.google-apps.folder',
-        "parents": [parentId]
     };
+    if(parentId)
+    {
+        request.parents = [parentId]
+    }
     gapi.client.request({
         'path': 'https://www.googleapis.com/drive/v3/files/',
         'method': 'POST',
@@ -47,8 +62,8 @@ const createFolder = (folderName, parentId) => {
 }
 
 const createFile = (fileName, parentId, mimeType) => {
-    if(!mimeType){
-       mimeType = "application/vnd.google-apps.spreadsheet"
+    if (!mimeType) {
+        mimeType = "application/vnd.google-apps.spreadsheet"
     }
     var request = {
         'name': fileName,
@@ -73,7 +88,7 @@ const createFile = (fileName, parentId, mimeType) => {
 function createAppFolder() {
     console.log("creating app folder");
     const appFolderName = 'biller-app';
-    findFile(appFolderName).then(file => {
+    getAppFolder().then(file => {
         if (!file) {
             console.log("app folder not found creating");
             createFolder(appFolderName);
@@ -84,7 +99,9 @@ function createAppFolder() {
         }
     });
 }
-
+function getAppFolder(){
+   return findFile('biller-app');
+}
 function createMonthFolder() {
     console.log("creating app folder");
     const folderName = new Date().getMonthName();
