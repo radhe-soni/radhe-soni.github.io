@@ -24,8 +24,11 @@ const items = [
 	"NMMS FORM ONLINE",
 	"NMMS Admit card Print out"
 ];
+
+
 function loader() {
-    initializeDateField()
+    intializeGAPIClient([createAppFolder, createMonthFolder]);
+    initializeDateField();
     const itemNames = document.getElementById("itemNames");
     items.forEach(item => {
         const option = document.createElement("option");

@@ -10,22 +10,18 @@ class GoogleAuth {
             this.DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest",
                 "https://sheets.googleapis.com/$discovery/rest?version=v4"],
             this.SCOPES = 'https://www.googleapis.com/auth/drive.file';
-        this.authorizeButton.onclick = this.handleAuthClick;
-        this.signoutButton.onclick = this.handleSignoutClick;
+        this.authorizeButton.onclick = handleAuthClick;
+        this.signoutButton.onclick = handleSignoutClick;
     }
     updateSigninStatus = (isSignedIn) => {
         if (isSignedIn) {
             this.authorizeButton.style.display = 'none';
             this.signoutButton.style.display = 'block';
-            this.createButton.style.display = 'block';
         } else {
             this.authorizeButton.style.display = 'block';
             this.signoutButton.style.display = 'none';
-            this.createButton.style.display = 'none';
         }
     }
 
-    handleAuthClick = (event) => gapi.auth2.getAuthInstance().signIn();
-
-    handleSignoutClick = (event) => gapi.auth2.getAuthInstance().signOut();
+    
 }
