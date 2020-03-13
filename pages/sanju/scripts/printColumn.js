@@ -49,7 +49,6 @@ class PrintRow {
         this.quantity = 0
         this.rate = '',
         this.sumTotal = '',
-        this.labourRateUnit = "kilo",
         this.sno = index + 1
     }
     get total() {

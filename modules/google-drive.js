@@ -19,7 +19,6 @@ const fetchFiles = parentId => {
         'parents': [parentId]
     }).then(response => response.result.files)
         .catch(response => {
-            alert("fetch files failed.", response.result.error);
             throw new Error(response.result.error.message);
         });
 }

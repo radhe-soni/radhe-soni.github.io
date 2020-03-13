@@ -61,7 +61,7 @@ margin-top:5px;
 .table-body-cell{
   display: table-cell;
   padding: 0.2rem; 
-  text-align: center;
+  text-align: left;
   border: 0.5px solid black;
 }
 .resp-table-footer {
