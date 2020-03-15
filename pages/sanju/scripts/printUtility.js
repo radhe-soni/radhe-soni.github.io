@@ -51,23 +51,22 @@ function getHeaderCell(columnInfo) {
 	return headerCell;
 }
 function getColumnName(itemId, name){
-	let unitSymbol = `(${printRows.rows[0].getUnitSymbol([itemId])})`;
-	if(unitSymbol == '(undefined)'){
-		unitSymbol='';
-	}
-	return `${name} ${unitSymbol}`;
+
+	return `${name}`;
 }
 function getNewCell(columnInfo) {
 	const cell = document.createElement('div');
 	cell.innerHTML = printRows.rows[printRows.rows.length - 1][columnInfo.itemId];
 	cell.classList.add('table-body-cell');
-	const cellId = printRows.generateCellId(columnInfo.itemId);
+    const cellId = printRows.generateCellId(columnInfo.itemId);
+    cell.id = cellId;
 	cells[cellId] = cell;
 	return cell;
 }
 function updatePrintItem(itemId) {
-	let cellId = printRows.getCurrentCellId(itemId);
-	let cell = cells[cellId];
+	const cellId = printRows.getCurrentCellId(itemId);
+    const cell = cells[cellId];
+    highlightChangedElement(cell);
 	cell.innerHTML = printRows.getCurrentRow()[itemId];
 	updateSubTotal();
 	updateGrandTotal();
@@ -75,27 +74,23 @@ function updatePrintItem(itemId) {
 
 function updateSubTotal() {
 	let cellId = printRows.getCurrentCellId('total');
-	let cell = cells[cellId];
+    let cell = cells[cellId];
+     highlightChangedElement(cell);
 	cell.innerHTML = printRows.getCurrentRow().total;
 }
 function updateGrandTotal(){
 	const grandTotalValue = printRows.grandTotal;
-	const grandTotal = document.getElementById('grandTotal');
+    const grandTotal = document.getElementById('grandTotal');
+    const grandTotalFloating = document.getElementById('grandTotalFloating');
+    highlightChangedElement(grandTotal);
 	grandTotal.innerText = grandTotalValue;
-	const grandTotalFloating = document.getElementById('grandTotalFloating');
+	
 	grandTotalFloating.innerText = grandTotalValue;
 }
-function createNewPrintItem(itemId) {
-	const column = printColumns[itemId].column;
-	const index = column.getElementsByTagName('li').length;
-	const cellId = printRows.generateCellId(itemId);
-	const cell = document.createElement('li');
-	cell.classList.add('list-group-item');
-	cell.classList.add('list-group-item-custom');
-	cell.setAttribute('id', cellId);
-	cells[cellId] = cell;
-	cell.innerHTML = printItemObj[itemId];
-	column.appendChild(cell);
 
-	return index;
+function highlightChangedElement(element, timeout = 300){
+    const oldColor = element.parentElement.style.backgroundColor;
+    element.style.backgroundColor = '#FF0'
+    setTimeout(() => element.style.backgroundColor = oldColor, timeout);
+
 }

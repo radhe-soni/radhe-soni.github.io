@@ -45,8 +45,7 @@ margin-top:5px;
 }
 .table-header-cell{
   display: table-cell;
-  padding: 0.2rem; 
-  text-align: center;
+  padding: 0.2rem;
   border: 0.5px solid black;
 }
 .resp-table-row{
@@ -60,7 +59,7 @@ margin-top:5px;
 }
 .table-body-cell{
   display: table-cell;
-  padding: 0.2rem; 
+  padding: 5px; 
   text-align: left;
   border: 0.5px solid black;
 }

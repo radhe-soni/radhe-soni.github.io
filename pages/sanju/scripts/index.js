@@ -131,16 +131,16 @@ function addNewItem() {
     newPrintRow.resetFeilds(inputMap);
     const printable = document.getElementById('printableDataGroup');
     const newRow = createTableRow(newPrintRow.index);
-    printable.appendChild(newRow);
     printColumns.columns.map(columnInfo => getNewCell(columnInfo))
         .forEach(cell => newRow.appendChild(cell));
     for (let i = 0; i < calculatables.length; i++) {
         let calculatable = calculatables[i];
-        console.log(calculatable.classList);
         if (calculatable.className.includes('calculatable')) {
             calculatable.value = null;
         }
     }
+    printable.appendChild(newRow);
+    highlightChangedElement(newRow, 600);
 
 }
 function getFormattedDate(date) {
@@ -170,6 +170,40 @@ function gotoNextField(e) {
         }
     }
 }
+function deleteLastItem() {
+    const rowIndex = printRows.rows.length - 1;
+    const tableRow = document.getElementById('dataRow' + rowIndex);
+    tableRow.parentNode.removeChild(tableRow);
+    printRows.rows.splice(rowIndex, 1);
+    if (rowIndex > 1) {
+        setFieldsWithSelectedRow(rowIndex - 1);
+    }
+    updateGrandTotal();
+}
+function deleteCurrentItem() {
+    const currentRowIndex = printRows.getCurrentRow().index;
+    const currentRowElement = document.getElementById('dataRow' + currentRowIndex);
+    currentRowElement.parentNode.removeChild(currentRowElement);
+    console.log(printRows);
+    printRows.rows.splice(currentRowIndex, 1);
+    console.log(printRows);
+    for (let i = 0; i < printRows.rows.length; i++) {
+        let sno = printRows.rows[i].sno;
+        const snoCell = document.getElementById('sno_cell_' + sno);
+        sno = i + 1;
+        snoCell.innerHTML = sno;
+        snoCell.id = 'sno_cell_' + sno;
+        printRows.rows[i].sno = sno;
+
+    }
+    if (currentRowIndex > 0) {
+        setFieldsWithSelectedRow(currentRowIndex - 1);
+    }
+
+    console.log(printRows);
+    updateGrandTotal();
+}
+
 (function () {
 
     var beforePrint = () => {
@@ -199,8 +233,3 @@ function gotoNextField(e) {
 
 }());
 
-function deleteCurrentItem() {
-    const currentRowIndex = printRows.getCurrentRow().index;
-    const currentRowElement = document.getElementById('dataRow' + currentRowIndex);
-
-}
