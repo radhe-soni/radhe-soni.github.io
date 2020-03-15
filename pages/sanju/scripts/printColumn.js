@@ -47,7 +47,7 @@ class PrintRow {
     constructor(index) {
         this.itemName = '',
         this.quantity = 0
-        this.rate = '',
+        this._rate = '',
         this.sumTotal = '',
         this.sno = index + 1
     }
@@ -57,6 +57,15 @@ class PrintRow {
     }
     get index() {
         return this.sno - 1;
+    }
+    get rate(){
+        let value = parseFloat(this._rate);
+        if(!value)
+            value = 0;
+        return value;
+    }
+    set rate(value){
+        this._rate = parseFloat(value);
     }
     resetFeilds(inputMap) {
         Object.entries(this).forEach(entry => {

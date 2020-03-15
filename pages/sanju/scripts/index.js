@@ -183,13 +183,16 @@ function gotoNextField(e) {
 }
 function deleteLastItem() {
     const rowIndex = printRows.rows.length - 1;
-    const tableRow = document.getElementById('dataRow' + rowIndex);
-    tableRow.parentNode.removeChild(tableRow);
-    printRows.rows.splice(rowIndex, 1);
-    if (rowIndex > 1) {
+    if (rowIndex > 0) {
+        const tableRow = document.getElementById('dataRow' + rowIndex);
+        tableRow.parentNode.removeChild(tableRow);
+        printRows.rows.splice(rowIndex, 1);
         setFieldsWithSelectedRow(rowIndex - 1);
+        updateGrandTotal();
     }
-    updateGrandTotal();
+    else{
+        alert("At least one row is required.");
+    }
 }
 function deleteCurrentItem() {
     const currentRowIndex = printRows.getCurrentRow().index;

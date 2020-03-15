@@ -32,7 +32,6 @@ Date.prototype.getMonthName = function(lang) {
 };
 const findFile = fileName => fetchFiles().then(files => files.find(file => file.name == fileName))
     .then(file => {
-        console.log(file);
         return file;
     });
 const createFolder = (folderName, parentId) => {
@@ -93,7 +92,7 @@ function createAppFolder() {
             createFolder(appFolderName);
         }
         else {
-            console.log("app folder already exist.", file);
+            console.log("app folder already exist.", file.name);
             APP_FOLDER = file;
         }
     });
