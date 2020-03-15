@@ -13,8 +13,8 @@ class PrintColumns {
         this.columns = [
             new PrintColumn('S. No.', 'col-1', 'sno'),
             new PrintColumn('Item Name', 'col-3', 'itemName'),
-            new PrintColumn('Quantity', 'col-2', 'quantity'),
             new PrintColumn('Rate', 'col-2', 'rate'),
+            new PrintColumn('Quantity', 'col-2', 'quantity'),
             new PrintColumn('Total', 'col-2', 'total')
         ];
     }
