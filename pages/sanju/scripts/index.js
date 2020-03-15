@@ -86,8 +86,19 @@ function updatePrintObj() {
     const calculatable = this;
     const itemId = calculatable.id;
     const itemValue = typeof calculatable.value === "string" ? calculatable.value : parseFloat(calculatable.value);
-    printRows.getCurrentRow()[itemId] = itemValue;
-    updatePrintItem(itemId);
+    const pattern = calculatable.pattern;
+    let test = true;
+    if(pattern){
+        test = RegExp(pattern).test(itemValue);
+    }
+    if(test){
+        printRows.getCurrentRow()[itemId] = itemValue;
+        updatePrintItem(itemId);
+    }
+    else{
+        calculatable.value = printRows.getCurrentRow()[itemId]
+    }
+    
 }
 function populatePrintHeader(element) {
     const printHeaderId = element.id + 'Print';
