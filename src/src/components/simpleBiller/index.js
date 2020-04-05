@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PrintTable, { PrintRow, DataGroup } from '../../modules/printTable'
-import PrintUtility from '../../modules/printUtility'
 import BillContainer from './billContainer'
 import PrintButton from './printButton'
 import GrandTotalSticky from './grandTotalSticky'
