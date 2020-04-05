@@ -1,0 +1,45 @@
+.printButton {
+    font-size: 16px;
+    padding-right: 4em;
+    padding-left: 4em;
+    border-radius: 3px;
+    font-weight: 500;
+    margin-top: 0.5em;
+  }
+  
+  .p-label {
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+  input, select{
+    background: #CCFFFF !important;
+  }
+  label{
+    font-size: 16px;
+    border-radius: 0.75em;
+    font-weight: 500;
+    display:grid !important;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    min-width: 80px;
+    word-wrap: break-word;
+  }
+  .list-group-custom{
+    display:inline-block !important;
+  }
+  .list-group-item-custom{
+    padding: 0.25rem 0.25rem !important;
+    border-radius: 0 !important;
+    border: 1px solid black !important;
+  }
+  .caption {
+    caption-side: left; 
+    display: table-caption; 
+    border: 1px solid black;
+  }
+  
+  .bill-container {
+    background-color:#CCDDEE;
+    margin-bottom: 50px;
+    margin-top:2em;
+    display:block;
+  }
