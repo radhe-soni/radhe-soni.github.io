@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import './billContainer.css'
+import { HeaderCells } from '../../modules/table/printableColumns';
 
 export default class BillContainer extends Component {
-    createHeaderRow() {
-        return this.props.printTable.createHeaderCellFor();
-    }
     render() {
         return (
             <div className="row bill-container">
@@ -34,8 +32,8 @@ export default class BillContainer extends Component {
                         <div className="resp-table-row">
                             <div className="table-body-cell">
                                 <div className="table" id="printable">
-                                    {this.createHeaderRow()}
-                                    {this.props.dataGroup}
+                                    <HeaderCells />
+                                    {this.props.children}
                                     <div className="resp-table-footer">
                                         <div className="table-body-cell"></div>
                                         <div className="table-body-cell">Grand Total</div>

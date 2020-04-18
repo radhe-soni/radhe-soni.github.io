@@ -4,40 +4,20 @@ class InputField extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.state.isItemVar = this.props.isItemVar === "true" ? true : false;
+        this.isItemVar = this.props.isItemVar === "true" ? true : false;
         this.className = "form-control";
-        if (!this.state.isItemVar) {
+        if (!this.isItemVar) {
             this.className += " print-header-input";
         }
         this.handleOnInput = this.handleOnInput.bind(this);
     }
     handleOnInput(event) {
-        if (this.state.isItemVar) {
-           this.updatePrintObj(event.target);
+        if (this.isItemVar) {
+            PrintUtility.updatePrintObj(event.target, this.props.table);
         }
         else {
-            PrintUtility.populatePrintHeader(event.target);
+            PrintUtility.updatePrintHeader(event.target);
         }
-    }
-    updatePrintObj(element) {
-        const itemId = element.id;
-        const itemValue = typeof element.value === "string" ? element.value : parseFloat(element.value);
-        const pattern = element.pattern;
-        let test = true;
-        const table = this.props.table;
-        const currentRow = table.getCurrentRow();
-        if(pattern){
-            test = RegExp(pattern).test(itemValue);
-        }
-        if(test){
-            currentRow[itemId] = itemValue;
-            
-            PrintUtility.updatePrintItem(currentRow, itemId, table.getGrandTotalValue());
-        }
-        else{
-            element.value = currentRow[itemId];
-        }
-        
     }
     render() {
         return (
@@ -45,9 +25,10 @@ class InputField extends Component {
                 id={this.props.id}
                 type={this.props.type}
                 onInput={this.handleOnInput}
+                onChange={this.props.onChange}
                 inputMode={this.props.inputmode}
                 pattern={this.props.pattern}
-                value={this.state.value} />
+                defaultValue={this.props.defaultValue} />
         )
     }
 }
@@ -55,6 +36,7 @@ class InputField extends Component {
 export class LookupInputField extends InputField {
 
     render() {
+        
         this.state.data = []
         if (typeof this.props.lookup == 'function') {
             this.state.data = this.props.lookup();
@@ -65,10 +47,11 @@ export class LookupInputField extends InputField {
                     id={this.props.id}
                     type={this.props.type}
                     onInput={this.handleOnInput}
+                    onChange={this.props.onChange}
                     inputMode={this.props.inputmode}
                     pattern={this.props.pattern}
                     list="itemNames"
-                    value={this.state.value} />
+                    defaultValue={this.props.defaultValue} />
                 <datalist id="itemNames" defaultValue="">
                     <option value="">select</option>
                     {

@@ -80,7 +80,7 @@ export default class PrintUtility {
 
 	}
 
-	static populatePrintHeader(element) {
+	static updatePrintHeader(element) {
 		const printHeaderId = element.id + 'Print';
 		if (element.type === 'date') {
 			document.getElementById(printHeaderId).innerText = new Date(element.value).toLocaleDateString()
@@ -90,5 +90,24 @@ export default class PrintUtility {
 		}
 
 	}
+
+	static updatePrintObj(element, table) {
+        const itemId = element.id;
+        const itemValue = typeof element.value === "string" ? element.value : parseFloat(element.value);
+        const pattern = element.pattern;
+        let test = true;
+        const currentRow = table.getCurrentRow();
+        if(pattern){
+            test = RegExp(pattern).test(itemValue);
+        }
+        if(test){
+            currentRow[itemId] = itemValue;
+            PrintUtility.updatePrintItem(currentRow, itemId, table.getGrandTotalValue());
+        }
+        else{
+            element.value = currentRow[itemId];
+        }
+        
+    }
 
 }
