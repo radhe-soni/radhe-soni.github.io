@@ -37,12 +37,12 @@ export default class PrintTable {
     setFieldsWithSelectedRow(rowNo) {
         this.rowSet.setFieldsWithSelectedRow(rowNo)
     }
-}
 
-export const Table = ({ id, printTable }) => {
-    return (
-        <DataGroup id={id} rowSet={printTable.rowSet} />
-    );
+    getTable(id) {
+        return (
+            <DataGroup id={id} rowSet={this.rowSet} />
+        );
+    }
 }
 
 

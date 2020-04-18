@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PrintTable, { Table } from '../../modules/table/printTable'
+import PrintTable from '../../modules/table/printTable'
 import BillContainer from './billContainer'
 import PrintButton from './printButton'
 import GrandTotalSticky from './grandTotalSticky'
@@ -39,10 +39,8 @@ export default class SimpleBiller extends Component {
                             </div>
                         </div>
                     </div>
-                    <BillContainer printTable={this.state.table}>
-                        <Table key={'PrintTable_DataGroup'}
-                            id={'PrintTable_DataGroup'}
-                            printTable={this.state.table} />
+                    <BillContainer grandTotal={this.state.table.getGrandTotalValue()} >
+                        {this.state.table.getTable('PrintTable_DataGroup')}
                     </BillContainer>
                 </div>
             </div>
