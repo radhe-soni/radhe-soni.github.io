@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PrintTable from '../../modules/table/printTable'
 import BillContainer from '../bill'
 import PrintButton from './printButton'
 import GrandTotalSticky from './grandTotalSticky'
@@ -8,25 +7,26 @@ import './print.css'
 import AddDeleteRowButton from './addDeleteRowButton'
 import HeaderInputs from './headerInputs'
 import DataInputs from './dataInputs'
+import RowSet, { DataGroup } from '../../modules/table/printableRows'
 
 export default class SimpleBiller extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        const table= new PrintTable()
+        const rowSet = new RowSet();
         this.state = {
-            table: table,
+            rowSet: rowSet,
             billInfo: {},
-            itemValues: table.getCurrentRow()
+            itemValues: rowSet.getCurrentRow()
         }
     }
-   
+
     handleTableModifyEvent() {
         this.setState({
-            itemValues: this.state.table.getCurrentRow()
+            itemValues: this.state.rowSet.getCurrentRow()
         })
     }
-    handleRowChangeEvent(event){
-        this.setState(this.state.table)
+    handleRowChangeEvent(event) {
+        this.setState(this.state.rowSet)
     }
     handleBillInfoChangedEvent(event) {
         const billInfo = {
@@ -39,7 +39,7 @@ export default class SimpleBiller extends Component {
     }
     handleRowOnClickEvent() {
         this.setState({
-            itemValues: this.state.table.getCurrentRow()
+            itemValues: this.state.rowSet.getCurrentRow()
         })
     }
     render() {
@@ -50,15 +50,15 @@ export default class SimpleBiller extends Component {
                         <div className="col-sm-12 row">
                             <div className="col-sm-9 card-body rounded">
                                 <HeaderInputs onChange={this.handleBillInfoChangedEvent.bind(this)} />
-                                <DataInputs printTable={this.state.table} itemValues={this.state.itemValues}
+                                <DataInputs rowSet={this.state.rowSet} itemValues={this.state.itemValues}
                                     onChange={this.handleRowChangeEvent.bind(this)}
                                 />
                             </div>
                             <div className="col-sm-3">
                                 <div className="sticky-top">
-                                    <GrandTotalSticky grandTotal={this.state.table.getGrandTotalValue()} />
+                                    <GrandTotalSticky grandTotal={this.state.rowSet.grandTotal} />
                                     <PrintButton />
-                                    <AddDeleteRowButton printTable={this.state.table}
+                                    <AddDeleteRowButton rowSet={this.state.rowSet}
                                         modifyTableEventListener={this.handleTableModifyEvent.bind(this)} />
                                 </div>
                             </div>
@@ -66,8 +66,10 @@ export default class SimpleBiller extends Component {
                     </div>
                     <BillContainer
                         billInfo={this.state.billInfo}
-                        grandTotal={this.state.table.getGrandTotalValue()} >
-                        {this.state.table.getTable('PrintTable_DataGroup', this.handleRowOnClickEvent.bind(this))}
+                        grandTotal={this.state.rowSet.grandTotal} >
+                        <DataGroup id='PrintTable_DataGroup'
+                            rowSet={this.state.rowSet}
+                            onClick={this.handleRowOnClickEvent.bind(this)} />
                     </BillContainer>
                 </div>
             </div>

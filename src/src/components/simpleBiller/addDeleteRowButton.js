@@ -1,26 +1,24 @@
 import React from 'react';
 import Row from '../../modules/table/printableRow';
 
-const AddDeleteRowButton = ({ printTable, modifyTableEventListener }) => {
+const AddDeleteRowButton = ({ rowSet, modifyTableEventListener }) => {
     const addNewItem = (callBack) => {
-        const newPrintRow = new Row(printTable.size());
-        printTable.pushRow(newPrintRow);
-        printTable.setCurrentRow(newPrintRow.sno);
-        newPrintRow.resetFeilds(printTable.getInputMap());
+        const newPrintRow = new Row(rowSet.size());
+        rowSet.push(newPrintRow);
+        rowSet.setCurrentRow(newPrintRow.sno);
         callBack();
     };
     const deleteLastItem = (callBack) => {
-        const rowIndex = printTable.size() - 1;
+        const rowIndex = rowSet.size() - 1;
         if (rowIndex > 0) {
-            printTable.deleteLastRow();
-            printTable.setCurrentRow(rowIndex);
+            rowSet.deleteLastRow();
+            rowSet.setCurrentRow(rowIndex);
             callBack();
         }
         else {
             alert("At least one row is required.");
         }
     };
-    console.log(modifyTableEventListener)
     return (
         <div>
             <Button iconClass="fa fa-plus"

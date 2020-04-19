@@ -1,16 +1,36 @@
 import React from 'react';
+import Row from './printableRow';
 export default class RowSet {
     constructor() {
-        this.rows = [];
+        this.rows = [new Row(0)];
         this.currentRow = 1;
         this.inputMap = {};
+    }
+    push(row) {
+        return this.rows.push(row)
     }
     getCurrentRow() {
         return this.rows[this.currentRow - 1];
     }
-
+    setCurrentRow(rowNo) {
+        this.currentRow = rowNo;
+    }
     getCurrentCellId(itemId) {
         return itemId + '_cell_' + this.currentRow;
+    }
+
+    size() {
+        return this.rows.length;
+    }
+    deleteRow(rowIndex) {
+       return this.rows.splice(rowIndex, 1);
+    }
+    deleteLastRow() {
+        return this.rows.pop();
+    }
+
+    getInputMap() {
+        return this.inputMap;
     }
 
     get grandTotal() {

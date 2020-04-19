@@ -11,7 +11,7 @@ const DataInputs = (props) => {
                 <div className="form-group col-sm-12">
                     <ItemLabel label='Item Name' />
                     <LookupInputField id="itemName" type="text" lookup={() => Products}
-                        isItemVar="true" table={props.printTable} value={itemValues.itemName}
+                        isItemVar="true" rowSet={props.rowSet} value={itemValues.itemName}
                         onChange={props.onChange}
                     />
                 </div>
@@ -21,7 +21,7 @@ const DataInputs = (props) => {
                     <ItemLabel label='Rate' />
                     <InputField id="rate" type="text" inputmode="numeric"
                         pattern="^\d{0,5}(?:\.{0,1})(?:\d{1,2}){0,1}?$" isItemVar="true"
-                        table={props.printTable}
+                        rowSet={props.rowSet}
                         value={itemValues.rate}
                         onChange={props.onChange}
                     />
@@ -29,7 +29,7 @@ const DataInputs = (props) => {
                 <div className="form-group col-sm-6">
                     <ItemLabel label='Quantity' />
                     <InputField id="quantity" type="text" inputmode="numeric"
-                        pattern="^\d{0,5}$" isItemVar="true" table={props.printTable}
+                        pattern="^\d{0,5}$" isItemVar="true" rowSet={props.rowSet}
                         value={itemValues.quantity}
                         onChange={props.onChange}
                     />

@@ -13,7 +13,7 @@ class InputField extends Component {
     }
     handleOnInput(event) {
         if (this.isItemVar) {
-            PrintUtility.updatePrintObj(event.target, this.props.table);
+            PrintUtility.updatePrintObj(event.target, this.props.rowSet);
         }
         else {
             PrintUtility.updatePrintHeader(event.target);
