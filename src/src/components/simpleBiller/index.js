@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PrintTable from '../../modules/table/printTable'
-import BillContainer from './billContainer'
+import BillContainer from '../bill'
 import PrintButton from './printButton'
 import GrandTotalSticky from './grandTotalSticky'
 import './index.css'

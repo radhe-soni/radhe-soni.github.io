@@ -34,9 +34,6 @@ export default class PrintTable {
     getInputMap() {
         return this.rowSet.inputMap;
     }
-    setFieldsWithSelectedRow(rowNo) {
-        this.rowSet.setFieldsWithSelectedRow(rowNo)
-    }
 
     getTable(id, onClick) {
         return (
