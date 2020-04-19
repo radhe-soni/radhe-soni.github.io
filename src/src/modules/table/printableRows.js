@@ -19,7 +19,7 @@ export default class RowSet {
 
     setFieldsWithSelectedRow(rowNo, callback) {
         this.currentRow = rowNo;
-       // callback()
+        callback()
     }
     
 }

@@ -38,9 +38,9 @@ export default class PrintTable {
         this.rowSet.setFieldsWithSelectedRow(rowNo)
     }
 
-    getTable(id) {
+    getTable(id, onClick) {
         return (
-            <DataGroup id={id} rowSet={this.rowSet} />
+            <DataGroup id={id} rowSet={this.rowSet} onClick={onClick}/>
         );
     }
 }

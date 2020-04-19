@@ -13,14 +13,14 @@ const AddDeleteRowButton = ({ printTable, modifyTableEventListener }) => {
         const rowIndex = printTable.size() - 1;
         if (rowIndex > 0) {
             printTable.deleteLastRow();
+            printTable.setCurrentRow(rowIndex);
             callBack();
-            printTable.setFieldsWithSelectedRow(rowIndex);
         }
         else {
             alert("At least one row is required.");
         }
     };
-
+    console.log(modifyTableEventListener)
     return (
         <div>
             <Button iconClass="fa fa-plus"

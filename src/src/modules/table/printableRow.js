@@ -33,7 +33,6 @@ export default class Row {
     resetFeilds(inputMap) {
         Object.entries(this).forEach((itemId, itemValue) => {
             const itemField = inputMap[itemId];
-            console.log(itemField)
             if (itemField) {
                 itemField.value = itemValue;
             }

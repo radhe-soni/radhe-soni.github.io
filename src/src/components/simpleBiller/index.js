@@ -10,23 +10,48 @@ import HeaderInputs from './headerInputs'
 import DataInputs from './dataInputs'
 
 export default class SimpleBiller extends Component {
-    state = {
-        table: new PrintTable()
+    constructor(props){
+        super(props)
+        const table= new PrintTable()
+        this.state = {
+            table: table,
+            billInfo: {},
+            itemValues: table.getCurrentRow()
+        }
     }
+   
     handleTableModifyEvent() {
+        this.setState({
+            itemValues: this.state.table.getCurrentRow()
+        })
+    }
+    handleRowChangeEvent(event){
         this.setState(this.state.table)
     }
-
+    handleBillInfoChangedEvent(event) {
+        const billInfo = {
+            ...this.state.billInfo,
+            [event.target.id]: `${event.target.value}`
+        }
+        this.setState({
+            billInfo: billInfo
+        })
+    }
+    handleRowOnClickEvent() {
+        this.setState({
+            itemValues: this.state.table.getCurrentRow()
+        })
+    }
     render() {
-        let itemValues = this.state.table.getCurrentRow()
         return (
             <div>
                 <div className="container  mt-2">
                     <div className="row card non-printable">
                         <div className="col-sm-12 row">
                             <div className="col-sm-9 card-body rounded">
-                                <HeaderInputs />
-                                <DataInputs printTable={this.state.table} itemValues={itemValues}
+                                <HeaderInputs onChange={this.handleBillInfoChangedEvent.bind(this)} />
+                                <DataInputs printTable={this.state.table} itemValues={this.state.itemValues}
+                                    onChange={this.handleRowChangeEvent.bind(this)}
                                 />
                             </div>
                             <div className="col-sm-3">
@@ -39,8 +64,10 @@ export default class SimpleBiller extends Component {
                             </div>
                         </div>
                     </div>
-                    <BillContainer grandTotal={this.state.table.getGrandTotalValue()} >
-                        {this.state.table.getTable('PrintTable_DataGroup')}
+                    <BillContainer
+                        billInfo={this.state.billInfo}
+                        grandTotal={this.state.table.getGrandTotalValue()} >
+                        {this.state.table.getTable('PrintTable_DataGroup', this.handleRowOnClickEvent.bind(this))}
                     </BillContainer>
                 </div>
             </div>
