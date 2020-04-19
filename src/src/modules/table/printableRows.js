@@ -1,5 +1,5 @@
 import React from 'react';
-import Row from './printableRow';
+import Row, { DataRow } from './printableRow';
 export default class RowSet {
     constructor() {
         this.rows = [new Row(0)];
@@ -46,8 +46,7 @@ export default class RowSet {
 
 export const DataGroup = ({ id,rowSet, onClick }) => {
     const dataRows = rowSet.rows.map(row =>{
-        const DataRow = row.DataRow;
-        return <DataRow key={row.sno} 
+        return <DataRow key={row.sno} row={row}
         onClick={event => rowSet.setFieldsWithSelectedRow(row.sno, onClick)} />
     })
     return (

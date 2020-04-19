@@ -39,15 +39,16 @@ export default class Row {
         });
 
     }
-    DataRow = ({ onClick }) => {
-        return (
-            <div
-                id={'dataRow' + this.sno}
-                className='resp-table-row data-table-row'
-                title='Click on the row to edit !!!'
-                onClick={() => onClick(this.sno)} >
-                <DataCells row={this}/>
-            </div>
-        );
-    }
+}
+
+export const DataRow = ({row, onClick }) => {
+    return (
+        <div
+            id={'dataRow' + row.sno}
+            className='resp-table-row data-table-row'
+            title='Click on the row to edit !!!'
+            onClick={() => onClick(row.sno)} >
+            <DataCells row={row}/>
+        </div>
+    );
 }

@@ -16,8 +16,10 @@ export default class SimpleBiller extends Component {
         this.state = {
             rowSet: rowSet,
             billInfo: {},
-            itemValues: rowSet.getCurrentRow()
+            itemValues: rowSet.getCurrentRow(),
+            isPrinting: false
         }
+        this.isPrinting = this.isPrinting.bind(this);
     }
 
     handleTableModifyEvent() {
@@ -42,6 +44,11 @@ export default class SimpleBiller extends Component {
             itemValues: this.state.rowSet.getCurrentRow()
         })
     }
+    isPrinting(isPrinting){
+        this.setState({
+            isPrinting: isPrinting
+        })
+    }
     render() {
         return (
             <div>
@@ -57,20 +64,24 @@ export default class SimpleBiller extends Component {
                             <div className="col-sm-3">
                                 <div className="sticky-top">
                                     <GrandTotalSticky grandTotal={this.state.rowSet.grandTotal} />
-                                    <PrintButton />
+                                    <PrintButton onClick={this.isPrinting} isPrinting={this.state.isPrinting}/>
                                     <AddDeleteRowButton rowSet={this.state.rowSet}
                                         modifyTableEventListener={this.handleTableModifyEvent.bind(this)} />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <BillContainer
-                        billInfo={this.state.billInfo}
-                        grandTotal={this.state.rowSet.grandTotal} >
-                        <DataGroup id='PrintTable_DataGroup'
-                            rowSet={this.state.rowSet}
-                            onClick={this.handleRowOnClickEvent.bind(this)} />
-                    </BillContainer>
+                    <div className="row bill-container">
+                        <BillContainer
+                            billInfo={this.state.billInfo}
+                            grandTotal={this.state.rowSet.grandTotal}
+                            isPrinting={this.state.isPrinting}>
+                            <DataGroup id='PrintTable_DataGroup'
+                                rowSet={this.state.rowSet}
+                                onClick={this.handleRowOnClickEvent.bind(this)} />
+                        </BillContainer>
+                    </div>
+
                 </div>
             </div>
         )
