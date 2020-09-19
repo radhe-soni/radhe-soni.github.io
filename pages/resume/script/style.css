@@ -73,5 +73,7 @@
 	  padding: 0 !important;
 	  overflow: hidden;
 	}
-  
+	.non-printable {
+		display: none !important;
+	}
   }
