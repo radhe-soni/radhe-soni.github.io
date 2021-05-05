@@ -15,6 +15,8 @@ except ImportError: # fall back to Python 2
 class CORSRequestHandler (SimpleHTTPRequestHandler):
     def end_headers (self):
         self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
         SimpleHTTPRequestHandler.end_headers(self)
 
 if __name__ == '__main__':
