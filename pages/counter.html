@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter</title>
+    <style>
+        body{
+            background-color: #CCC;
+        }
+        .container {
+            display: flex;
+            /* flex-flow: column; */
+            max-width: 9em;
+            justify-content: center;
+            flex-direction: column;
+            margin: auto;
+            background-color: #BBB;
+            padding: 1em;
+            margin-top: 5em;
+            border-radius: 1em
+        }
+
+        .start-button {
+            border-radius: 2em;
+            width: min-content;
+            height: 3em;
+            margin: auto;
+            margin-top: 1em;
+            background-color: #555;
+            color: #DDD;
+            border: none;
+        }
+
+        .display {
+            margin: auto
+        }
+
+        label {
+            margin: auto;
+        }
+
+        input {
+            border-radius: 1em;
+            background-color: #EEE;
+            max-width: 5em;
+            color: #847e7e;
+            text-align: center;
+            margin: auto;
+        }
+    </style>
+    <script>
+        const utterance = new SpeechSynthesisUtterance();
+        utterance.voice = window.speechSynthesis.getVoices()[0];
+
+        function startCounter() {
+
+
+            const pause = Number.parseInt(document.getElementById("pause").value)
+            const maxCounter = Number.parseInt(document.getElementById("maxCounter").value)
+            const repeatition = Number.parseInt(document.getElementById("repeatition").value)
+            let waitDuration = 0
+            for (var turn = 0; turn < repeatition; turn++) {
+                waitDuration += (turn == 0 ? 0 : 1000) * pause
+                speakTurn(turn + 1, waitDuration)
+                for (var counter = 1; counter <= maxCounter; counter++) {
+                    waitDuration += 1000
+                    speakCounter(counter, waitDuration)
+                }
+            }
+        }
+        function speakCounter(counter, timeout) {
+            console.log('speakCounter', counter, timeout)
+            setTimeout(() => {
+                document.getElementById("counterDisplay").innerText = counter
+                speak(`${counter}`)
+            }, timeout + 500)
+        }
+        function speakTurn(turn, timeout) {
+            console.log('speakTurn', turn, timeout)
+            setTimeout(() => {
+                document.getElementById("turnDisplay").innerText = `Turn ${turn}`
+                speak(`Turn ${turn}`)
+            }, timeout + 500)
+
+        }
+
+        function speak(text) {
+            utterance.text = `${text}`;
+            console.log(utterance.text)
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <label for="maxCounter">Max Count</label>
+        <input type="number" name="maxCounter" id="maxCounter" value="10">
+        <label for="repeatition">Repeatition</label>
+        <input type="number" name="repeatition" id="repeatition" value="5">
+        <label for="pause">Repeatition</label>
+        <input type="number" name="pause" id="pause" value="5">
+        <button class="start-button" onclick="startCounter()">Start</button>
+        <h1 class="display" id="counterDisplay"></h1>
+        <h6 class="display" id="turnDisplay"></h6>
+    </div>
+</body>
+
+</html>
