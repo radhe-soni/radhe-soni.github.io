@@ -90,6 +90,7 @@
         }
     </style>
     <script>
+
         const utterance = new SpeechSynthesisUtterance();
         utterance.voice = window.speechSynthesis.getVoices()[0];
         function clearAllTimeouts() {
@@ -110,10 +111,39 @@
             stopButtonBlinking()
 
         }
-        function startCounter() {
+        function ScreenControl() {
+            const canWakeLock = () => 'wakeLock' in navigator;
 
+            let wakelock;
+            async function lockWakeState() {
+                if (!canWakeLock()) return;
+                try {
+                    wakelock = await navigator.wakeLock.request();
+                    wakelock.addEventListener('release', () => {
+                        console.log('Screen Wake State Locked:', !wakelock.released);
+                    });
+                    console.log('Screen Wake State Locked:', !wakelock.released);
+                } catch (e) {
+                    console.error('Failed to lock wake state with reason:', e.message);
+                }
+            }
+            function releaseWakeState() {
+                if (wakelock) wakelock.release();
+                wakelock = null;
+            }
+
+            return {
+                lockWakeState: lockWakeState,
+                releaseWakeState: releaseWakeState
+            }
+        }
+
+
+        async function startCounter() {
+            const screenControl = ScreenControl();
             clearAllTimeouts()
             setButtonBlinking()
+            await screenControl.lockWakeState();
             const pause = Number.parseInt(document.getElementById("pause").value)
             const maxCounter = Number.parseInt(document.getElementById("maxCounter").value)
             const repeatition = Number.parseInt(document.getElementById("repeatition").value)
@@ -128,7 +158,9 @@
                 let endTimeout = waitDuration + 1000
                 speakTurn(`Turn ${turn + 1} ends`, turn + 1, endTimeout)
             }
-            setTimeout(() => stopButtonBlinking(), waitDuration += (pause * 1000));
+            waitDuration += (pause * 1000)
+            setTimeout(() => stopButtonBlinking(), waitDuration);
+            setTimeout(() => screenControl.releaseWakeState(), waitDuration);
         }
         function speakCounter(counter, timeout) {
             console.log('speakCounter', counter, timeout)
