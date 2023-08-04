@@ -1,6 +1,8 @@
 /.settings/
 /.project
+.idea
 
 /npm-1.4.9/
 /start_npm_cmd.cmd
 /start_npm_cmd.sh
+.DS_Store

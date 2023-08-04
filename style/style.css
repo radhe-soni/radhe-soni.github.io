@@ -52,13 +52,13 @@ span.h5{
 	color: #777;
 	text-align: justify;
 	text-justify: inter-word;
-	font-size: 18px;
+	font-size: 1em;
 	font-family: "Times New Roman";
 }
 
 .duration {
 	color: #888;
-	font-size: 12;
+	font-size: 0.8em;
 }
 
 .leading-content {
