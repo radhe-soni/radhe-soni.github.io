@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter</title>
+    <style>
+        :root {
+            --container-width: 12em;
+            --container-height: 12em;
+            --button-color-blinking-orange: #e06f23;
+            --button-color-start: #10c018;
+            --button-color-blinking-grey: #555;
+        }
+
+        body {
+            background-color: #CCC;
+        }
+
+        .container {
+            display: flex;
+            /* flex-flow: column; */
+            max-width: var(--container-width);
+            height: var(--container-height);
+            justify-content: center;
+            flex-direction: column;
+            margin: auto;
+            background-color: #BBB;
+            padding: 1em;
+            margin-top: 5em;
+            border-radius: 1em;
+            font-size: calc(var(--container-width)/6);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .start-button {
+            border-radius: 2em;
+            width: calc(var(--container-width)/3);
+            height: calc(var(--container-width)/3);
+            margin: auto;
+            margin-top: 1em;
+            background-color: var(--button-color-start);
+            color: #DDD;
+            border: none;
+        }
+
+        .stop-button {
+            background-color: #c00;
+            border-radius: 1em;
+            color: aliceblue;
+            font-weight: bold;
+            margin-top: 1em;
+        }
+
+        .display {
+            margin: auto
+        }
+
+        label {
+            margin: auto;
+        }
+
+        input {
+            border-radius: 1em;
+            background-color: #EEE;
+            max-width: calc(var(--container-width)/4);
+            height: calc(var(--container-width)/6);
+            color: #847e7e;
+            text-align: center;
+            margin: auto;
+        }
+
+        .button-blink {
+            animation: blinkingButton 2s infinite;
+        }
+
+        @keyframes blinkingButton {
+            0% {
+                background-color: var(--button-color-blinking-orange)
+            }
+
+            50% {
+                background-color: var(--button-color-blinking-grey)
+            }
+
+            100% {
+                background-color: var(--button-color-blinking-orange)
+            }
+        }
+    </style>
+    <script>
+
+        const utterance = new SpeechSynthesisUtterance();
+        utterance.voice = window.speechSynthesis.getVoices()[0];
+        function clearAllTimeouts() {
+            var id = window.setTimeout(function () { }, 0);
+
+            while (id--) {
+                window.clearTimeout(id);
+            }
+        }
+        function setButtonBlinking() {
+            document.getElementById("startButton").classList.add('button-blink')
+        }
+        function stopButtonBlinking() {
+            document.getElementById("startButton").classList.remove('button-blink')
+        }
+        function stopCounter() {
+            clearAllTimeouts()
+            stopButtonBlinking()
+
+        }
+        function ScreenControl() {
+            const canWakeLock = () => 'wakeLock' in navigator;
+
+            let wakelock;
+            async function lockWakeState() {
+                if (!canWakeLock()) return;
+                try {
+                    wakelock = await navigator.wakeLock.request();
+                    wakelock.addEventListener('release', () => {
+                        console.log('Screen Wake State Locked:', !wakelock.released);
+                    });
+                    console.log('Screen Wake State Locked:', !wakelock.released);
+                } catch (e) {
+                    console.error('Failed to lock wake state with reason:', e.message);
+                }
+            }
+            function releaseWakeState() {
+                if (wakelock) wakelock.release();
+                wakelock = null;
+            }
+
+            return {
+                lockWakeState: lockWakeState,
+                releaseWakeState: releaseWakeState
+            }
+        }
+
+
+        async function startCounter() {
+            const screenControl = ScreenControl();
+            clearAllTimeouts()
+            setButtonBlinking()
+            await screenControl.lockWakeState();
+            const pause = Number.parseInt(document.getElementById("pause").value)
+            const maxCounter = Number.parseInt(document.getElementById("maxCounter").value)
+            const repeatition = Number.parseInt(document.getElementById("repeatition").value)
+            let waitDuration = 0
+            for (var turn = 0; turn < repeatition; turn++) {
+                waitDuration += (turn == 0 ? 0 : 1000) * pause
+                speakTurn(`Turn ${turn + 1} starts`, turn + 1, waitDuration)
+                for (var counter = 1; counter <= maxCounter; counter++) {
+                    waitDuration += 1000
+                    speakCounter(counter, waitDuration)
+                }
+                let endTimeout = waitDuration + 1000
+                speakTurn(`Turn ${turn + 1} ends`, turn + 1, endTimeout)
+            }
+            waitDuration += (pause * 1000)
+            setTimeout(() => stopButtonBlinking(), waitDuration);
+            setTimeout(() => screenControl.releaseWakeState(), waitDuration);
+        }
+        function speakCounter(counter, timeout) {
+            console.log('speakCounter', counter, timeout)
+            setTimeout(() => {
+                document.getElementById("counterDisplay").innerText = counter
+                speak(`${counter}`)
+            }, timeout + 500)
+        }
+
+        function speakTurn(message, turn, timeout) {
+            console.log('speakTurn', turn, timeout)
+            setTimeout(() => {
+                document.getElementById("turnDisplay").innerText = `Turn ${turn}`
+                speak(message)
+            }, timeout + 500)
+
+        }
+
+        function speak(text) {
+            utterance.text = `${text}`;
+            console.log(utterance.text)
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <label for="maxCounter">Max Count</label>
+        <input type="number" name="maxCounter" id="maxCounter" value="10">
+        <label for="repeatition">Repeatition</label>
+        <input type="number" name="repeatition" id="repeatition" value="5">
+        <label for="pause">Pause</label>
+        <input type="number" name="pause" id="pause" value="5">
+        <button class="start-button" id="startButton" onclick="startCounter()">Start</button>
+        <h1 class="display" id="counterDisplay">0</h1>
+        <h6 class="display" id="turnDisplay">Turn -</h6>
+        <button class="stop-button" id="stopButton" onclick="stopCounter()">X</button>
+    </div>
+</body>
+
+</html>
