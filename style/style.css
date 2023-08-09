@@ -7,7 +7,7 @@ body{
 	background-color: var(--clr-magestic-black);
 }
 .main-body-background{
-	background-image: linear-gradient( to bottom right, hsl(0 100% 100% / 2  ),hsl(212 70% 90% / 1  ))
+	background-image: linear-gradient( to bottom right, hsl(0 100% 100% / 2  ),hsl(212 70% 90% / 1  ));
 }
 .cv-name{
 	color: var(--clr-magestic-black);
@@ -43,10 +43,11 @@ body{
 	0 0 0.125em var(--clr-magestic-black),
 	0 0 0.125em currentColor;
 }
-span.h5{
+span.h6{
 	color: var(--clr-magestic-black);
-	text-shadow: 
-	0 0 0.125em currentColor;
+	/*text-shadow: 
+	0 0 0.125em currentColor;*/
+	font-weight: 800;
 }
 .description {
 	color: #777;
@@ -78,6 +79,9 @@ span.h5{
 }
 .descriptionTermBold label {
 	font-weight: bold;
+}
+[class*='col-'] {
+    padding-left: 15px;
 }
 .fa {
     padding: 0.45em;
@@ -112,20 +116,46 @@ span.h5{
 	color: white;
 }
 
+.main-body-border{
+	box-shadow: 5px 10px 2px 0 #5a99e3; 
+	border-radius: 0.5em;  
+  }
+  
 @media print {
 
+    @page { 
+        margin-left: 0.5in;
+        margin-right: 0.5in;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 	html, body {
 	  height:100%; 
 	  margin: 0 !important; 
 	  padding: 0 !important;
 	  overflow: hidden;
 	}
+	.container {
+	    margin-top: 2px !important;
+	    margin-left: 5px !important;
+	}
 	.non-printable {
 		display: none !important;
 	}
+	
+	.main-body-border{
+	    box-shadow: none; 
+        border-radius: 0em;  
+	}
+	.main-body-background{
+    	background-image: none;
+    }
+    .description {
+    	font-size: 0.8em;
+    }
+    #mainContent{
+        width:100%;
+    }
   }
 
-  .main-body-border{
-	box-shadow: 5px 10px 2px 0 #5a99e3; 
-	border-radius: 0.5em;  
-  }
+  
