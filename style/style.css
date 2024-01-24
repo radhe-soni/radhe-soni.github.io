@@ -126,18 +126,17 @@ span.h6{
     @page { 
         margin-left: 0.5in;
         margin-right: 0.5in;
-        margin-top: 0;
-        margin-bottom: 0;
+        margin-top: 0.2in;
+        margin-bottom: 0.2in;
     }
 	html, body {
 	  height:100%; 
-	  margin: 0 !important; 
-	  padding: 0 !important;
 	  overflow: hidden;
 	}
 	.container {
-	    margin-top: 2px !important;
-	    margin-left: 5px !important;
+	    margin-top: 0.2in !important;
+	    padding-left: 5px !important;
+		padding-bottom: 0.2in;
 	}
 	.non-printable {
 		display: none !important;
@@ -151,7 +150,7 @@ span.h6{
     	background-image: none;
     }
     .description {
-    	font-size: 0.8em;
+    	font-size: 1em;
     }
     #mainContent{
         width:100%;
