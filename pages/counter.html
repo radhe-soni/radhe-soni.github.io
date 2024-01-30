@@ -7,8 +7,8 @@
     <title>Counter</title>
     <style>
         :root {
-            --container-width: 12em;
-            --container-height: 12em;
+            --container-width: 13em;
+            --container-height: 14em;
             --button-color-blinking-orange: #e06f23;
             --button-color-start: #10c018;
             --button-color-blinking-grey: #555;
@@ -35,6 +35,16 @@
         }
 
         .start-button {
+            border-radius: 2em;
+            width: calc(var(--container-width)/3);
+            height: calc(var(--container-width)/3);
+            margin: auto;
+            margin-top: 1em;
+            background-color: var(--button-color-start);
+            color: #DDD;
+            border: none;
+        }
+        .next-physio{
             border-radius: 2em;
             width: calc(var(--container-width)/3);
             height: calc(var(--container-width)/3);
@@ -73,6 +83,12 @@
 
         .button-blink {
             animation: blinkingButton 2s infinite;
+        }
+
+        .physio{
+            width: calc(var(--container-width)/1.5);
+            margin: auto;
+            margin-top: 0.2em;
         }
 
         @keyframes blinkingButton {
@@ -184,6 +200,12 @@
             console.log(utterance.text)
             window.speechSynthesis.speak(utterance);
         }
+        const state = {physioCounter:2}
+        function nextPhysio(){
+            document.getElementById("physio").src=`/resources/physio/physio-${state.physioCounter}.png`
+            state.physioCounter = ((state.physioCounter+1) % 10)
+            state.physioCounter = state.physioCounter===0? 1 :state.physioCounter;
+        }
     </script>
 </head>
 
@@ -199,6 +221,8 @@
         <h1 class="display" id="counterDisplay">0</h1>
         <h6 class="display" id="turnDisplay">Turn -</h6>
         <button class="stop-button" id="stopButton" onclick="stopCounter()">X</button>
+        <img class="physio" id="physio" src="/resources/physio/physio-1.png" />
+        <button class="next-physio" id="nextPhysio" onclick="nextPhysio()">Next</button>
     </div>
 </body>
 
