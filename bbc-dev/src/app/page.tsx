@@ -1,10 +1,10 @@
 import styles from "./page.module.css";
-import Navbar from "./globalComponent/navbar";
+import BasicExample from "./globalComponent/navbar";
 
 export default function Home() {
   return (
     <div className={styles.App}>
-        <Navbar />
+        <BasicExample />
         <div>
           <div className={styles.background}>
             <div className={styles.OP}>
