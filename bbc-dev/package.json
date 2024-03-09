@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "rm -rf ../pages/balanced-bite-cafe/* && cp -r out/* ../pages/balanced-bite-cafe/"
   },
   "dependencies": {
     "react": "^18",
