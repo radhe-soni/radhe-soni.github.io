@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <style>
+        :root {
+            --container-width: 10em;
+            --container-height: 7em;
+            --button-color-blinking-orange: #e06f23;
+            --button-color-start: #10c018;
+            --button-color-blinking-grey: #555;
+        }
+
+        body {
+            background-color: #CCC;
+        }
+
+        .container {
+            display: flex;
+            /* flex-flow: column; */
+            max-width: var(--container-width);
+            height: var(--container-height);
+            justify-content: center;
+            flex-direction: column;
+            margin: auto;
+            background-color: #BBB;
+            padding: 1em;
+            margin-top: 5em;
+            border-radius: 1em;
+            font-size: calc(var(--container-width)/6);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .display {
+            margin: auto
+        }
+
+        label,a {
+            margin: auto;
+            font-size: calc(var(--container-width)/14);
+            font-family: cursive;
+        }
+
+        input {
+            border-radius: 1em;
+            background-color: #EEE;
+            max-width: calc(var(--container-width));
+            height: calc(var(--container-width)/6);
+            color: #847e7e;
+            text-align: center;
+            margin: auto;
+        }
+
+    </style>
+    <script>
+        var previousNumber = 0;
+        function generateLink(contantNumber) {
+            if(contantNumber.length > 12){
+                if(previousNumber.length < contantNumber.length){
+                    alert("Contact Number can not be more than 12 digits.")
+                }
+                previousNumber = contantNumber
+                return false;
+            }
+            const waLink = document.getElementById("waLink")
+            const link = `https://wa.me/${contantNumber}`
+            waLink.setAttribute("href", `https://wa.me/${contantNumber}`)
+            waLink.innerText = link
+            previousNumber = contantNumber
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <label for="contantNumber">Enter whatsapp number without '+' sign</label>
+        <input id="contantNumber" name="contantNumber" type="number" oninput="generateLink(this.value)" maxlength="12" />
+        <label for="waLink">Chat with: </label>
+        <a id="waLink" href="https://wa.me/"></a>
+    </div>
+</body>
+
+</html>
