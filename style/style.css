@@ -43,6 +43,10 @@ body{
 	0 0 0.125em var(--clr-magestic-black),
 	0 0 0.125em currentColor;
 }
+
+h3.section-header {
+    font-size: 1.2em;
+}
 span.h6{
 	color: var(--clr-magestic-black);
 	/*text-shadow: 
