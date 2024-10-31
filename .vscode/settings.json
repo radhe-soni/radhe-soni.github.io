@@ -20,5 +20,8 @@
             "icon": "terminal-powershell"
         }
     },
-    "terminal.integrated.tabs.title": "${cwd}"
+    "terminal.integrated.tabs.title": "${cwd}",
+    "files.exclude": {
+        "**/.git": false
+    }
 }
