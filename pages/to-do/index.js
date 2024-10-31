@@ -101,23 +101,29 @@ function addTodoToDOM(todo) {
         }, 1000);
 
         if ('serviceWorker' in navigator && 'Notification' in window) {
-            showNotification('New Task Added', {
-                body: `Task "${todo.task}" has been added.`,
-                icon: './icon-360x360.png'
-            });
             setTimeout(() => {
                 showNotification('Task Reminder', {
                     body: `Task "${todo.task}" has exhausted 50% of its time.`,
-                    icon: './icon-360x360.png'
+                    icon: './icon-360x360.png',
+                    badge: './icon-72x72.png'
                 });
             }, todo.timer * 30000); // 50% of the time
 
             setTimeout(() => {
                 showNotification('Task Reminder', {
                     body: `Task "${todo.task}" has exhausted 80% of its time.`,
-                    icon: './icon-360x360.png'
+                    icon: './icon-360x360.png',
+                    badge: './icon-72x72.png'
                 });
             }, todo.timer * 48000); // 80% of the time
+
+            setTimeout(() => {
+                showNotification('Task Reminder', {
+                    body: `Time up for Task "${todo.task}".`,
+                    icon: './icon-360x360.png',
+                    badge: './icon-72x72.png'
+                });
+            }, todo.timer * 60000); // 100% of the time
         }
     }
 
