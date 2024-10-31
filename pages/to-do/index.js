@@ -101,29 +101,30 @@ function addTodoToDOM(todo) {
         }, 1000);
 
         if ('serviceWorker' in navigator && 'Notification' in window) {
-            setTimeout(() => {
+            todo.timeoutIds = [];
+            todo.timeoutIds.push(setTimeout(() => {
                 showNotification('Task Reminder', {
                     body: `Task "${todo.task}" has exhausted 50% of its time.`,
                     icon: './icon-360x360.png',
                     badge: './icon-72x72.png'
                 });
-            }, todo.timer * 30000); // 50% of the time
+            }, todo.timer * 30000)); // 50% of the time
 
-            setTimeout(() => {
+            todo.timeoutIds.push(setTimeout(() => {
                 showNotification('Task Reminder', {
                     body: `Task "${todo.task}" has exhausted 80% of its time.`,
                     icon: './icon-360x360.png',
                     badge: './icon-72x72.png'
                 });
-            }, todo.timer * 48000); // 80% of the time
+            }, todo.timer * 48000)); // 80% of the time
 
-            setTimeout(() => {
+            todo.timeoutIds.push(setTimeout(() => {
                 showNotification('Task Reminder', {
                     body: `Time up for Task "${todo.task}".`,
                     icon: './icon-360x360.png',
                     badge: './icon-72x72.png'
                 });
-            }, todo.timer * 60000); // 100% of the time
+            }, todo.timer * 60000)); // 100% of the time
         }
     }
 
@@ -133,6 +134,9 @@ function addTodoToDOM(todo) {
     deleteButton.addEventListener('click', function() {
         li.remove();
         removeTodoFromLocalStorage(todo.id);
+        if (todo.timeoutIds) {
+            todo.timeoutIds.forEach(timeoutId => clearTimeout(timeoutId));
+        }
     });
     li.appendChild(deleteButton);
     document.getElementById('todo-list').appendChild(li);
