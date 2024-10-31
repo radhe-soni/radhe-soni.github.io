@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+        }
+        label{
+            font-family: cursive;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            width: 20%;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        .primary {
+            padding: 10px;
+            width: 20%;
+            border: none;
+            background: #28a745;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .timer {
+            margin-left: 10px;
+            color: #dc3545;
+        }
+        .delete-button{
+            background: none;
+            color: #e21d3a;
+            border: 1px solid #e21d3a;
+            cursor: pointer;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Add a new task">
+            <label for="todo-timer">Time limit (in min, optional):</label>
+            <input type="number" id="todo-timer">
+            <button class="primary" type="submit">+</button>
+        </form>
+        <ul id="todo-list"></ul>
+    </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            }).catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        }
+
+        document.getElementById('todo-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('todo-input');
+            const timerInput = document.getElementById('todo-timer');
+            const newTask = input.value.trim();
+            const timerValue = parseInt(timerInput.value.trim(), 10);
+
+            if (newTask) {
+                const startTime = Date.now();
+                const endTime = !isNaN(timerValue) && timerValue > 0 ? startTime + timerValue * 60000 : null;
+                const todo = {
+                    task: newTask,
+                    timer: timerValue,
+                    startTime: startTime,
+                    endTime: endTime,
+                    id: Date.now()
+                };
+                addTodoToDOM(todo);
+                saveTodoToLocalStorage(todo);
+                input.value = '';
+                timerInput.value = '';
+            }
+        });
+        function addTodoToDOM(todo) {
+            const li = document.createElement('li');
+            li.textContent = todo.task;
+            li.dataset.id = todo.id;
+
+            if (todo.timer !== null) {
+                const timerSpan = document.createElement('span');
+                timerSpan.className = 'timer';
+                li.appendChild(timerSpan);
+
+                const endTime = Date.now() + todo.timer * 60000;
+                const interval = setInterval(() => {
+                    const remainingTime = Math.max(0, todo.endTime - Date.now());
+                    const minutes = Math.floor(remainingTime / 60000);
+                    const seconds = Math.floor((remainingTime % 60000) / 1000);
+                    timerSpan.textContent = ` (${minutes}:${seconds < 10 ? '0' : ''}${seconds} min)`;
+
+                    if (remainingTime <= 0) {
+                        clearInterval(interval);
+                        timerSpan.textContent = ' (Time up!)';
+                    }
+                }, 1000);
+
+                if ('serviceWorker' in navigator && 'Notification' in window) {
+                    navigator.serviceWorker.ready.then(function(registration) {
+                        registration.showNotification('Task Added', {
+                            body: `Task "${todo.task}" added with a ${todo.timer} minute timer.`,
+                            icon: '/images/icon.png'
+                        });
+
+                        setTimeout(() => {
+                            registration.showNotification('Task Reminder', {
+                                body: `Task "${todo.task}" has exhausted 50% of its time.`,
+                                icon: '/images/icon.png'
+                            });
+                        }, todo.timer * 30000); // 50% of the time
+
+                        setTimeout(() => {
+                            registration.showNotification('Task Reminder', {
+                                body: `Task "${todo.task}" has exhausted 80% of its time.`,
+                                icon: '/images/icon.png'
+                            });
+                        }, todo.timer * 48000); // 80% of the time
+                    });
+                }
+            }
+
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'delete-button';
+            deleteButton.innerHTML = '&#x1F5D1;'; // Trash can symbol
+            deleteButton.addEventListener('click', function() {
+                li.remove();
+                removeTodoFromLocalStorage(todo.id);
+            });
+            li.appendChild(deleteButton);
+            document.getElementById('todo-list').appendChild(li);
+        }
+        function saveTodoToLocalStorage(todo) {
+            const todos = JSON.parse(localStorage.getItem('todos')) || [];
+            todos.push(todo);
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function removeTodoFromLocalStorage(id) {
+            let todos = JSON.parse(localStorage.getItem('todos')) || [];
+            todos = todos.filter(todo => todo.id !== id);
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function loadTodos() {
+            const todos = JSON.parse(localStorage.getItem('todos')) || [];
+            todos.forEach(todo => addTodoToDOM(todo));
+        }
+
+        document.addEventListener('DOMContentLoaded', loadTodos);
+    </script>
+</body>
+</html>
