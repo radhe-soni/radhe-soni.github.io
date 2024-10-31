@@ -1,6 +1,6 @@
 {
   "name": "To-Do List",
-  "short_name": "To-Do",
+  "short_name": "ToDo",
   "start_url": "/pages/to-do/",
   "display": "standalone",
   "background_color": "#ffffff",
