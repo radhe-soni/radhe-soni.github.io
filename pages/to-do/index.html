@@ -186,20 +186,20 @@
                     navigator.serviceWorker.ready.then(function(registration) {
                         registration.showNotification('Task Added', {
                             body: `Task "${todo.task}" added with a ${todo.timer} minute timer.`,
-                            icon: '/images/icon.png'
+                            icon: './icon-360x360.png'
                         });
 
                         setTimeout(() => {
                             registration.showNotification('Task Reminder', {
                                 body: `Task "${todo.task}" has exhausted 50% of its time.`,
-                                icon: '/images/icon.png'
+                                icon: './icon-360x360.png'
                             });
                         }, todo.timer * 30000); // 50% of the time
 
                         setTimeout(() => {
                             registration.showNotification('Task Reminder', {
                                 body: `Task "${todo.task}" has exhausted 80% of its time.`,
-                                icon: '/images/icon.png'
+                                icon: './icon-360x360.png'
                             });
                         }, todo.timer * 48000); // 80% of the time
                     });
