@@ -102,8 +102,8 @@ function addTodoToDOM(todo) {
 
         if ('serviceWorker' in navigator && 'Notification' in window) {
             showNotification('New Task Added', {
-                body: `Task "${newTask}" has been added.`,
-                icon: '/icon-192x192.png'
+                body: `Task "${todo.task}" has been added.`,
+                icon: './icon-360x360.png'
             });
             setTimeout(() => {
                 showNotification('Task Reminder', {
