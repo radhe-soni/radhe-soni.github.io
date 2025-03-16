@@ -1,5 +1,5 @@
 {
-    "terminal.integrated.cwd": "${workspaceFolder}/bbc-dev",
+    "terminal.integrated.cwd": "${workspaceFolder}",
     "terminal.integrated.profiles.linux": {
         "bash": {
             "path": "bash",

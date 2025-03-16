@@ -101,30 +101,28 @@ function addTodoToDOM(todo) {
         }, 1000);
 
         if ('serviceWorker' in navigator && 'Notification' in window) {
+            const halfTime = todo.timerValue * 30000;
+            const eightyPercentTime = todo.timerValue * 48000;
+            const fullTime = todo.timerValue * 60000;
+
             todo.timeoutIds = [];
             todo.timeoutIds.push(setTimeout(() => {
-                showNotification('Task Reminder', {
-                    body: `Task "${todo.task}" has exhausted 50% of its time.`,
-                    icon: './icon-360x360.png',
-                    badge: './icon-72x72.png'
+                navigator.serviceWorker.ready.then(function(registration) {
+                    registration.sync.register('sync-todo-' + todo.id + '-50');
                 });
-            }, todo.timer * 30000)); // 50% of the time
+            }, halfTime)); // 50% of the time
 
             todo.timeoutIds.push(setTimeout(() => {
-                showNotification('Task Reminder', {
-                    body: `Task "${todo.task}" has exhausted 80% of its time.`,
-                    icon: './icon-360x360.png',
-                    badge: './icon-72x72.png'
+                navigator.serviceWorker.ready.then(function(registration) {
+                    registration.sync.register('sync-todo-' + todo.id + '-80');
                 });
-            }, todo.timer * 48000)); // 80% of the time
+            }, eightyPercentTime)); // 80% of the time
 
             todo.timeoutIds.push(setTimeout(() => {
-                showNotification('Task Reminder', {
-                    body: `Time up for Task "${todo.task}".`,
-                    icon: './icon-360x360.png',
-                    badge: './icon-72x72.png'
+                navigator.serviceWorker.ready.then(function(registration) {
+                    registration.sync.register('sync-todo-' + todo.id + '-100');
                 });
-            }, todo.timer * 60000)); // 100% of the time
+            }, fullTime)); // 100% of the time
         }
     }
 
@@ -142,19 +140,15 @@ function addTodoToDOM(todo) {
     document.getElementById('todo-list').appendChild(li);
 }
 function saveTodoToLocalStorage(todo) {
-    const todos = JSON.parse(localStorage.getItem('todos')) || [];
-    todos.push(todo);
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem('todo-'+todo.id, JSON.stringify(todo));
 }
 
 function removeTodoFromLocalStorage(id) {
-    let todos = JSON.parse(localStorage.getItem('todos')) || [];
-    todos = todos.filter(todo => todo.id !== id);
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.removeItem('todo-'+id);
 }
 
 function loadTodos() {
-    const todos = JSON.parse(localStorage.getItem('todos')) || [];
+    const todos = keys.filter(key => key.startsWith('todos')).map(key => JSON.parse(localStorage.getItem(key)));
     todos.forEach(todo => addTodoToDOM(todo));
 }
 
