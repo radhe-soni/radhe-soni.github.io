@@ -30,19 +30,32 @@
 
 .details-text h3 {
     color: #667eea;
-    font-size: 1.2em;
+    font-size: 1em;
     margin-bottom: 5px;
 }
 
 .details-text p {
     color: #666;
-    font-size: 1em;
+    font-size: 0.8em;
 }
 
 .venue-map {
     text-align: center;
     margin-top: 30px;
 }
+
+.calendar a {
+    background: linear-gradient(135deg, #e2e4ee 0%, #e9dfa0 100%);
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1em;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Georgia', serif;
+    text-decoration: none;
+}
+
 
 .action-buttons {
     display: flex;

@@ -24,6 +24,7 @@
             overflow-x: hidden;
         }
 
+       
         .invitation-container {
             max-width: 800px;
             width: 100%;
@@ -116,15 +117,18 @@
 
         .content {
             padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
         }
 
         .couple-names {
             text-align: center;
             margin-bottom: 40px;
+            margin-right:5em
         }
 
         .couple-names h2 {
-            font-size: 2.5em;
+            font-size: 2em;
             color: #667eea;
             margin: 10px 0;
             animation: fadeInUp 1s ease-out 0.3s both;
@@ -151,13 +155,20 @@
 
         .message {
             text-align: center;
-            font-size: 1.5em;
-            line-height: 1.8;
+            font-size: 1em;
+            line-height: 1.5;
             color: #555;
             margin-bottom: 40px;
             animation: fadeInUp 1s ease-out 0.7s both;
         }
 
+        .begin-message{
+            text-align: left;
+        }
+        .end-message{
+            text-align: right;
+            margin-left: 2em;
+        }
         
         .footer {
             text-align: center;
@@ -184,7 +195,7 @@
         .guest-greeting {
             text-align: center;
             font-size: 1.3em;
-            color: #764ba2;
+            color: #f8f5fb;
             margin-bottom: 20px;
             font-weight: bold;
             animation: fadeInUp 1s ease-out 0.2s both;
@@ -209,25 +220,25 @@
                 <button onclick="handleRSVP()">💌 RSVP</button>
             </div>
             <h1>Wedding Invitation</h1>
-            <p>Together with their families</p>
+            <div id="guestGreeting" class="guest-greeting"></div>
         </div>
 
         <div class="content">
-            <div id="guestGreeting" class="guest-greeting"></div>
-            
-            <div class="couple-names">
-                <h2>Radhe Kishan</h2>
-                <div class="and">&</div>
-                <h2>Neeshu</h2>
+            <div  id="message_content">
+                <div class="message begin-message"><p>Together with their families</p></div>
+                <div class="couple-names">
+                    <h2>Radhe Kishan</h2>
+                    <div class="and">&</div>
+                    <h2>Neeshu</h2>
+                </div>
+
+                <!-- <div class="hearts">💕</div> -->
+
+                <div class="message end-message">
+                    <p>joyfully invite you to celebrate our wedding ceremony.<br>
+                    Your presence will make our special day even more memorable.</p>
+                </div>
             </div>
-
-            <div class="hearts">💕</div>
-
-            <div class="message">
-                <p>We joyfully invite you to celebrate our wedding ceremony.<br>
-                Your presence will make our special day even more memorable.</p>
-            </div>
-
             <div class="decorative-line"></div>
 
             <div class="details">
@@ -236,16 +247,18 @@
                     <div class="details-text">
                         <h3>Date</h3>
                         <p>Saturday, November 29, 2025</p>
+                        <!-- https://calendar.google.com/calendar/u/0/r/eventedit -->
+                        <div class="calendar"><a  href="https://www.google.com/calendar/render?action=TEMPLATE&text=Radhe+%26+Neeshu+Wedding&dates=20251128T050000Z/20251129T170000Z&details=Join+us+to+celebrate+the+wedding+of+Radhe+Kishan+and+Neeshu.&location=The+K.P.+Resort,+NH-27,+Jhansi+Kanpur+Highway,+Nearby+Chirgaon,+Distt.+Jhansi(U.P.)&sf=true&output=xml" target="_blank" style="font-size: 0.9em; color: #764ba2; text-decoration: underline; margin-top: 5px; display: inline-block;">Add to Google Calendar</a></div>
                     </div>
                 </div>
 
-                <div class="details-item">
+                <!-- <div class="details-item">
                     <div class="icon">⏰</div>
                     <div class="details-text">
                         <h3>Time</h3>
                         <p>11:00 AM onwards</p>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="details-item">
                     <div class="icon">📍</div>
@@ -359,40 +372,52 @@
             }
         });
 
-        // Add floating hearts animation
-        function createFloatingHeart() {
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.style.position = 'fixed';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.bottom = '-50px';
-            heart.style.fontSize = '20px';
-            heart.style.opacity = '0.6';
-            heart.style.pointerEvents = 'none';
-            heart.style.zIndex = '1000';
-            heart.style.animation = 'floatUp 8s linear';
+        function createFloatingOms(symbol) {
+            const messageContent = document.getElementById('message_content');
+            if (!messageContent) return;
             
-            document.body.appendChild(heart);
+            const om = document.createElement('div');
+            om.innerHTML = symbol; // Use the passed symbol
+            om.style.position = 'absolute';
+            om.style.left = Math.random() * 90 + '%';
+            om.style.top = Math.random() * 90 + '%';
+            om.style.color = 'red';
+            om.style.fontSize = '40px';
+            om.style.opacity = '0';
+            om.style.pointerEvents = 'none';
+            om.style.zIndex = '10';
+            om.style.animation = 'fadeInOut 3s ease-in-out';
+            
+            messageContent.appendChild(om);
             
             setTimeout(() => {
-                heart.remove();
-            }, 8000);
+                om.remove();
+            }, 3000);
         }
 
-        // Add CSS for floating animation
+        // Add CSS for fade in/out animation
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes floatUp {
-                to {
-                    transform: translateY(-100vh) rotate(360deg);
+            @keyframes fadeInOut {
+                0% {
                     opacity: 0;
+                    transform: scale(0.5);
+                }
+                50% {
+                    opacity: 0.3;
+                    transform: scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(0.5);
                 }
             }
         `;
         document.head.appendChild(style);
 
-        // Create hearts periodically
-        setInterval(createFloatingHeart, 3000);
+        // Create decorations periodically
+        setInterval(() => createFloatingOms('&#21328;'), 3000);
+        setInterval(() => createFloatingOms('&#2384;'), 3000);
 
         // Add glowing animation to RSVP buttons every 5 seconds
         function glowRSVPButtons() {
