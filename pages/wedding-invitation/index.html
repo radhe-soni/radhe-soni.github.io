@@ -62,6 +62,31 @@
             transform: translate(-50%, -50%);
         }
 
+        .header-rsvp {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .header-rsvp button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-family: 'Georgia', serif;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-rsvp button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+        }
+
         .header h1 {
             font-size: 3em;
             margin-bottom: 10px;
@@ -176,7 +201,14 @@
             margin-top: 30px;
         }
 
-        .venue-map button {
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
@@ -188,9 +220,17 @@
             font-family: 'Georgia', serif;
         }
 
-        .venue-map button:hover {
+        .action-buttons button:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .action-buttons .rsvp-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .action-buttons .rsvp-button:hover {
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
         }
 
         .footer {
@@ -215,6 +255,15 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
+        .guest-greeting {
+            text-align: center;
+            font-size: 1.3em;
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-weight: bold;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
@@ -222,6 +271,118 @@
             50% {
                 transform: scale(1.1);
             }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+                transform: scale(1);
+            }
+            25% {
+                box-shadow: 0 0 30px rgba(245, 87, 108, 0.8), 0 0 50px rgba(245, 87, 108, 0.6);
+                transform: scale(1.05);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(245, 87, 108, 1), 0 0 70px rgba(245, 87, 108, 0.8);
+                transform: scale(1.08);
+            }
+            75% {
+                box-shadow: 0 0 30px rgba(245, 87, 108, 0.8), 0 0 50px rgba(245, 87, 108, 0.6);
+                transform: scale(1.05);
+            }
+        }
+
+        .rsvp-glow {
+            animation: glow 2s ease-in-out;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            position: relative;
+            animation: slideUp 0.4s ease;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.8em;
+            font-weight: normal;
+        }
+
+        .close-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            line-height: 1;
+        }
+
+        .close-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-body {
+            padding: 0;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         @media (max-width: 768px) {
@@ -241,6 +402,16 @@
                 padding: 40px 20px;
             }
 
+            .header-rsvp {
+                top: 10px;
+                right: 10px;
+            }
+
+            .header-rsvp button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+
             .details-item {
                 flex-direction: column;
                 text-align: center;
@@ -250,17 +421,43 @@
                 margin-right: 0;
                 margin-bottom: 10px;
             }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-buttons button {
+                width: 100%;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-height: 80vh;
+            }
+
+            .modal-header h2 {
+                font-size: 1.4em;
+            }
+
+            .modal-body {
+                height: 500px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="invitation-container">
         <div class="header">
+            <div class="header-rsvp">
+                <button onclick="handleRSVP()">💌 RSVP</button>
+            </div>
             <h1>Wedding Invitation</h1>
             <p>Together with their families</p>
         </div>
 
         <div class="content">
+            <div id="guestGreeting" class="guest-greeting"></div>
+            
             <div class="couple-names">
                 <h2>Radhe Kishan Soni</h2>
                 <div class="and">and</div>
@@ -307,7 +504,10 @@
             </div>
 
             <div class="venue-map">
-                <button onclick="openMap()">📍 View Location on Map</button>
+                <div class="action-buttons">
+                    <button onclick="openMap()">📍 View Location on Map</button>
+                    <button class="rsvp-button" onclick="handleRSVP()">💌 RSVP</button>
+                </div>
             </div>
         </div>
 
@@ -317,7 +517,56 @@
         </div>
     </div>
 
+    <!-- RSVP Modal -->
+    <div id="rsvpModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💌 RSVP to Our Wedding</h2>
+                <button class="close-button" onclick="closeRSVPModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Replace the src URL with your actual Google Form embed URL -->
+                <iframe 
+                    id="rsvpIframe"
+                    src="https://docs.google.com/forms/d/e/1FAIpQLScmw3oHJ0gysIsW-89ZTTt7oUlwbVCvhxcdJxNL-ZT6MZR7ew/viewform?embedded=true&usp=pp_url"
+                    frameborder="0"
+                    marginheight="0"
+                    marginwidth="0">
+                    Loading…
+                </iframe>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Get guest name from URL parameter
+        function getGuestNameFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('guest') || urlParams.get('name') || '';
+        }
+
+        // Initialize page with guest name
+        function initializePage() {
+            const guestName = getGuestNameFromURL();
+            
+            if (guestName) {
+                // Display personalized greeting
+                const greetingElement = document.getElementById('guestGreeting');
+                greetingElement.textContent = `Dear ${decodeURIComponent(guestName)},`;
+                
+                // Update Google Form with guest name
+                updateFormWithGuestName(guestName);
+            }
+        }
+
+        // Update the Google Form iframe with guest name
+        function updateFormWithGuestName(guestName) {
+            const iframe = document.getElementById('rsvpIframe');
+            const currentSrc = iframe.src;
+            const encodedName = encodeURIComponent(guestName);
+            iframe.src = `${currentSrc}&entry.1472142018=${encodedName}`;
+        }
+
         function openMap() {
             // Replace with actual venue address/coordinates
             const address = "The K.P. Resort, NH-27, Jhansi Kanpur Highway, Nearby Chirgaon, Distt. Jhansi(U.P.)";
@@ -325,6 +574,33 @@
             window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, '_blank');
             window.open(`https://maps.app.goo.gl/pUB6N6dAM3zNjXo56`, '_blank');
         }
+
+        function handleRSVP() {
+            const modal = document.getElementById('rsvpModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        function closeRSVPModal() {
+            const modal = document.getElementById('rsvpModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('rsvpModal');
+            if (event.target === modal) {
+                closeRSVPModal();
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeRSVPModal();
+            }
+        });
 
         // Add floating hearts animation
         function createFloatingHeart() {
@@ -360,6 +636,26 @@
 
         // Create hearts periodically
         setInterval(createFloatingHeart, 3000);
+
+        // Add glowing animation to RSVP buttons every 5 seconds
+        function glowRSVPButtons() {
+            const rsvpButtons = document.querySelectorAll('.rsvp-button, .header-rsvp button');
+            rsvpButtons.forEach(button => {
+                button.classList.add('rsvp-glow');
+                setTimeout(() => {
+                    button.classList.remove('rsvp-glow');
+                }, 2000); // Remove after animation completes (2 seconds)
+            });
+        }
+
+        // Trigger glow every 5 seconds
+        setInterval(glowRSVPButtons, 5000);
+
+        // Initial glow after 2 seconds
+        setTimeout(glowRSVPButtons, 2000);
+
+        // Initialize page on load
+        window.addEventListener('DOMContentLoaded', initializePage);
     </script>
 </body>
 </html>
