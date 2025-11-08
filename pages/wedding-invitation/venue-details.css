@@ -45,10 +45,11 @@
 }
 
 .calendar a {
+    display: flex;
     background: linear-gradient(135deg, #e2e4ee 0%, #e9dfa0 100%);
     border: none;
     padding: 15px 40px;
-    font-size: 1.1em;
+    font-size: 0.8em;
     border-radius: 50px;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -69,7 +70,7 @@
     color: white;
     border: none;
     padding: 15px 40px;
-    font-size: 1.1em;
+    font-size: 0.8em;
     border-radius: 50px;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;

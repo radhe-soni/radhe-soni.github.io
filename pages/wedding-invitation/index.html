@@ -124,7 +124,8 @@
         .couple-names {
             text-align: center;
             margin-bottom: 40px;
-            margin-right:5em
+            margin-right:5em;
+            line-height: 0.5;
         }
 
         .couple-names h2 {
@@ -243,12 +244,11 @@
 
             <div class="details">
                 <div class="details-item">
-                    <div class="icon">📅</div>
+                    <div class="icon">🗓️</div>
                     <div class="details-text">
                         <h3>Date</h3>
-                        <p>Saturday, November 29, 2025</p>
+                        <p>Friday, November <b>28</b>, 2025 - Saturday, November <b>29</b>, 2025</p>
                         <!-- https://calendar.google.com/calendar/u/0/r/eventedit -->
-                        <div class="calendar"><a  href="https://www.google.com/calendar/render?action=TEMPLATE&text=Radhe+%26+Neeshu+Wedding&dates=20251128T050000Z/20251129T170000Z&details=Join+us+to+celebrate+the+wedding+of+Radhe+Kishan+and+Neeshu.&location=The+K.P.+Resort,+NH-27,+Jhansi+Kanpur+Highway,+Nearby+Chirgaon,+Distt.+Jhansi(U.P.)&sf=true&output=xml" target="_blank" style="font-size: 0.9em; color: #764ba2; text-decoration: underline; margin-top: 5px; display: inline-block;">Add to Google Calendar</a></div>
                     </div>
                 </div>
 
@@ -275,8 +275,10 @@
 
             <div class="venue-map">
                 <div class="action-buttons">
-                    <button onclick="openMap()">📍 View Location on Map</button>
+                    <button onclick="openMap()">📍 Locate Venue</button>
                     <button class="rsvp-button" onclick="handleRSVP()">💌 RSVP</button>
+                    <div class="calendar"><a id="calendar_anchor" href="https://www.google.com/calendar/render?action=TEMPLATE&text=Radhe+%26+Neeshu+Wedding&dates=20251128T050000Z/20251129T170000Z&details=Join+us+to+celebrate+the+wedding+of+Radhe+Kishan+and+Neeshu.&location=The+K.P.+Resort,+NH-27,+Jhansi+Kanpur+Highway,+Nearby+Chirgaon,+Distt.+Jhansi(U.P.)&sf=true&output=xml" target="_blank" style="font-size: 0.9em; color: #764ba2; text-decoration: underline; margin-top: 5px; display: inline-block;">Add to Google Calendar</a></div>
+
                 </div>
             </div>
         </div>
@@ -355,6 +357,7 @@
             const modal = document.getElementById('rsvpModal');
             modal.classList.remove('active');
             document.body.style.overflow = 'auto'; // Re-enable scrolling
+            document.getElementById('calendar_anchor').click();
         }
 
         // Close modal when clicking outside of it
