@@ -1,0 +1,45 @@
+ @media (max-width: 768px) {
+     .header h1 {
+         font-size: 2em;
+     }
+
+     .couple-names h2 {
+         font-size: 1.8em;
+     }
+
+     .content {
+         padding: 30px 20px;
+     }
+
+     .header {
+         padding: 40px 20px;
+     }
+
+     .header-rsvp {
+         top: 10px;
+         right: 10px;
+     }
+
+     .header-rsvp button {
+         padding: 10px 20px;
+         font-size: 0.9em;
+     }
+
+     .details-item {
+         flex-direction: column;
+         text-align: center;
+     }
+
+     .icon {
+         margin-right: 0;
+         margin-bottom: 10px;
+     }
+
+     .action-buttons {
+         flex-direction: column;
+     }
+
+     .action-buttons button {
+         width: 100%;
+     }
+ }

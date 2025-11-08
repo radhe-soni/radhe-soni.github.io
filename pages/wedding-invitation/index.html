@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radhe & Neeshu - Wedding Invitation</title>
+    <link rel="stylesheet" href="google-form.css">
+    <link rel="stylesheet" href="venue-details.css">
     <style>
         * {
             margin: 0;
@@ -12,7 +14,7 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: "Brush Script MT", cursive;
             background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
             min-height: 100vh;
             display: flex;
@@ -129,7 +131,7 @@
         }
 
         .couple-names .and {
-            font-size: 1.5em;
+            font-size: 2.0em;
             color: #764ba2;
             font-style: italic;
             margin: 20px 0;
@@ -149,90 +151,14 @@
 
         .message {
             text-align: center;
-            font-size: 1.1em;
+            font-size: 1.5em;
             line-height: 1.8;
             color: #555;
             margin-bottom: 40px;
             animation: fadeInUp 1s ease-out 0.7s both;
         }
 
-        .details {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            animation: fadeInUp 1s ease-out 0.9s both;
-        }
-
-        .details-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .details-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .icon {
-            font-size: 2em;
-            margin-right: 20px;
-            min-width: 40px;
-            text-align: center;
-        }
-
-        .details-text h3 {
-            color: #667eea;
-            font-size: 1.2em;
-            margin-bottom: 5px;
-        }
-
-        .details-text p {
-            color: #666;
-            font-size: 1em;
-        }
-
-        .venue-map {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .action-buttons button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1em;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            font-family: 'Georgia', serif;
-        }
-
-        .action-buttons button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        .action-buttons .rsvp-button {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .action-buttons .rsvp-button:hover {
-            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
-        }
-
+        
         .footer {
             text-align: center;
             padding: 30px;
@@ -273,177 +199,8 @@
             }
         }
 
-        @keyframes glow {
-            0%, 100% {
-                box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
-                transform: scale(1);
-            }
-            25% {
-                box-shadow: 0 0 30px rgba(245, 87, 108, 0.8), 0 0 50px rgba(245, 87, 108, 0.6);
-                transform: scale(1.05);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(245, 87, 108, 1), 0 0 70px rgba(245, 87, 108, 0.8);
-                transform: scale(1.08);
-            }
-            75% {
-                box-shadow: 0 0 30px rgba(245, 87, 108, 0.8), 0 0 50px rgba(245, 87, 108, 0.6);
-                transform: scale(1.05);
-            }
-        }
-
-        .rsvp-glow {
-            animation: glow 2s ease-in-out;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 700px;
-            max-height: 90vh;
-            position: relative;
-            animation: slideUp 0.4s ease;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 25px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-size: 1.8em;
-            font-weight: normal;
-        }
-
-        .close-button {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            font-size: 2em;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-            line-height: 1;
-        }
-
-        .close-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .modal-body {
-            padding: 0;
-            height: 600px;
-            overflow: hidden;
-        }
-
-        .modal-body iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
-            }
-
-            .couple-names h2 {
-                font-size: 1.8em;
-            }
-
-            .content {
-                padding: 30px 20px;
-            }
-
-            .header {
-                padding: 40px 20px;
-            }
-
-            .header-rsvp {
-                top: 10px;
-                right: 10px;
-            }
-
-            .header-rsvp button {
-                padding: 10px 20px;
-                font-size: 0.9em;
-            }
-
-            .details-item {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .icon {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-            }
-
-            .action-buttons button {
-                width: 100%;
-            }
-
-            .modal-content {
-                width: 95%;
-                max-height: 80vh;
-            }
-
-            .modal-header h2 {
-                font-size: 1.4em;
-            }
-
-            .modal-body {
-                height: 500px;
-            }
-        }
     </style>
+    <link rel="stylesheet" href="small-media.css">
 </head>
 <body>
     <div class="invitation-container">
@@ -459,9 +216,9 @@
             <div id="guestGreeting" class="guest-greeting"></div>
             
             <div class="couple-names">
-                <h2>Radhe Kishan Soni</h2>
-                <div class="and">and</div>
-                <h2>Neeshu Sharma</h2>
+                <h2>Radhe Kishan</h2>
+                <div class="and">&</div>
+                <h2>Neeshu</h2>
             </div>
 
             <div class="hearts">💕</div>
@@ -528,7 +285,7 @@
                 <!-- Replace the src URL with your actual Google Form embed URL -->
                 <iframe 
                     id="rsvpIframe"
-                    src="https://docs.google.com/forms/d/e/1FAIpQLScmw3oHJ0gysIsW-89ZTTt7oUlwbVCvhxcdJxNL-ZT6MZR7ew/viewform?embedded=true&usp=pp_url"
+                    src="https://docs.google.com/forms/d/e/1FAIpQLScmw3oHJ0gysIsW-89ZTTt7oUlwbVCvhxcdJxNL-ZT6MZR7ew/viewform?embedded=true&usp=sharing&ouid=109998130078885719467"
                     frameborder="0"
                     marginheight="0"
                     marginwidth="0">
