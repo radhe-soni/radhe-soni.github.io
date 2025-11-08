@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radhe & Neeshu - Wedding Invitation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .invitation-container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '❤️';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: normal;
+            letter-spacing: 2px;
+            animation: slideDown 1s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header p {
+            font-size: 1.2em;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .couple-names {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .couple-names h2 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin: 10px 0;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .couple-names .and {
+            font-size: 1.5em;
+            color: #764ba2;
+            font-style: italic;
+            margin: 20px 0;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message {
+            text-align: center;
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .details {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .details-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .details-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .icon {
+            font-size: 2em;
+            margin-right: 20px;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .details-text h3 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .details-text p {
+            color: #666;
+            font-size: 1em;
+        }
+
+        .venue-map {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .venue-map button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-family: 'Georgia', serif;
+        }
+
+        .venue-map button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            color: #666;
+            font-style: italic;
+        }
+
+        .decorative-line {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+            margin: 30px auto;
+        }
+
+        .hearts {
+            text-align: center;
+            font-size: 2em;
+            margin: 20px 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .couple-names h2 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .header {
+                padding: 40px 20px;
+            }
+
+            .details-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-container">
+        <div class="header">
+            <h1>Wedding Invitation</h1>
+            <p>Together with their families</p>
+        </div>
+
+        <div class="content">
+            <div class="couple-names">
+                <h2>Radhe Kishan Soni</h2>
+                <div class="and">and</div>
+                <h2>Neeshu Sharma</h2>
+            </div>
+
+            <div class="hearts">💕</div>
+
+            <div class="message">
+                <p>We joyfully invite you to celebrate our wedding ceremony.<br>
+                Your presence will make our special day even more memorable.</p>
+            </div>
+
+            <div class="decorative-line"></div>
+
+            <div class="details">
+                <div class="details-item">
+                    <div class="icon">📅</div>
+                    <div class="details-text">
+                        <h3>Date</h3>
+                        <p>Saturday, November 29, 2025</p>
+                    </div>
+                </div>
+
+                <div class="details-item">
+                    <div class="icon">⏰</div>
+                    <div class="details-text">
+                        <h3>Time</h3>
+                        <p>11:00 AM onwards</p>
+                    </div>
+                </div>
+
+                <div class="details-item">
+                    <div class="icon">📍</div>
+                    <div class="details-text">
+                        <h3>Venue</h3>
+                        <p>The K.P. Resort<br>
+                        NH-27, Jhansi Kanpur Highway<br/>
+                        Nearby Chirgaon, Distt. Jhansi(U.P.)<br/>
+                        Hotel Reception: 6306577424
+                    </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="venue-map">
+                <button onclick="openMap()">📍 View Location on Map</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>We look forward to celebrating with you! 🎉</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">~ Radhe & Neeshu ~</p>
+        </div>
+    </div>
+
+    <script>
+        function openMap() {
+            // Replace with actual venue address/coordinates
+            const address = "The K.P. Resort, NH-27, Jhansi Kanpur Highway, Nearby Chirgaon, Distt. Jhansi(U.P.)";
+            const encodedAddress = encodeURIComponent(address);
+            window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, '_blank');
+            window.open(`https://maps.app.goo.gl/pUB6N6dAM3zNjXo56`, '_blank');
+        }
+
+        // Add floating hearts animation
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.bottom = '-50px';
+            heart.style.fontSize = '20px';
+            heart.style.opacity = '0.6';
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '1000';
+            heart.style.animation = 'floatUp 8s linear';
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Add CSS for floating animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                to {
+                    transform: translateY(-100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Create hearts periodically
+        setInterval(createFloatingHeart, 3000);
+    </script>
+</body>
+</html>
