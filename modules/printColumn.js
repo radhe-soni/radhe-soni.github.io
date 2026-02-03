@@ -47,19 +47,19 @@ class PrintRows {
         return itemId + '_cell_' + 0;
     }
     get grandTotal() {
-        return this.rows.map(row => parseFloat(row.total)).reduce((x, y) => x + y).toFixed(2);
+        return this.rows.map(row => row.total).reduce((x, y) => x + y, 0).toFixed(2);
     }
     get gstTotal() {
-        return this.rows.map(row => parseFloat(row.gst)).reduce((x, y) => x + y).toFixed(2);
+        return this.rows.map(row => row.gst).reduce((x, y) => x + y, 0).toFixed(2);
     }
     get weightTotal() {
-        return this.rows.map(row => row.getStandardWeight()).reduce((x, y) => x + y).toFixed(3);
+        return this.rows.map(row => row.getStandardWeight()).reduce((x, y) => x + y, 0).toFixed(3);
     }
     get fineWeightTotal() {
-        return this.rows.map(row => row.fineWeight).reduce((x, y) => x + y).toFixed(3);
+        return this.rows.map(row => row.fineWeight).reduce((x, y) => x + y, 0).toFixed(3);
     }
     get labourChargeTotal() {
-        return this.rows.map(row => row.labourCharge).reduce((x, y) => x + y).toFixed(2);
+        return this.rows.map(row => row.labourCharge).reduce((x, y) => x + y, 0).toFixed(2);
     }
 }
 class PrintRow {
@@ -79,25 +79,26 @@ class PrintRow {
             this.sno = index + 1
     }
     getStandardWeight() {
-        return (unitMultiplier[this.weightUnit] * this.weight)
+        return Number((unitMultiplier[this.weightUnit] * this.weight).toFixed(3));
     }
     get fineWeight() {
-        return ((this.getStandardWeight() * this.purity / 100)
-            + (this.pieces * this.wastage * unitMultiplier[this.wastageUnit]));
+        return Number(((this.getStandardWeight() * this.purity / 100)
+            + (this.pieces * this.wastage * unitMultiplier[this.wastageUnit])).toFixed(3));
     }
     get labourCharge() {
         if (this.labourRateUnit == 'pieces') {
-            return (this.labourRate * this.pieces);
+            return Number((this.labourRate * this.pieces).toFixed(2));
         }
-        return (this.labourRate / unitMultiplier[this.labourRateUnit]) * this.getStandardWeight().toFixed(2);
+        const charge = (this.labourRate / unitMultiplier[this.labourRateUnit]) * this.getStandardWeight();
+        return Number(charge.toFixed(2));
     }
     get total() {
         this.sumTotal = (this.rate / unitMultiplier[this.rateUnit]) *
             this.fineWeight + this.labourCharge;
-        return this.sumTotal.toFixed(2);
+        return Number(this.sumTotal.toFixed(2));
     }
     get gst() {
-        return (this.sumTotal * 0.03).toFixed(2);
+        return Number((this.sumTotal * 0.03).toFixed(2));
     }
     get index() {
         return this.sno - 1;

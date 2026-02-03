@@ -86,15 +86,20 @@ function getUnitSymbol(itemId) {
 function updateLabourCharge() {
 	let cellId = printRows.getCurrentCellId('labourCharge');
 	let cell = cells[cellId];
-	cell.innerHTML = printRows.getCurrentRow().labourCharge;
+	cell.innerHTML = printRows.getCurrentRow().labourCharge.toFixed(2);
 }
 function updateSubTotal() {
 	let cellId = printRows.getCurrentCellId('total');
 	let cell = cells[cellId];
-	cell.innerHTML = printRows.getCurrentRow().total;
+	cell.innerHTML = printRows.getCurrentRow().total.toFixed(2);
 	cellId = printRows.getCurrentCellId('gst');
 	cell = cells[cellId];
-	cell.innerHTML = printRows.getCurrentRow().gst;
+	cell.innerHTML = printRows.getCurrentRow().gst.toFixed(2);
+	cellId = printRows.getCurrentCellId('fineWeight');
+	cell = cells[cellId];
+	if (cell) {
+		cell.innerHTML = printRows.getCurrentRow().fineWeight.toFixed(3);
+	}
 	updateLabourCharge();
 }
 function updateGrandTotal() {

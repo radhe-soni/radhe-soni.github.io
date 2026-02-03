@@ -87,11 +87,11 @@ function printTheTable() {
 	const separater = document.createElement('hr');
 	separater.style.border = "2px dashed black";
 	billInfo.appendChild(separater);
-	window.print();
-	window.onafterprint(() => {
+	window.onafterprint = () => {
 		console.log("Printing completed...");
 		billInfoParent.innerHTML = original;
-	});
+	};
+	window.print();
 }
 function addNewItem() {
 	const newPrintRow = new PrintRow(printRows.rows.length);
@@ -138,34 +138,6 @@ function gotoNextField(e) {
 		}
 	}
 }
-(function () {
-
-	var beforePrint = () => {
-		// console.log('Functionality to run before printing.');
-	};
-
-	var afterPrint = fun => {
-		if (typeof fun === "function") {
-			fun();
-		}
-	}
-
-
-	if (window.matchMedia) {
-		var mediaQueryList = window.matchMedia('print');
-		mediaQueryList.addListener(mql => {
-			if (mql.matches) {
-				beforePrint();
-			} else {
-				fun => afterPrint(fun);
-			}
-		});
-	}
-
-	window.onbeforeprint = beforePrint;
-	window.onafterprint = afterPrint;
-
-}());
 
 function deleteCurrentItem() {
 	const currentRowIndex = printRows.getCurrentRow().index;
