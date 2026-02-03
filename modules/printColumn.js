@@ -4,7 +4,7 @@ class PrintColumn {
         this.name = name,
             this.className = className,
             this.itemId = itemId,
-        printColumnMap[itemId] = this;
+            printColumnMap[itemId] = this;
     }
 }
 
@@ -15,13 +15,14 @@ class PrintColumns {
             new PrintColumn('Item Name', 'col-3', 'itemName'),
             new PrintColumn('Pcs', 'col-2', 'pieces'),
             new PrintColumn('Rate', 'col-2', 'rate'),
-            new PrintColumn('Weight', 'col-2', 'weight'),
-            new PrintColumn('Purity', 'col-2', 'purity'),
-            new PrintColumn('Wast-age', 'col-2', 'wastage'),
-            new PrintColumn('Fine Weight', 'col-2', 'fineWeight'),
+            new PrintColumn('Wgt', 'col-2', 'weight'),
+            new PrintColumn('Tch', 'col-2', 'purity'),
+            new PrintColumn('Wstg', 'col-2', 'wastage'),
+            new PrintColumn('Fine Wgt', 'col-2', 'fineWeight'),
             new PrintColumn('Labour Rate', 'col-2', 'labourRate'),
             new PrintColumn('Labour', 'col-2', 'labourCharge'),
-            new PrintColumn('Total', 'col-2', 'total')
+            new PrintColumn('Total', 'col-2', 'total'),
+            new PrintColumn('GST@3%', 'col-2', 'gst')
         ];
     }
 }
@@ -48,19 +49,22 @@ class PrintRows {
     get grandTotal() {
         return this.rows.map(row => parseFloat(row.total)).reduce((x, y) => x + y).toFixed(2);
     }
+    get gstTotal() {
+        return this.rows.map(row => parseFloat(row.gst)).reduce((x, y) => x + y).toFixed(2);
+    }
     get weightTotal() {
         return this.rows.map(row => row.getStandardWeight()).reduce((x, y) => x + y).toFixed(3);
     }
     get fineWeightTotal() {
         return this.rows.map(row => row.fineWeight).reduce((x, y) => x + y).toFixed(3);
     }
-    get labourChargeTotal(){
+    get labourChargeTotal() {
         return this.rows.map(row => row.labourCharge).reduce((x, y) => x + y).toFixed(2);
     }
 }
 class PrintRow {
     constructor(index) {
-        this.itemName = 'Gold Fine',
+        this.itemName = 'Gold Bullion',
             this.rate = '',
             this.rateUnit = "tola",
             this.weight = '',
@@ -82,7 +86,7 @@ class PrintRow {
             + (this.pieces * this.wastage * unitMultiplier[this.wastageUnit]));
     }
     get labourCharge() {
-        if(this.labourRateUnit == 'pieces'){
+        if (this.labourRateUnit == 'pieces') {
             return (this.labourRate * this.pieces);
         }
         return (this.labourRate / unitMultiplier[this.labourRateUnit]) * this.getStandardWeight().toFixed(2);
@@ -91,6 +95,9 @@ class PrintRow {
         this.sumTotal = (this.rate / unitMultiplier[this.rateUnit]) *
             this.fineWeight + this.labourCharge;
         return this.sumTotal.toFixed(2);
+    }
+    get gst() {
+        return (this.sumTotal * 0.03).toFixed(2);
     }
     get index() {
         return this.sno - 1;
@@ -107,7 +114,7 @@ class PrintRow {
 
     }
     getUnitSymbol(itemId) {
-        return unitSymbol[this[itemId+'Unit']];
+        return unitSymbol[this[itemId + 'Unit']];
     }
 
 }

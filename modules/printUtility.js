@@ -1,7 +1,7 @@
 function getDataGroup(parentId) {
 	const row = document.createElement('div');
 	row.classList.add('table-row-group');
-	row.id = parentId+'DataGroup';
+	row.id = parentId + 'DataGroup';
 	return row;
 }
 function getHeaderRow() {
@@ -26,8 +26,8 @@ function getGrandTotalRow() {
 	row.appendChild(cell);
 	cell = document.createElement('div');
 	cell.classList.add('table-body-cell');
-	cell.id='grandTotal';
-	cell.innerText=0;
+	cell.id = 'grandTotal';
+	cell.innerText = 0;
 	row.appendChild(cell);
 	return row;
 }
@@ -39,7 +39,7 @@ function createTableRow(index) {
 	row.setAttribute("data-placement", "top");
 	row.setAttribute("title", "Click on the row to edit !!!");
 	row.addEventListener('click', () => setFieldsWithSelectedRow(index));
-	row.setAttribute('id', 'dataRow'+ index);
+	row.setAttribute('id', 'dataRow' + index);
 	return row;
 }
 function getHeaderCell(columnInfo) {
@@ -50,10 +50,10 @@ function getHeaderCell(columnInfo) {
 	headerCell.classList.add('table-header-cell');
 	return headerCell;
 }
-function getColumnName(itemId, name){
+function getColumnName(itemId, name) {
 	let unitSymbol = `(${printRows.rows[0].getUnitSymbol([itemId])})`;
-	if(unitSymbol == '(undefined)'){
-		unitSymbol='';
+	if (unitSymbol == '(undefined)') {
+		unitSymbol = '';
 	}
 	return `${name} ${unitSymbol}`;
 }
@@ -72,13 +72,13 @@ function updatePrintItem(itemId) {
 	updateSubTotal();
 	updateGrandTotal();
 }
-function getUnitSymbol(itemId){
+function getUnitSymbol(itemId) {
 	let unitSymbolString = '';
 	const unitSymbol = printRows.getCurrentRow().getUnitSymbol(itemId);
-	if(unitSymbol){
+	if (unitSymbol) {
 		const unitSymbolSpan = document.createElement('span');
 		unitSymbolSpan.classList.add('unit-symbol');
-		unitSymbolSpan.innerText = `(${unitSymbol})`;
+		unitSymbolSpan.innerText = `(/${unitSymbol})`;
 		unitSymbolString = unitSymbolSpan.outerHTML;
 	}
 	return unitSymbolString;
@@ -92,9 +92,12 @@ function updateSubTotal() {
 	let cellId = printRows.getCurrentCellId('total');
 	let cell = cells[cellId];
 	cell.innerHTML = printRows.getCurrentRow().total;
+	cellId = printRows.getCurrentCellId('gst');
+	cell = cells[cellId];
+	cell.innerHTML = printRows.getCurrentRow().gst;
 	updateLabourCharge();
 }
-function updateGrandTotal(){
+function updateGrandTotal() {
 	const grandTotalValue = printRows.grandTotal;
 	const grandTotal = document.getElementById('grandTotal');
 	grandTotal.innerText = grandTotalValue;
@@ -106,6 +109,8 @@ function updateGrandTotal(){
 	fineWeightTotal.innerText = printRows.fineWeightTotal + '(kg)';
 	const labourChargeTotal = document.getElementById('labourChargeTotal');
 	labourChargeTotal.innerText = printRows.labourChargeTotal;
+	const gstTotal = document.getElementById('gstTotal');
+	gstTotal.innerText = printRows.gstTotal;
 }
 function createNewPrintItem(itemId) {
 	const column = printColumns[itemId].column;

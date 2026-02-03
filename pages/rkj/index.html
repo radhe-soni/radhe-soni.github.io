@@ -15,6 +15,12 @@
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="/style/index.css" />
 	<meta name="viewport" content="minimum-scale=0.2, user-scalable=no">
+	<style>
+		.unit-symbol {
+			font-size: xx-small;
+			color: #666;
+		}
+	</style>
 </head>
 
 <body onload="loader()">
@@ -57,7 +63,13 @@
 						<span class="badge badge-dark"><label>Item Name</label></span>
 						<div class="row">
 							<div class="col-sm-12">
-								<input class="calculatable form-control" id="itemName" type="text" value="Gold Fine" />
+								<input class="calculatable form-control" id="itemName" list="itemList" type="text"
+									value="Gold Bullion" />
+								<datalist id="itemList">
+									<option value="Gold Bullion">
+									<option value="Silver Fine">
+									<option value="Silver Jewellery">
+								</datalist>
 							</div>
 						</div>
 					</div>
@@ -95,12 +107,12 @@
 					<div class="form-group col-sm-12">
 						<div class="row">
 							<div class="col-sm-6">
-								<span class="badge badge-dark"><label>Purity(%)</label></span>
+								<span class="badge badge-dark"><label>Tunch(%)</label></span>
 								<input class="calculatable form-control" id="purity" type="number" value="100" />
 							</div>
 							<div class="col-sm-6">
 								<span class="badge badge-dark"><label>Pieces</label></span>
-								<input class="calculatable form-control" id="pieces" type="number" value="1"/>
+								<input class="calculatable form-control" id="pieces" type="number" value="1" />
 							</div>
 						</div>
 					</div>
@@ -148,15 +160,17 @@
 				<div class="col-sm-3">
 					<div class="sticky-top">
 						<div class="bg-success text-center">
-							<div class='col-sm-12 h4'>GRAND TOTAL<br/><span class='badge badge-dark' id="grandTotalFloating">0</span></div>
-							
+							<div class='col-sm-12 h4'>GRAND TOTAL<br /><span class='badge badge-dark'
+									id="grandTotalFloating">0</span></div>
+
 						</div>
 						<div class="mt-1 text-center">
 							<button class="btn btn-primary" onclick="printTheTable();">
 								<span class="display-4">Print</span></button>
 						</div>
 						<div class="mt-1 text-center">
-							<button class="btn btn-primary" onclick="addNewItem();"><span class="h4">+ Add New Item</span>
+							<button class="btn btn-primary" onclick="addNewItem();"><span class="h4">+ Add New
+									Item</span>
 							</button>
 						</div>
 					</div>
@@ -169,7 +183,7 @@
 			<div class="col-sm-12 printable bill-info" id="billInfo">
 				<div class='table' id="billInfoTable">
 					<div class="resp-table-header">
-						<div class="table-header-cell">Radhe Kishan Jwellers</div>
+						<div class="table-header-cell">Radhey Kishan Jwellers</div>
 					</div>
 					<div class="resp-table-row">
 						<div class="table-body-cell">
@@ -202,6 +216,7 @@
 									<div class="table-body-cell"></div>
 									<div class="table-body-cell" id="labourChargeTotal">0</div>
 									<div class="table-body-cell" id="grandTotal">0.00</div>
+									<div class="table-body-cell" id="gstTotal">0.00</div>
 								</div>
 							</div>
 						</div>
@@ -217,7 +232,7 @@
 									Contact:- 9425841282
 								</div>
 								<div class='col-sm-9'>
-									<div>Address:- c/o Radhe Kishan Jwellers, Sarafa Bazaar</div>
+									<div>Address:- c/o Radhey Kishan Jewellers, Sarafa Bazaar</div>
 									<div> Kotwali Road Sidhi (M.P.)</div>
 								</div>
 								<div class='col-sm-3' style="text-align: center">
@@ -239,10 +254,17 @@
 		</div>
 	</div>
 
-	<script src="./modules/printColumn.js"></script>
-	<script src="./modules/printUtility.js"></script>
-	<script src="./pages/rkj/scripts/index.js"></script>
-	<script>$("#billDate").val(getFormattedDate(new Date()));</script>
+	<script src="/modules/printColumn.js"></script>
+	<script src="/modules/printUtility.js"></script>
+	<script src="/pages/rkj/scripts/index.js"></script>
+	<script>
+		(function () {
+			let currentDate = getFormattedDate(new Date());
+			$("#billDate").val(getFormattedDate(new Date()));
+			$("#billDatePrint").text(getPrintableDate(new Date()));
+		})();
+
+	</script>
 </body>
 
 </html>

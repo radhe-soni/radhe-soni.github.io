@@ -58,7 +58,11 @@ function updatePrintObj() {
 }
 function populatePrintHeader(element) {
 	const printHeaderId = element.id + 'Print';
-	document.getElementById(printHeaderId).innerText = element.value;
+	if (element.type === 'date') {
+		document.getElementById(printHeaderId).innerText = getPrintableDate(new Date(element.value));
+	} else {
+		document.getElementById(printHeaderId).innerText = element.value;
+	}
 }
 function printTheTable() {
 	const printHeaderInputs = document.getElementsByClassName('print-header-input');
@@ -80,6 +84,9 @@ function printTheTable() {
 	customerDiv.innerText = 'Customer Copy';
 	customerCopy.insertBefore(customerDiv, customerCopy.firstChild);
 	billInfoParent.appendChild(customerCopy);
+	const separater = document.createElement('hr');
+	separater.style.border = "2px dashed black";
+	billInfo.appendChild(separater);
 	window.print();
 	window.onafterprint(() => {
 		console.log("Printing completed...");
@@ -105,6 +112,12 @@ function getFormattedDate(date) {
 		+ "-"
 		+ ("0" + date.getDate()).slice(-2);
 }
+
+function getPrintableDate(date) {
+	var dateParts = date.toGMTString().split(' ')
+	return `${dateParts[1]}/${dateParts[2]}/${dateParts[3]}`;
+}
+
 var calculatables = document.getElementsByTagName('input');
 var inputMap = getInputMap();
 function getInputMap() {
@@ -154,8 +167,8 @@ function gotoNextField(e) {
 
 }());
 
-function deleteCurrentItem(){
+function deleteCurrentItem() {
 	const currentRowIndex = printRows.getCurrentRow().index;
-	const currentRowElement = document.getElementById('dataRow'+ currentRowIndex);
-	
+	const currentRowElement = document.getElementById('dataRow' + currentRowIndex);
+
 }
